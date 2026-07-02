@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情勢・市場デイリーダイジェスト（動作確認版）</title>
+<style>
+  :root {
+    --bg: #0f1420;
+    --card-bg: #1a2032;
+    --card-border: #2a3348;
+    --text-main: #e8ecf4;
+    --text-sub: #9aa5b8;
+    --accent: #4f8cff;
+    --up: #ef5350;
+    --down: #26a69a;
+    --warn: #f4b942;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    padding: 32px 20px 60px;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  header { margin-bottom: 18px; }
+  header h1 { font-size: 22px; margin: 0 0 6px; }
+  header .meta { color: var(--text-sub); font-size: 13px; }
+  .test-banner {
+    background: rgba(244,185,66,0.12);
+    border: 1px solid var(--warn);
+    color: var(--warn);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  /* --- タブ --- */
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 20px;
+  }
+  .tab-btn {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: var(--text-sub);
+    font-size: 13.5px;
+    font-family: inherit;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color .15s, border-color .15s;
+  }
+  .tab-btn:hover { color: var(--text-main); }
+  .tab-btn.active {
+    color: var(--text-main);
+    border-bottom: 2px solid var(--accent);
+  }
+  .tab-btn .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); opacity: .0; }
+  .tab-btn.active .dot { opacity: 1; }
+
+  .panel { display: none; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px 22px; }
+  .panel.active { display: block; }
+
+  .panel h2 { font-size: 15px; margin: 0 0 14px; }
+  .panel ul { margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.8; color: var(--text-main); }
+  .panel ul li { margin-bottom: 10px; }
+  .panel ul li a { color: var(--accent); text-decoration: none; }
+  .panel ul li a:hover { text-decoration: underline; }
+  .asof { color: var(--text-sub); font-size: 11.5px; margin-top: 14px; }
+
+  .num-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .num-tile {
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed var(--card-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    min-width: 130px;
+  }
+  .num-tile .label { font-size: 11.5px; color: var(--text-sub); }
+  .num-tile .value { font-size: 18px; font-weight: 600; color: var(--text-sub); }
+  .placeholder { color: var(--text-sub); font-style: italic; font-size: 13px; }
+
+  footer {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+    font-size: 12px;
+    color: var(--text-sub);
+    line-height: 1.7;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>情勢・市場デイリーダイジェスト</h1>
+    <div class="meta">生成日時: 2026-07-02 23:50 JST（動作確認用ドライラン・タブ切り替え版）</div>
+  </header>
+
+  <div class="test-banner">
+    これは実装フローの動作確認用サンプルです。本番の毎朝6:30 JST生成では、
+    その時点の最新ニュース・数値を都度取得します。株価・為替の具体的な数値部分は
+    プレースホルダーです。
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="world"><span class="dot"></span>世界情勢</button>
+    <button class="tab-btn" data-tab="japan"><span class="dot"></span>日本情勢</button>
+    <button class="tab-btn" data-tab="stocks"><span class="dot"></span>株式市場</button>
+    <button class="tab-btn" data-tab="fx"><span class="dot"></span>為替・金利・債券</button>
+    <button class="tab-btn" data-tab="watchlist"><span class="dot"></span>ウォッチリスト</button>
+  </div>
+
+  <div id="panel-world" class="panel active">
+    <h2>世界情勢</h2>
+    <ul>
+      <li>世界経済フォーラムの「グローバルリスク報告書2026」は、地政学的対立の激化を
+        2026年の主要リスクの一つに挙げている。<a href="https://www.weforum.org/press/2026/01/global-risks-report-2026-geopolitical-and-economic-risks-rise-in-new-age-of-competition/" target="_blank">[出典: WEF]</a></li>
+      <li>Lazardのリサーチも2026年の地政学トレンドとして大国間競争の激化を指摘。
+        <a href="https://www.lazard.com/research-insights/top-geopolitical-trends-in-2026/" target="_blank">[出典: Lazard]</a></li>
+    </ul>
+    <div class="asof">確認日: 2026-07-02（記事自体の公開時期は要個別確認）</div>
+  </div>
+
+  <div id="panel-japan" class="panel">
+    <h2>日本情勢</h2>
+    <ul>
+      <li>日銀は政策金利を1.0%へ引き上げる決定をし、国債買い入れの減額停止は
+        2027年4月以降とする方針。<a href="https://www.nikkei.com/article/DGXZQOUB154P00V10C26A6000000/" target="_blank">[出典: 日本経済新聞]</a></li>
+      <li>野村総研の分析では、日銀は追加利上げに積極姿勢を示す一方、高市政権との
+        間で軋轢が続いているとの指摘。<a href="https://www.nri.com/jp/media/column/kiuchi/20260108.html" target="_blank">[出典: NRI]</a></li>
+    </ul>
+    <div class="asof">確認日: 2026-07-02（一部記事は2026年1月時点の分析）</div>
+  </div>
+
+  <div id="panel-stocks" class="panel">
+    <h2>株式市場</h2>
+    <div class="num-row">
+      <div class="num-tile"><div class="label">日経平均</div><div class="value">--</div></div>
+      <div class="num-tile"><div class="label">NYダウ</div><div class="value">--</div></div>
+      <div class="num-tile"><div class="label">S&amp;P500</div><div class="value">--</div></div>
+    </div>
+    <p class="placeholder">本番実行時に主要メディアの最新記事から複数ソース照合の上、
+      値と前日比を記載します（本日はドライランのため未取得）。</p>
+    <ul>
+      <li><a href="https://www.nikkei.com/markets/worldidx/chart/nk225/" target="_blank">日経平均株価 - 日本経済新聞</a></li>
+      <li><a href="https://www.nikkei.com/marketdata/quote/DJI/" target="_blank">NYダウ - 日本経済新聞</a></li>
+      <li><a href="https://www.nikkei.com/marketdata/quote/SPX/" target="_blank">S&amp;P500 - 日本経済新聞</a></li>
+    </ul>
+  </div>
+
+  <div id="panel-fx" class="panel">
+    <h2>為替・金利・債券</h2>
+    <div class="num-row">
+      <div class="num-tile"><div class="label">ドル円</div><div class="value">--</div></div>
+      <div class="num-tile"><div class="label">米10年債利回り</div><div class="value">--</div></div>
+    </div>
+    <p class="placeholder">本番実行時に取得・記載します（本日はドライランのため未取得）。</p>
+    <ul>
+      <li><a href="https://www.nikkei.com/marketdata/quote/USDJPY/" target="_blank">ドル円相場 - 日本経済新聞</a></li>
+      <li><a href="https://www.investing.com/rates-bonds/usa-government-bonds" target="_blank">US Treasury Yield Curve - Investing.com</a></li>
+    </ul>
+  </div>
+
+  <div id="panel-watchlist" class="panel">
+    <h2>ウォッチリスト（注目トピック）</h2>
+    <p class="placeholder">現在ウォッチリストは未登録です。「◯◯をウォッチリストに追加して」と
+      伝えると、この枠に関連ニュースが表示されるようになります。</p>
+  </div>
+
+  <footer>
+    本ダイジェストは公開情報の要約であり、投資助言ではありません。投資判断はご自身の
+    責任で行ってください。数値は複数ソースを参考にした概算であり、正確な最新値は各金融
+    情報サービスでご確認ください。
+  </footer>
+</div>
+
+<script>
+  var buttons = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.panel');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      buttons.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
