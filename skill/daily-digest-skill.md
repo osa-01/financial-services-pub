@@ -1,7 +1,7 @@
-# 毎朝の情勢・金融ダイジェスト — 実行手順書 (v2: GitHub API方式)
+# 毎朝の情勢・金融ダイジェスト — 実行手順書 (v3: 詳細版)
 
 このドキュメントは、毎朝6:30 JSTに自動起動するスケジュールタスクが実行する手順です。
-デバイス（PC）への接続は不要。GitHub APIで全ての読み書きを行います。
+デバイスへの接続は不要。GitHub APIで全ての読み書きを行います。
 
 ## 設定情報
 スケジュールタスクのプロンプトから以下の値が渡される：
@@ -15,148 +15,253 @@
 
 ## 0. 前提データの読み込み
 
-GitHub APIで以下のファイルを取得する。レスポンスの `content` フィールドはbase64エンコードされているのでデコードして使用する。
+GitHub APIで以下を取得する（レスポンスの `content` フィールドをbase64デコード）：
 
-**ウォッチリスト（プライベートリポジトリ）:**
 ```
 GET https://api.github.com/repos/osa-01/financial-services/contents/config/watchlist.json
-Authorization: Bearer {GITHUB_PAT}
-```
-
-**アーティファクト状態（プライベートリポジトリ）:**
-```
 GET https://api.github.com/repos/osa-01/financial-services/contents/config/artifact_state.json
 Authorization: Bearer {GITHUB_PAT}
 ```
-※ レスポンスの `sha` フィールドを必ず記録しておくこと（手順4の更新時に必要）。
 
-今日の日付（JST）を確認する：
+`artifact_state.json` の `sha` を記録しておく（手順4の更新時に必要）。
+
+JSTの今日の日付と曜日を確認する：
 ```bash
-TZ=Asia/Tokyo date +%Y-%m-%d
+TZ=Asia/Tokyo date "+%Y-%m-%d %A"
 ```
 
 ---
 
-## 1. 情報収集（WebSearchツールを使用）
+## 1. 情報収集（WebSearchツール + WebFetch）
 
-**検索のコツ（動作検証で判明した注意点）**: 汎用的なキーワードだけで検索すると、
-個別記事ではなくポータルサイトのトップページやテーマ解説ページばかりが返ってくる
-ことがある。日付・「本日」「速報」等の語や、固有名詞（企業名・要人名・指標名）を
-組み合わせるなど、より具体的なクエリを心がけること。また、日本経済新聞など
-一部サイトはrobots.txtによりWebFetchでの本文取得がブロックされるため、無理に
-個別ページを深掘りせず、WebSearchのスニペット（タイトル・要約文）を情報源として
-活用してよい。
+**基本方針**:
+- 各カテゴリで5〜8件のWeb検索を実施する。より具体的なクエリ（日付・固有名詞・指標名を含む）を優先する
+- 重要度が高いと判断した記事は WebFetch で本文を取得し、詳細を確認する（ただし robots.txt でブロックされるサイトは無理に深掘りしない）
+- 検索結果のタイトル・URL・スニペットの日時を必ず記録する
 
-以下の4カテゴリについて、それぞれ2〜4件のWeb検索を行い、直近24時間以内を中心に
-重要なニュースを収集する。検索結果のタイトル・URL・スニペットの日時を必ず記録すること。
+### 1-1. 世界情勢（5〜7クエリ）
 
-- **世界情勢**: 地政学リスク、米国・中国・欧州など主要国の政治・外交・要人発言
-  （例: "geopolitics news today", "米国 中国 外交 最新"）
-- **日本情勢**: 政治動向、日銀金融政策、政府の経済対策、主要経済指標
-  （例: "日銀 金融政策 最新", "日本 政治 経済対策 ニュース"）
-- **株式市場**: 日経平均・TOPIX・主要日本株、S&P500・NASDAQ・主要米国株の値動きと材料
-  （例: "日経平均 本日 終値 理由", "S&P500 米国株 本日"）
-- **為替・金利・債券**: ドル円などの為替、各国政策金利、国債利回り
-  （例: "ドル円 本日 レート", "米国債 利回り 最新"）
+以下のテーマを網羅するよう検索する：
+- 米中関係・外交・貿易（例: "US China trade tariffs latest 2026", "米中 外交 最新"）
+- 欧州の政治・経済（例: "Europe EU economy politics news today"）
+- 中東・ロシア・地政学リスク（例: "Middle East conflict latest", "Russia Ukraine news today"）
+- 米国政治・要人発言（例: "White House statement today", "Fed chairman speech latest"）
+- 国際機関・多国間外交（例: "G7 G20 UN Security Council latest"）
+- 新興国・アジア（例: "India Southeast Asia economy news today"）
+- 貿易・制裁・サプライチェーン（例: "global trade sanctions supply chain news"）
 
-さらに、`watchlist.json` に登録されている銘柄・通貨ペアがあれば、それぞれについて
-個別に検索し、「注目トピック」として別枠にまとめる。ウォッチリストが空の場合はこの手順を
-スキップしてよい。
+### 1-2. 日本情勢（5〜7クエリ）
+
+- 日銀・金融政策（例: "日銀 金融政策 利上げ 最新", "BOJ monetary policy latest"）
+- 政治・内閣・政策（例: "日本 内閣 政策 最新ニュース"）
+- 主要経済指標（例: "日本 CPI インフレ 最新", "日本 GDP 速報", "日本 貿易収支 最新"）
+- 為替・経常収支・財政（例: "日本 財政 国債 最新"）
+- 雇用・消費（例: "日本 失業率 消費 最新"）
+- 産業・企業政策（例: "日本 産業政策 半導体 経済安保 最新"）
+
+### 1-3. 株式市場 — 日本（5〜7クエリ）
+
+- 日経平均・TOPIX（例: "日経平均 本日 終値 材料 解説", "TOPIX 本日"）
+- 業種別動向（例: "東証 業種別 騰落 本日"）
+- 主要銘柄（例: "トヨタ ソニー 任天堂 株価 本日"）
+- 売買代金・市場全体（例: "東証プライム 売買代金 本日"）
+- テーマ・物色動向（例: "日本株 テーマ 本日 材料"）
+- 外国人投資家動向（例: "外国人 日本株 売買 最新"）
+
+### 1-4. 株式市場 — 米国（5〜7クエリ）
+
+- 主要指数（例: "S&P 500 Dow Jones NASDAQ close today", "US stock market today summary"）
+- セクター動向（例: "US stock sector performance today tech energy financials"）
+- 主要銘柄（例: "Apple Microsoft Nvidia Tesla stock today"）
+- 市場センチメント（例: "VIX fear greed index today", "US market breadth today"）
+- 米国経済指標・FRB（例: "US economic data today Fed policy"）
+- 決算（例: "US earnings results today after hours"）
+
+### 1-5. 為替・金利・債券（5〜7クエリ）
+
+- ドル円・主要通貨ペア（例: "ドル円 本日 レート 要因", "USD/JPY EUR/USD GBP/USD today"）
+- クロス円（例: "ユーロ円 ポンド円 豪ドル円 本日"）
+- 米国債利回り（例: "US Treasury 10-year yield today", "US bond market today"）
+- 日本国債・各国金利（例: "日本国債 10年 利回り 本日", "Germany bund yield today"）
+- 各国政策金利（例: "central bank interest rate latest ECB BOE"）
+- 為替介入・通貨政策（例: "FX intervention currency policy latest"）
+
+### 1-6. 商品市況（4〜6クエリ）
+
+- 原油（例: "WTI Brent crude oil price today", "原油 価格 本日 要因"）
+- 金・貴金属（例: "gold silver price today", "金 価格 本日"）
+- 産業用金属（例: "copper aluminum steel price today"）
+- 農産物・エネルギー（例: "natural gas LNG price today", "wheat corn soybean price"）
+- 商品市場全体（例: "commodity market outlook today CRB index"）
+
+### 1-7. 仮想通貨（3〜5クエリ）
+
+- BTC・ETH（例: "Bitcoin BTC price today", "Ethereum ETH price today"）
+- 市場全体（例: "crypto market today total market cap", "altcoin news today"）
+- 規制・ニュース（例: "crypto regulation news today", "crypto institutional news"）
+
+### 1-8. 企業・決算ニュース（4〜6クエリ）
+
+- 日本企業決算（例: "日本 企業決算 本日 サプライズ"）
+- 米国企業決算（例: "US earnings today beat miss guidance"）
+- M&A・再編（例: "M&A merger acquisition news today Japan"）
+- 大型企業ニュース（例: "major corporate announcement today Japan US"）
+
+### 1-9. ウォッチリスト（登録銘柄がある場合のみ）
+
+`watchlist.json` に登録されている銘柄・通貨ペアそれぞれについて個別に検索する。
+
+### 1-10. 経済指標カレンダー（2〜3クエリ）
+
+- 本日・翌日の経済指標発表予定（例: "economic calendar today tomorrow major events"）
+- 日本の経済指標発表（例: "日本 経済指標 発表予定 今週"）
+- 中央銀行イベント（例: "central bank meeting schedule this week"）
 
 ---
 
 ## 2. 数値データの確認（重要・注意事項あり）
 
-**過去の検証で、WebFetchで金融情報ページを1件だけ取得すると、実際とは異なる古い日付の
-数値を「最新値」として返す事例が確認されている。** そのため、価格・騰落率などの数値は
-以下のルールに従うこと。
+複数ソースを突き合わせ、各数値には「◯月◯日時点」または「速報値」を必ず明記する。
+矛盾または古い値は "--" とし、無理に確定させない。
 
-- 可能な限り2件以上の情報源（検索結果のスニペット、または複数ページのWebFetch）を
-  突き合わせ、大きく矛盾しないか確認する。
-- 表示する数値には必ず「◯月◯日時点」「速報値」など、いつの情報かを併記する。
-- 出典が古い、または矛盾する場合は、無理に数値を確定させず「詳細は主要ニュースサイトで
-  ご確認ください」という表現に留める。
-- 分単位のリアルタイム性は保証しない前提とする（このアプリの目的はリアルタイム取引
-  ではなく、投資判断の参考情報整理であるため）。
+収集する数値（取得できた範囲で記載）：
+
+**株価指数:**
+- 日経平均、TOPIX、JPXプライム150
+- S&P 500、NASDAQ総合、Dow Jones、Russell 2000
+
+**為替（対円）:**
+- USD/JPY、EUR/JPY、GBP/JPY、AUD/JPY、CNY/JPY
+
+**為替（クロス）:**
+- EUR/USD、GBP/USD
+
+**金利・国債利回り:**
+- 米国10年債、米国2年債（逆イールド確認）
+- 日本10年国債、ドイツ10年Bund
+- FF金利（現在の政策金利）、日銀政策金利
+
+**商品:**
+- WTI原油、Brent原油
+- 金（XAU/USD）、銀（XAG/USD）
+- 銅（LME）
+
+**仮想通貨:**
+- BTC/USD、ETH/USD
 
 ---
 
-## 3. ダッシュボードHTMLの生成（確定デザイン: タブ切り替え形式）
+## 3. ダッシュボードHTMLの生成
 
-自己完結的な1ファイルのHTML（インラインCSS/JS、外部ライブラリ不使用）として、
-以下の構成でダッシュボードを作る。デザインの方向性はユーザー確認済み（2026-07-02）。
+自己完結的な1ファイルのHTML（インラインCSS/JS、外部ライブラリ不使用）として生成する。
+デザインベースは既存のドライラン版（ダーク背景、タブ切り替え方式）を踏襲する。
 
-- ヘッダー: タイトル「情勢・市場デイリーダイジェスト」、生成日時（JST）
-- **タブ切り替えナビゲーション**を横並びで配置し、以下5つのタブを持つ
-  （ウォッチリストが空の日も「ウォッチリスト」タブ自体は残し、空メッセージを表示する）。
+### 3-1. 全体構成
+
+- **ヘッダー**: タイトル「情勢・市場デイリーダイジェスト」、生成日時（JST）、曜日
+- **サマリーバナー**（ページ上部、全タブ共通）: 本日の最重要ニュース1〜3点を太字で表示
+- **タブナビゲーション**（横スクロール対応）: 以下の8タブ
   1. 世界情勢
   2. 日本情勢
-  3. 株式市場
-  4. 為替・金利・債券
-  5. ウォッチリスト（注目トピック）
-- タブは一度に1パネルだけ表示するJS（`.tab-btn` クリックで対応する `.panel` に
-  `active` クラスを付け替える、素の JavaScript。localStorage 等のブラウザ保存APIは
-  使用しない）。
-- 各パネルの中身:
-  - 要点3〜5行の箇条書き＋出典リンク＋「◯月◯日時点」の注記
-  - 株式市場／為替・金利・債券タブは、値を「数値タイル」（大きめフォントのカード）で
-    ハイライト表示する。数値が確認できない場合は "--" とし、
-    「本番実行時に複数ソース照合の上で記載」のプレースホルダー文言を表示してよい
-    （無理に不確かな数値を埋めない）。
-- ページ上部に「本日のダイジェストは公開情報を要約したものである」旨の簡潔な注記バナー、
-  ページ下部に固定の免責事項:
-  「本ダイジェストは公開情報の要約であり、投資助言ではありません。投資判断は
-  ご自身の責任で行ってください。数値は複数ソースを参考にした概算であり、
-  正確な最新値は各金融情報サービスでご確認ください。」
-- 配色はダーク背景＋アクセントカラー1色を基調としたダッシュボード風とする。
-  参考実装（ドライラン版）が公開リポジトリの `archive/_test_dryrun.html` に保存済みなので、
-  HTML構造・CSSクラス名はこれを踏襲してよい。
+  3. 株式（日本）
+  4. 株式（米国）
+  5. 為替・金利
+  6. 商品・コモディティ
+  7. 仮想通貨
+  8. ウォッチリスト
+- **経済指標カレンダー**（固定セクション、タブ外・全タブの下部に常時表示）
+- **免責事項フッター**（固定）
+
+### 3-2. 各タブの構成
+
+**ニュースタブ（世界情勢・日本情勢・企業ニュースを含む全タブ）:**
+- 🔴 重要 バッジ付きの最重要ニュース（1〜3件）
+- 通常の箇条書き（7〜10行）
+- 各項目に出典リンクと日時
+- タブ末尾に「週次トレンドコメント」（直近1週間の大きな流れを1〜2行で要約）
+
+**数値タイルを持つタブ（株式・為替・金利・商品・仮想通貨）:**
+- 数値タイルカードを2行グリッドで配置
+  - カード内: 名称、値、前日比（%）、取得日時
+  - 上昇: 赤系（`--up`）、下落: 緑系（`--down`）、不明: グレー
+- 数値の下にニュース箇条書き（5〜8行）
+- 週次トレンドコメント
+
+**ウォッチリストタブ:**
+- 登録銘柄ごとに個別セクション（値動き + 関連ニュース）
+- 空の場合は登録方法の案内を表示
+
+### 3-3. 経済指標カレンダーウィジェット
+
+タブ外・ページ下部（フッターの直前）に常時表示するセクション：
+
+```
+📅 経済指標カレンダー
+[本日] 15:00 日本 消費者物価指数 (前月比) 予想: +0.2%
+[本日] 23:00 米国 ISM製造業景況指数 予想: 48.5
+[明日] 08:50 日本 貿易収支
+[明日] 21:30 米国 雇用統計
+```
+
+取得できた情報の範囲で記載。不明な場合は省略してよい。
+
+### 3-4. CSS・デザイン仕様
+
+```css
+:root {
+  --bg: #0f1420;
+  --card-bg: #1a2032;
+  --card-border: #2a3348;
+  --text-main: #e8ecf4;
+  --text-sub: #9aa5b8;
+  --accent: #4f8cff;
+  --up: #ef5350;
+  --down: #26a69a;
+  --warn: #f4b942;
+  --important: #ff6b6b;
+}
+```
+
+- タブボタンは横スクロール可能（モバイル対応）
+- 数値タイルは `display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr))`
+- 重要バッジ: `background: var(--important); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px`
+- 週次トレンドは薄い背景ボックス（`background: rgba(79,140,255,0.08); border-left: 3px solid var(--accent)`）
 
 ---
 
 ## 4. GitHub APIでの保存
 
-生成したHTMLを変数 `HTML_CONTENT` として、以下の手順でGitHubに保存する。
 全APIリクエストに共通ヘッダー: `Authorization: Bearer {GITHUB_PAT}`, `Content-Type: application/json`
+
+HTMLのbase64エンコードにはPythonを使用する（シェルのechoは文字化けが起きやすい）：
+```python
+import base64
+content_b64 = base64.b64encode(html_content.encode('utf-8')).decode('ascii')
+```
 
 ### 4-1. latest.html をパブリックリポジトリに保存/更新
 
 ```
-# ① 既存ファイルのSHAを取得（ファイルが存在しない場合は404になるので sha=null として扱う）
+# 既存のSHAを取得
 GET https://api.github.com/repos/osa-01/financial-services-pub/contents/latest.html
 
-# ② PUT で保存（HTMLはUTF-8でbase64エンコードする）
+# 更新
 PUT https://api.github.com/repos/osa-01/financial-services-pub/contents/latest.html
-Body:
-{
-  "message": "Update digest YYYY-MM-DD",
-  "content": "<HTMLをUTF-8でbase64エンコードした文字列>",
-  "sha": "<①で取得したsha。新規の場合はフィールドごと省略>"
-}
+Body: {"message": "Update digest YYYY-MM-DD", "content": "<base64>", "sha": "<sha>"}
 ```
 
 ### 4-2. archive/YYYY-MM-DD.html をパブリックリポジトリに保存
 
 ```
 PUT https://api.github.com/repos/osa-01/financial-services-pub/contents/archive/YYYY-MM-DD.html
-Body:
-{
-  "message": "Add archive YYYY-MM-DD",
-  "content": "<base64エンコードしたHTML>"
-}
+Body: {"message": "Add archive YYYY-MM-DD", "content": "<base64>"}
 ```
-アーカイブは毎回新規作成なのでSHAは不要。`archive/` ディレクトリはGitHubが自動で作成する。
 
 ### 4-3. artifact_state.json をプライベートリポジトリで更新
 
 ```
 PUT https://api.github.com/repos/osa-01/financial-services/contents/config/artifact_state.json
-Body:
-{
-  "message": "Update state YYYY-MM-DD",
-  "content": "<base64エンコードしたJSON>",
-  "sha": "<手順0で取得したsha>"
-}
+Body: {"message": "Update state YYYY-MM-DD", "content": "<base64>", "sha": "<手順0で取得したsha>"}
 ```
 
 更新するJSONの内容:
@@ -167,38 +272,28 @@ Body:
 }
 ```
 
-**実装上の注意**: HTMLコンテンツをbase64エンコードする際は、Pythonを推奨する：
-```python
-import base64
-content_b64 = base64.b64encode(html_content.encode('utf-8')).decode('ascii')
-```
-シェルのechoやbase64コマンドは改行・特殊文字の扱いで文字化けが起きやすい。
-
 ---
 
 ## 5. 完了メッセージ（スケジュールタスクの通知メール本文）
 
-セッションの最後のメッセージとして、以下を含む簡潔な日本語サマリーを出力する：
+以下を含む日本語サマリーを最後のメッセージとして出力する：
 
-- 今日の一言まとめ（世界情勢・日本情勢・市場の要点を3〜5行）
-- ウォッチリスト銘柄で特筆すべき動きがあれば1〜2行
-- ダッシュボードURL: https://osa-01.github.io/financial-services-pub/latest.html
+- **本日の最重要ニュース**（世界・日本・市場から各1〜2点、計3〜5行）
+- **主要数値サマリー**（日経平均・ドル円・米10年債利回り・BTC/USDを1行で）
+- **ウォッチリスト特記事項**（登録銘柄がある場合のみ）
+- **ダッシュボードURL**: https://osa-01.github.io/financial-services-pub/latest.html
 
 ---
 
 ## 6. ウォッチリストの更新（通常のチャットセッションで随時）
 
-このスケジュール実行とは別に、ユーザーが通常のチャットで「◯◯をウォッチリストに
-追加して」等と伝えてきた場合は、以下の手順で `config/watchlist.json` を更新する：
-
-1. GitHub APIで現在のwatchlist.jsonを取得し、SHAを記録する
-2. 内容を編集（銘柄の追加・削除）
-3. GitHub APIで更新（SHA指定）
+ユーザーがチャットで「◯◯をウォッチリストに追加して」等と伝えた場合：
 
 ```
+# 現在の内容とSHAを取得
 GET https://api.github.com/repos/osa-01/financial-services/contents/config/watchlist.json
-→ sha を記録
 
+# 編集後に更新（SHA指定が必要）
 PUT https://api.github.com/repos/osa-01/financial-services/contents/config/watchlist.json
 Body: {"message": "Update watchlist", "content": "<base64>", "sha": "<sha>"}
 ```
