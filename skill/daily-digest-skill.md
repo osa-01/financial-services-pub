@@ -1,4 +1,4 @@
-# 毎朝の情勢・金融ダイジェスト — 実行手順書 (v3: 詳細版)
+# 毎朝の情勢・金融ダイジェスト — 実行手順書 (v4: メモリ機能追加)
 
 このドキュメントは、毎朝6:30 JSTに自動起動するスケジュールタスクが実行する手順です。
 デバイスへの接続は不要。GitHub APIで全ての読み書きを行います。
@@ -10,25 +10,50 @@
 - GITHUB_CONFIG_REPO: financial-services（private）
 - GITHUB_WEB_REPO: financial-services-pub（public）
 - DASHBOARD_URL: https://osa-01.github.io/financial-services-pub/latest.html
+- RESEND_API_KEY: Resend APIキー
+- MAIL_TO: 送信先メールアドレス
 
 ---
 
 ## 0. 前提データの読み込み
 
-GitHub APIで以下を取得する（レスポンスの `content` フィールドをbase64デコード）：
+**重要: GitHub APIの呼び出しはすべてBash curlで行う（WebFetchは使わない）**
 
-```
-GET https://api.github.com/repos/osa-01/financial-services/contents/config/watchlist.json
-GET https://api.github.com/repos/osa-01/financial-services/contents/config/artifact_state.json
-Authorization: Bearer {GITHUB_PAT}
+以下を取得する（レスポンスの `content` フィールドをbase64デコード）：
+
+```bash
+# watchlist.json
+curl -s -H "Authorization: Bearer {GITHUB_PAT}" \
+  https://api.github.com/repos/osa-01/financial-services/contents/config/watchlist.json
+
+# artifact_state.json（SHAを記録）
+curl -s -H "Authorization: Bearer {GITHUB_PAT}" \
+  https://api.github.com/repos/osa-01/financial-services/contents/config/artifact_state.json
+
+# agent_memory.json（SHAを記録）
+curl -s -H "Authorization: Bearer {GITHUB_PAT}" \
+  https://api.github.com/repos/osa-01/financial-services/contents/config/agent_memory.json
 ```
 
-`artifact_state.json` の `sha` を記録しておく（手順4の更新時に必要）。
+`artifact_state.json` と `agent_memory.json` の `sha` をそれぞれ記録しておく（手順4・5の更新時に必要）。
 
 JSTの今日の日付と曜日を確認する：
 ```bash
 TZ=Asia/Tokyo date "+%Y-%m-%d %A"
 ```
+
+---
+
+## 0.5. エージェントメモリの参照
+
+`agent_memory.json` の内容を読み込み、今日の実行に活かす：
+
+- **effective_queries**: 過去に有効だった検索クエリを優先的に使用する
+- **blocked_sources**: ここに記載されたサイトはWebFetchでの本文取得をスキップ
+- **recurring_themes**: 継続して追っているテーマは重点的に検索する
+- **last_notes**: 前回の自己評価メモを参考に、今日の検索・分析方針を調整する
+
+`history`（過去の実行サマリー）があれば、週次トレンドコメントの参考にする。
 
 ---
 
@@ -274,14 +299,67 @@ Body: {"message": "Update state YYYY-MM-DD", "content": "<base64>", "sha": "<手
 
 ---
 
-## 5. 完了メッセージ（スケジュールタスクの通知メール本文）
+## 5. 完了メッセージ＆メール送信
 
-以下を含む日本語サマリーを最後のメッセージとして出力する：
+以下を含む日本語サマリーを作成する：
 
 - **本日の最重要ニュース**（世界・日本・市場から各1〜2点、計3〜5行）
 - **主要数値サマリー**（日経平均・ドル円・米10年債利回り・BTC/USDを1行で）
 - **ウォッチリスト特記事項**（登録銘柄がある場合のみ）
 - **ダッシュボードURL**: https://osa-01.github.io/financial-services-pub/latest.html
+
+サマリーを作成したら、Resend APIでメールを送信する：
+
+```bash
+SUBJECT="情勢・市場ダイジェスト $(TZ=Asia/Tokyo date +%Y-%m-%d)"
+# BODYには上記サマリー全文を代入する
+
+curl -s -X POST https://api.resend.com/emails \
+  -H "Authorization: Bearer {RESEND_API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d "{\"from\":\"onboarding@resend.dev\",\"to\":\"{MAIL_TO}\",\"subject\":\"${SUBJECT}\",\"text\":\"${BODY}\"}"
+```
+
+---
+
+## 5.5. エージェントメモリの更新
+
+セクション5完了後、今日の実行を振り返り `agent_memory.json` を更新する。
+
+更新内容を評価・整理する：
+
+1. **effective_queries**: 今日使ったクエリのうち、有益な結果が得られたものを追加（既存リストと合わせて最大20件に絞る）
+2. **blocked_sources**: 今日アクセスできなかったサイトを追加
+3. **recurring_themes**: 今日のニュースで継続的に重要と判断したテーマを更新
+4. **last_notes**: 今日の実行の自己評価を100字以内で記録（検索精度・改善点・気づき）
+5. **history**: 今日のサマリーを追加（最大30件、古いものから削除）
+
+historyの1エントリ形式：
+```json
+{
+  "date": "YYYY-MM-DD",
+  "top_news": ["ニュース1", "ニュース2"],
+  "key_figures": "日経XXXXX / ドル円XXX / 米10年X.XX% / BTC XXXXX"
+}
+```
+
+更新したJSONをGitHub APIで保存する（手順0で取得したSHAを使用）：
+
+```bash
+# Python でbase64エンコード
+python3 -c "
+import base64, json
+data = <更新後のagent_memory dictをここに>
+content = json.dumps(data, ensure_ascii=False, indent=2)
+print(base64.b64encode(content.encode('utf-8')).decode('ascii'))
+"
+
+curl -s -X PUT \
+  -H "Authorization: Bearer {GITHUB_PAT}" \
+  -H "Content-Type: application/json" \
+  https://api.github.com/repos/osa-01/financial-services/contents/config/agent_memory.json \
+  -d "{\"message\":\"Update memory YYYY-MM-DD\",\"content\":\"<base64>\",\"sha\":\"<手順0で取得したsha>\"}"
+```
 
 ---
 
