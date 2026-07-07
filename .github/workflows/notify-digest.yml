@@ -1,0 +1,34 @@
+name: ダイジェスト更新通知
+
+on:
+  push:
+    branches: [main]
+    paths: [latest.html]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: サマリー取得＆メール送信
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          DATE=$(TZ=Asia/Tokyo date +%Y-%m-%d)
+
+          if [ -f latest_summary.txt ]; then
+            BODY=$(cat latest_summary.txt)
+          else
+            BODY="本日の情勢・市場ダイジェストが更新されました。"
+          fi
+          BODY="${BODY}
+
+ダッシュボード: https://osa-01.github.io/financial-services-pub/latest.html"
+
+          BODY_ESCAPED=$(echo "$BODY" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))")
+
+          curl -s -X POST https://api.resend.com/emails \
+            -H "Authorization: Bearer $RESEND_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"from\":\"onboarding@resend.dev\",\"to\":\"kabata.osamu.01@gmail.com\",\"subje ${DATE}\",\"text\":${BODY_ESCAPED}}"
