@@ -1,4 +1,4 @@
-# 毎朝の情勢・金融ダイジェスト — 実行手順書 (v4: メモリ機能追加)
+# 毎朝の情勢・金融ダイジェスト — 実行手順書 (v5: 用語集機能追加)
 
 このドキュメントは、毎朝6:30 JSTに自動起動するスケジュールタスクが実行する手順です。
 デバイスへの接続は不要。GitHub APIで全ての読み書きを行います。
@@ -35,7 +35,18 @@ curl -s -H "Authorization: Bearer {GITHUB_PAT}" \
   https://api.github.com/repos/osa-01/financial-services/contents/config/agent_memory.json
 ```
 
-`artifact_state.json` と `agent_memory.json` の `sha` をそれぞれ記録しておく（手順4・5の更新時に必要）。
+# glossary.json（SHAを記録。ファイルが存在しない場合は404が返るので sha は空として扱う）
+curl -s -H "Authorization: Bearer {GITHUB_PAT}" \
+  https://api.github.com/repos/osa-01/financial-services/contents/config/glossary.json
+```
+
+`artifact_state.json` と `agent_memory.json` と `glossary.json` の `sha` をそれぞれ記録しておく（手順4・5の更新時に必要）。
+`glossary.json` が404の場合は sha を空として扱い、手順4.4でファイル新規作成として保存する。
+
+また、`glossary.html` の現在の sha も取得しておく：
+```bash
+curl -s -H "Authorization: Bearer {GITHUB_PAT}" \
+  https://api.github.com/repos/osa-01/financial-services-pub/contents/glossary.html
 
 JSTの今日の日付と曜日を確認する：
 ```bash
@@ -183,7 +194,7 @@ TZ=Asia/Tokyo date "+%Y-%m-%d %A"
 
 ### 3-1. 全体構成
 
-- **ヘッダー**: タイトル「情勢・市場デイリーダイジェスト」、生成日時（JST）、曜日
+- **ヘッダー**: タイトル「情勢・市場デイリーダイジェスト」、生成日時（JST）、曜日、右端に「📖 用語集」リンク（`glossary.html` へ）
 - **サマリーバナー**（ページ上部、全タブ共通）: 本日の最重要ニュース1〜3点を太字で表示
 - **タブナビゲーション**（横スクロール対応）: 以下の8タブ
   1. 世界情勢
@@ -254,6 +265,106 @@ TZ=Asia/Tokyo date "+%Y-%m-%d %A"
 
 ---
 
+## 3.5. 用語集の更新
+
+今日のダイジェスト本文から専門用語を抽出し、`glossary.json` を更新した上で `glossary.html` を生成する。
+
+### 3.5-1. 用語の抽出
+
+今日生成したダイジェストのコンテンツ（全タブのニュース・解説文）を対象に、以下の種類の用語を抽出する：
+
+- 金融・経済の略語（CPI、GDP、FOMC、QE、YCC、ETF、REIT、PBR 等）
+- 金融指標・概念（イールドカーブ、フラット化、テーパリング、スプレッド 等）
+- 中央銀行・政策（量的緩和、マイナス金利、フォワードガイダンス 等）
+- 地政学・国際機関（BRICS、G7、NATO、OPEC+ 等の文脈説明が必要なもの）
+- 今日のニュースで重要な意味を持つ固有の概念・用語
+
+### 3.5-2. 差分チェック
+
+`glossary.json` の既存エントリと比較する：
+- **既存の用語**: `last_updated` を今日の日付に更新するのみ（解説文は変更しない）
+- **新出の用語のみ**: 以下の形式で解説を生成する
+
+```json
+{
+  "term": "用語名（日本語表記）",
+  "reading": "よみがな（ひらがな）",
+  "english": "English Term",
+  "description": "120〜200字の平易な解説。金融・経済の専門知識がない読者でも理解できる表現にする。今日のニュースでの文脈も1文添えるとよい。",
+  "first_seen": "YYYY-MM-DD",
+  "last_updated": "YYYY-MM-DD",
+  "category": "金融指標|経済政策|地政学|企業・市場|仮想通貨"
+}
+```
+
+### 3.5-3. glossary.json の更新
+
+`glossary.json` の全体構造：
+
+```json
+{
+  "last_updated": "YYYY-MM-DD",
+  "terms": [ ...全エントリの配列... ]
+}
+```
+
+`terms` 配列は `reading`（よみがな）の五十音順でソートする。
+
+### 3.5-4. glossary.html の生成
+
+以下の仕様で自己完結型HTMLを生成する（同じダークテーマ、外部ライブラリ不使用）：
+
+**ページ構成:**
+- ヘッダー: タイトル「📖 金融・経済 用語集」、最終更新日、登録用語数、「← ダイジェストに戻る」リンク
+- 検索ボックス（JavaScript リアルタイムフィルタ）
+- カテゴリフィルタボタン（全て・金融指標・経済政策・地政学・企業・市場・仮想通貨）
+- 用語カード一覧（よみがな五十音順）
+- フッター（免責事項）
+
+**用語カードのHTML構造:**
+```html
+<div class="term-card" data-category="金融指標" data-reading="いーるどかーぶ">
+  <div class="term-header">
+    <span class="term-name">イールドカーブ</span>
+    <span class="term-reading">いーるどかーぶ</span>
+    <span class="term-english">Yield Curve</span>
+    <span class="term-category">金融指標</span>
+  </div>
+  <p class="term-description">解説文...</p>
+  <div class="term-meta">初出: 2026-07-01</div>
+</div>
+```
+
+**CSSはダイジェストと同じ `:root` 変数を使用:**
+```css
+:root {
+  --bg: #0f1420; --card-bg: #1a2032; --card-border: #2a3348;
+  --text-main: #e8ecf4; --text-sub: #9aa5b8; --accent: #4f8cff;
+}
+.term-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+.term-name { font-size: 1.2em; font-weight: bold; color: var(--text-main); }
+.term-reading { font-size: 0.8em; color: var(--text-sub); margin-left: 8px; }
+.term-english { font-size: 0.85em; color: var(--accent); margin-left: 8px; }
+.term-category { float: right; font-size: 0.75em; background: rgba(79,140,255,0.15); color: var(--accent); padding: 2px 8px; border-radius: 4px; }
+.term-description { color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+.term-meta { font-size: 0.75em; color: var(--text-sub); margin-top: 8px; }
+```
+
+**検索・フィルタのJavaScript:**
+```javascript
+function filterTerms() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const cat = document.querySelector('.cat-btn.active').dataset.cat;
+  document.querySelectorAll('.term-card').forEach(card => {
+    const matchQ = !q || card.textContent.toLowerCase().includes(q);
+    const matchC = cat === 'all' || card.dataset.category === cat;
+    card.style.display = (matchQ && matchC) ? '' : 'none';
+  });
+}
+```
+
+---
+
 ## 4. GitHub APIでの保存
 
 全APIリクエストに共通ヘッダー: `Authorization: Bearer {GITHUB_PAT}`, `Content-Type: application/json`
@@ -282,7 +393,31 @@ PUT https://api.github.com/repos/osa-01/financial-services-pub/contents/archive/
 Body: {"message": "Add archive YYYY-MM-DD", "content": "<base64>"}
 ```
 
-### 4-3. artifact_state.json をプライベートリポジトリで更新
+### 4-3. glossary.json をプライベートリポジトリに保存
+
+```
+# 新規作成の場合（glossary.json が存在しなかった場合）
+PUT https://api.github.com/repos/osa-01/financial-services/contents/config/glossary.json
+Body: {"message": "Add glossary YYYY-MM-DD", "content": "<base64>"}
+
+# 既存ファイルの更新（sha が取得できていた場合）
+PUT https://api.github.com/repos/osa-01/financial-services/contents/config/glossary.json
+Body: {"message": "Update glossary YYYY-MM-DD", "content": "<base64>", "sha": "<手順0で取得したsha>"}
+```
+
+### 4-4. glossary.html をパブリックリポジトリに保存
+
+```
+# 新規作成の場合（glossary.html が存在しなかった場合）
+PUT https://api.github.com/repos/osa-01/financial-services-pub/contents/glossary.html
+Body: {"message": "Add glossary YYYY-MM-DD", "content": "<base64>"}
+
+# 既存ファイルの更新
+PUT https://api.github.com/repos/osa-01/financial-services-pub/contents/glossary.html
+Body: {"message": "Update glossary YYYY-MM-DD", "content": "<base64>", "sha": "<手順0で取得したsha>"}
+```
+
+### 4-6. artifact_state.json をプライベートリポジトリで更新
 
 ```
 PUT https://api.github.com/repos/osa-01/financial-services/contents/config/artifact_state.json
