@@ -6,68 +6,48 @@
 <title>📖 金融・経済 用語集</title>
 <style>
 :root {
-  --bg: #0f1420;
-  --card-bg: #1a2032;
-  --card-border: #2a3348;
-  --text-main: #e8ecf4;
-  --text-sub: #9aa5b8;
-  --accent: #4f8cff;
-  --up: #ef5350;
-  --down: #26a69a;
-  --warn: #f4b942;
+  --bg: #0f1420; --card-bg: #1a2032; --card-border: #2a3348;
+  --text-main: #e8ecf4; --text-sub: #9aa5b8; --accent: #4f8cff;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif; font-size: 14px; line-height: 1.6; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-.header { background: linear-gradient(135deg, #0d1628, #1a2540); border-bottom: 1px solid var(--card-border); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-.header-title { font-size: 1.3em; font-weight: 700; color: var(--text-main); }
-.header-meta { font-size: 0.82em; color: var(--text-sub); margin-top: 4px; }
-.back-btn { background: rgba(79,140,255,0.15); color: var(--accent); padding: 6px 12px; border-radius: 6px; font-size: 0.85em; border: 1px solid rgba(79,140,255,0.3); }
-
-.controls { padding: 16px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--card-border); }
-.search-box { flex: 1; min-width: 200px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 8px 12px; color: var(--text-main); font-size: 0.9em; outline: none; }
-.search-box:focus { border-color: var(--accent); }
-.search-box::placeholder { color: var(--text-sub); }
-.cat-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-.cat-btn { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-sub); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82em; transition: all 0.2s; }
-.cat-btn:hover { border-color: var(--accent); color: var(--accent); }
-.cat-btn.active { background: rgba(79,140,255,0.15); border-color: var(--accent); color: var(--accent); }
-
-.stats-bar { padding: 8px 16px; font-size: 0.78em; color: var(--text-sub); border-bottom: 1px solid var(--card-border); }
-#count-display { color: var(--accent); font-weight: bold; }
-
-.terms-container { padding: 16px; }
-
+header { background: linear-gradient(135deg, #131c2e 0%, #1a2540 100%); border-bottom: 1px solid var(--card-border); padding: 14px 20px; }
+header h1 { font-size: 1.2em; color: var(--accent); }
+header .meta { font-size: 0.8em; color: var(--text-sub); margin-top: 4px; }
+header a { color: var(--accent); text-decoration: none; font-size: 0.85em; }
+header a:hover { text-decoration: underline; }
+.controls { padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border-bottom: 1px solid var(--card-border); }
+#search { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 14px; border-radius: 20px; font-size: 0.9em; width: 260px; outline: none; }
+#search:focus { border-color: var(--accent); }
+.cat-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.cat-btn { background: none; border: 1px solid var(--card-border); color: var(--text-sub); padding: 5px 12px; border-radius: 16px; cursor: pointer; font-size: 0.8em; transition: all 0.2s; }
+.cat-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+.cat-btn:hover { border-color: var(--accent); color: var(--text-main); }
+.term-list { padding: 16px; max-width: 900px; margin: 0 auto; }
 .term-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; margin-bottom: 12px; transition: border-color 0.2s; }
-.term-card:hover { border-color: rgba(79,140,255,0.4); }
-.term-header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-.term-name { font-size: 1.2em; font-weight: bold; color: var(--text-main); }
+.term-card:hover { border-color: var(--accent); }
+.term-header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+.term-name { font-size: 1.15em; font-weight: bold; color: var(--text-main); }
 .term-reading { font-size: 0.8em; color: var(--text-sub); }
 .term-english { font-size: 0.85em; color: var(--accent); }
 .term-category { margin-left: auto; font-size: 0.75em; background: rgba(79,140,255,0.15); color: var(--accent); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
-.term-description { color: var(--text-main); margin-top: 8px; line-height: 1.7; font-size: 0.9em; }
-.term-meta { font-size: 0.75em; color: var(--text-sub); margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px; }
-
-.no-results { text-align: center; padding: 40px; color: var(--text-sub); }
-
-.footer { background: #0a0f1a; border-top: 1px solid var(--card-border); padding: 12px 16px; font-size: 0.75em; color: var(--text-sub); text-align: center; }
+.term-description { color: var(--text-main); margin-top: 8px; line-height: 1.65; font-size: 0.9em; }
+.term-meta { font-size: 0.72em; color: var(--text-sub); margin-top: 8px; }
+.no-result { text-align: center; padding: 40px; color: var(--text-sub); }
+footer { background: var(--card-bg); border-top: 1px solid var(--card-border); padding: 12px 16px; text-align: center; font-size: 0.72em; color: var(--text-sub); margin-top: 20px; }
+footer a { color: var(--accent); text-decoration: none; }
+@media (max-width: 600px) { #search { width: 100%; } .term-category { margin-left: 0; } }
 </style>
 </head>
 <body>
-
-<div class="header">
-  <div>
-    <div class="header-title">📖 金融・経済 用語集</div>
-    <div class="header-meta">最終更新: 2026-08-05　｜　登録用語数: 35語</div>
-  </div>
-  <a href="latest.html" class="back-btn">← ダイジェストに戻る</a>
-</div>
+<header>
+  <h1>📖 金融・経済 用語集</h1>
+  <div class="meta">最終更新: 2026-08-06 ／ 登録用語数: 37語 ／ <a href="latest.html">← ダイジェストに戻る</a></div>
+</header>
 
 <div class="controls">
-  <input type="text" id="search" class="search-box" placeholder="🔍 用語・解説・英語で検索..." oninput="filterTerms()">
-  <div class="cat-btns">
+  <input type="text" id="search" placeholder="🔍 用語・英語・解説を検索..." oninput="filterTerms()">
+  <div class="cat-buttons">
     <button class="cat-btn active" data-cat="all" onclick="setCategory(this)">すべて</button>
     <button class="cat-btn" data-cat="金融指標" onclick="setCategory(this)">金融指標</button>
     <button class="cat-btn" data-cat="経済政策" onclick="setCategory(this)">経済政策</button>
@@ -77,12 +57,7 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
-<div class="stats-bar">
-  <span id="count-display">35</span> 件表示中
-</div>
-
-<div class="terms-container" id="terms-container">
-
+<div class="term-list" id="term-list">
     <div class="term-card" data-category="金融指標" data-reading="あいえすえむせいぞうぎょうけいきょうしすう">
       <div class="term-header">
         <span class="term-name">ISM製造業景況指数</span>
@@ -91,7 +66,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">米国の製造業購買担当者景気指数（PMI）。米供給管理協会（ISM）が毎月第1営業日に発表。50以上が景気拡大、50未満が縮小を示す。2026年8月3日（月）発表予定。2026年は関税・地政学リスクを受けて50を下回る状態が続いており、製造業低迷の指標として注視される。</p>
-      <div class="term-meta">初出: 2026-07-31　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-31 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="あじゅーる">
       <div class="term-header">
@@ -101,7 +76,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">Microsoftのクラウドコンピューティングプラットフォーム。AI・データ処理・エンタープライズシステムを中心に展開。2026年Q4 FY2026（4-6月）でAzure売上が前年比+43%と加速、年間収益は初めて$1,000億ドルを突破。OpenAIへの投資を背景にAI分野での競争優位を確立。</p>
-      <div class="term-meta">初出: 2026-07-31　最終更新: 2026-08-04</div>
+      <div class="term-meta">初出: 2026-07-31 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="えすあんどぴーごひゃく">
       <div class="term-header">
@@ -111,7 +86,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">S&Pダウ・ジョーンズ・インデックスが算出する米国株式市場の代表的な株価指数。ニューヨーク証券取引所とNASDAQに上場する米国大型株500銘柄の時価総額加重平均。米国株市場全体のベンチマークとして最も広く使われ、機関投資家のパフォーマンス比較基準になることが多い。2026年8月4日に終値7,737ポイントで約2ヶ月ぶりの最高値を更新。Palantir好決算・ホルムズ協議期待が牽引した。</p>
-      <div class="term-meta">初出: 2026-08-05　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-05 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="えぬえふぴー">
       <div class="term-header">
@@ -121,7 +96,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">非農業部門雇用者数。米労働省が毎月第1金曜日に発表する米国の雇用統計の中核指標。農業を除く民間・政府の雇用者数の月次変化を示す。FOMCの雇用判断に直結し、為替・株式・債券市場を大きく動かす。次回は8月7日（金）発表予定。7月分の予想は+120K。</p>
-      <div class="term-meta">初出: 2026-07-31　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-31 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="えふえふきんり">
       <div class="term-header">
@@ -131,7 +106,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">米連邦準備制度（Fed）が設定する政策金利。銀行間の翌日物資金貸借に適用される基準金利で、米国の金融政策の核心。2026年8月現在3.50-3.75%（7/29 FOMC据え置き）。FOMCが年8回会合で決定し、世界の金利・為替・株式市場に大きな影響を与える。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="えふおーえむしー">
       <div class="term-header">
@@ -141,7 +116,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">連邦公開市場委員会。米国の金融政策を決定する会議体。FRB（連邦準備制度理事会）の7名の理事と地区連銀総裁12名（うち5名が議決権）で構成。年8回開催し、FF金利の誘導目標を決定する。7/29会合では9-3で据え置き（3.50-3.75%）決定。3名（Hammack・Kashkari・Logan）が利上げに反対票。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="えむぴーあーる">
       <div class="term-header">
@@ -151,7 +126,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">金融政策報告書。英国のBOE（イングランド銀行）が四半期ごとに発表するレポートで、インフレ・成長率見通しや金融政策の方向性を詳説する。MPR発表回（年4回）はレポート内容が市場の注目を集め、金利決定だけでなく経済見通しの更新も注視される。7月30日のBOE会合はMPR発表回。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-04</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-04</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="えるえぬじー">
       <div class="term-header">
@@ -161,7 +136,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">液化天然ガス。天然ガスを-162℃以下に冷却して液体化し、タンカーで輸送できる形にしたもの。日本は天然ガスの大部分をLNGとして輸入しており、原油価格や地政学リスクの影響を受けやすい。8/2時点で円安159円台の状況ではコスト増大が続き、電力・ガス料金の押し上げ要因となる。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="えるえむいーどう">
       <div class="term-header">
@@ -171,7 +146,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">ロンドン金属取引所（LME）で取引される銅の先物価格。銅は電気・建設・製造業に不可欠な産業用金属で、「ドクター・カッパー」と呼ばれるほど世界景気の先行指標として機能する。2026年7月31日時点で$6.45-6.49/ポンドと月次+5.39%の堅調推移。中国の製造業景気に敏感に反応する。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-04</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="えーだぶりゅーえす">
       <div class="term-header">
@@ -181,7 +156,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">Amazonのクラウドコンピューティング事業部門。世界最大のクラウドサービスプロバイダーで、AI・機械学習・データ処理など幅広いサービスを提供。Amazon Q2 2026決算でAWSの売上が前年比+37%（予想+31%を大幅超過）と加速。MicrosoftのAzureと並びAI需要の恩恵を最も受けているクラウド部門。</p>
-      <div class="term-meta">初出: 2026-07-31　最終更新: 2026-08-04</div>
+      <div class="term-meta">初出: 2026-07-31 ／ 最終更新: 2026-08-04</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="えーでぃーあーる">
       <div class="term-header">
@@ -191,7 +166,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">米国預託証券。海外企業の株式を米国市場で取引可能にするための証券。例えば韓国のSK Hynix（ハイニックス）のADRを米国市場で売買できる。為替リスクや現地市場の規制を緩和しつつ、海外株式への投資を可能にする仕組み。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-03</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-03</div>
     </div>
     <div class="term-card" data-category="地政学" data-reading="おーぺっくぷらす">
       <div class="term-header">
@@ -201,7 +176,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">地政学</span>
       </div>
       <p class="term-description">石油輸出国機構（OPEC）とロシアを筆頭とする非OPEC産油国の連合体。サウジアラビアとロシアが主導し、協調生産調整で原油価格の安定化を図る。2026年は米・イラン停戦を受け増産計画を協議中。Brent$88台まで急落した状況で、増産ペースの調整が焦点。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-04</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-04</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="かわせかいにゅう">
       <div class="term-header">
@@ -211,7 +186,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">政府・中央銀行が為替レートを操作するために外国為替市場で自国通貨を売買する行為。日本では財務省が決定し、日銀が執行する。2026年7月30日に財務省が約8.45兆円（約$528億）の円買い・ドル売り介入を実施。単日では過去最大規模とみられ、ドル円が162.8円→157円に急騰した。根本的な日米金利差要因の解決にはならず、時間稼ぎとの見方が多い。</p>
-      <div class="term-meta">初出: 2026-08-01　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-01 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="きゃぺっくす">
       <div class="term-header">
@@ -221,7 +196,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">設備投資（資本的支出）。企業が将来の収益獲得のために設備・インフラ・技術に投資する支出。2026年のMag7（特にMeta・Microsoft・Alphabet）はAIデータセンター構築のためCapExを急拡大。Metaは2026年Q2に$31B（前年比ほぼ2倍）を計上し、EPS miss・株価急落の一因に。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="ぎゃくいーるど">
       <div class="term-header">
@@ -231,7 +206,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">短期国債の利回りが長期国債の利回りを上回る状態。通常の「順イールド（長期＞短期）」とは逆の状態で、景気後退の先行指標として知られる。2022年〜2025年に米国で続いたが、2026年は10年債利回りが2年債を上回る「正常化」が進行中。米10年4.74% vs 2年4.45%（8/2時点）で順イールドに転換済み。</p>
-      <div class="term-meta">初出: 2026-07-31　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-31 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="仮想通貨" data-reading="くらりてぃあくと">
       <div class="term-header">
@@ -241,7 +216,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">仮想通貨</span>
       </div>
       <p class="term-description">米国議会が審議中の暗号資産（仮想通貨）規制法。デジタル資産をCFTC（商品先物取引委員会）管轄の「商品」とSEC（証券取引委員会）管轄の「有価証券」に分類するフレームワークを規定する。ビットコイン・イーサリアムはCFTC管轄となる見込み。下院は2025年7月17日に294-134で可決済み。2026年8月10日が上院夏季休会前の採決最終期日で、可決確率は予測市場で30〜38%。</p>
-      <div class="term-meta">初出: 2026-08-05　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-05 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="しょうひぜい">
       <div class="term-header">
@@ -251,7 +226,17 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">日本の付加価値税。現行税率は標準10%・食料品等8%（軽減税率）。高市内閣は2026年8月上旬、食料品への消費税を2年間限定で引き下げる方針の決定を検討中。財源・実施方法をめぐり与野党で議論が続いており、決定されれば消費刺激効果と財政悪化懸念の両面から市場に影響を与える。</p>
-      <div class="term-meta">初出: 2026-08-03　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-03 ／ 最終更新: 2026-08-06</div>
+    </div>
+    <div class="term-card" data-category="金融指標" data-reading="しーぴーあい（しょうひしゃぶっかしすう）">
+      <div class="term-header">
+        <span class="term-name">CPI（消費者物価指数）</span>
+        <span class="term-reading">しーぴーあい（しょうひしゃぶっかしすう）</span>
+        <span class="term-english">Consumer Price Index (CPI)</span>
+        <span class="term-category">金融指標</span>
+      </div>
+      <p class="term-description">家計が購入する財・サービスの価格変動を示す代表的なインフレ指標。米国では労働省（BLS）が毎月中旬に発表。日本は総務省が毎月下旬に発表する。中央銀行の金融政策判断（利上げ・据え置き）の根拠として最も重視される統計のひとつ。東京CPIは全国に1ヶ月先行する先行指標として注目される。</p>
+      <div class="term-meta">初出: 2026-08-06 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="じゃくそんほーる">
       <div class="term-header">
@@ -261,7 +246,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">米カンザスシティ連銀が毎年8月下旬にワイオミング州ジャクソンホールで開催する経済政策シンポジウム。世界の中央銀行総裁・財務大臣・著名エコノミスト約120名が参集し、金融政策の方向性を議論する。Fed議長の講演は市場に大きな影響を与えることが多い。2026年は8/27-29開催、Warsh議長が8/28に講演予定。9月利上げのシグナルが出るか否かが最大の焦点。</p>
-      <div class="term-meta">初出: 2026-08-02　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-02 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="じょるつ">
       <div class="term-header">
@@ -271,7 +256,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">求人労働移動調査。米労働省が毎月発表する米国の求人・採用・離職・解雇件数の統計。特に「求人件数」が労働市場の逼迫度の指標として注目され、FOMCの政策判断に直結する。2026年8月4日に6月分（予想710万件）が発表予定。求人件数が多いほど労働需給が逼迫し、賃金インフレ圧力を高める。</p>
-      <div class="term-meta">初出: 2026-08-04　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-04 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="じーでぃーぴーなう">
       <div class="term-header">
@@ -281,7 +266,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">アトランタ連銀が発表するリアルタイムのGDP成長率予測モデル。毎週更新され、各種経済指標が入るたびに推計値が変化する。市場参加者が四半期中の経済動向をリアルタイムで把握するためのツール。2026年Q2 GDP速報値は+1.5%（予想+2.1%を下回り）として7/30に発表済み。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="地政学" data-reading="じーにじゅう">
       <div class="term-header">
@@ -291,7 +276,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">地政学</span>
       </div>
       <p class="term-description">主要20カ国・地域（G7＋新興国等）の首脳・財務大臣・中央銀行総裁が参集する国際会議体。世界GDPの約85%を占める。2026年は米国が議長国。8/29-31にアッシュビル（米国）で財務大臣・中央銀行総裁会議が開催予定。世界的な金融政策の協調・為替・貿易・気候変動が主要議題となる。</p>
-      <div class="term-meta">初出: 2026-08-02　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-02 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="すたぐふれーしょん">
       <div class="term-header">
@@ -301,7 +286,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">経済が停滞（Stagnation）している中でインフレ（Inflation）が同時進行する経済現象。通常、景気悪化時にはインフレが低下するが、スタグフレーションはその逆という難しい政策対応を迫る。2026年の米国は、Q2 GDP+1.5%と予想下回る成長鈍化にもかかわらず、コアPCEが+3.3%と粘着。FOMCが利上げの選択肢を保持する一因となっており、スタグフレーション懸念が市場の不安材料になっている。</p>
-      <div class="term-meta">初出: 2026-08-02　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-02 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="地政学" data-reading="せくしょんさんびゃくいち">
       <div class="term-header">
@@ -311,7 +296,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">地政学</span>
       </div>
       <p class="term-description">1974年通商法第301条に基づく米国の報復関税措置。USTRが不公正な貿易慣行と認定した国・地域からの輸入品に追加関税を課せる。2026年7月24日に「強制労働」を理由とした60カ国・12.5%の新関税体制が発効。Section 122（10%グローバル関税）失効後の後継措置として機能。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="だぶりゅーてぃーあいげんゆ">
       <div class="term-header">
@@ -321,7 +306,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">ウェスト・テキサス・インターミディエート。米国産軽質スイート原油の代表的な指標価格。ニューヨーク商業取引所（NYMEX）で取引される。2026年7月31日時点で1バレル約$82-84。7/23の$100超から米・イラン停戦を受けて急落。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="でぃーゆーぶい しんしがいせんりそぐらふぃー">
       <div class="term-header">
@@ -331,7 +316,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">波長200nm前後の深紫外線を使った半導体製造装置技術。EUV（極紫外線）の前世代技術だが、現在も多くの半導体工程で使われる。2026年、中国の半導体メーカーSMEEがDUV装置の内製化を進めているとの報道が、日本の半導体装置大手（キヤノン・ニコン等）の需要減懸念を呼び、7/28の日経急落の一因となった。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-03</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-03</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="とぴっくす">
       <div class="term-header">
@@ -341,7 +326,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">東証株価指数。東京証券取引所に上場する全銘柄（プライム市場等）を対象とした時価総額加重平均型の株価指数。日経225（225銘柄）より広範な市場全体の動きを反映する。日経平均（大型株偏重）とは異なる動きをすることもある。7/31は日経+4.03%・TOPIX+1.29%（4,003.30）で心理的節目の4,000ポイントを突破。</p>
-      <div class="term-meta">初出: 2026-07-31　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-31 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="どっとぷろっと">
       <div class="term-header">
@@ -351,7 +336,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">FOMC参加者が今後の政策金利見通しを点（ドット）で示した図。年4回のSEP（経済見通し）公表時に発表される。ドットの分布から市場はFed内部の意見の割れ具合を読み取る。7月29日会合はSEP非公表回のため更新なし。次回は9月会合。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="なんどがたふらっしゅめもり">
       <div class="term-header">
@@ -361,7 +346,17 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">データを電気的に書き換え可能な半導体記憶素子。スマートフォン・PC・データセンターのSSDに広く使われる。Kioxia（キオクシア）が主力製品とする分野で、AIデータセンター需要の急拡大が追い風。2026年Q1 FY2026（4-6月）はKioxiaの平均販売価格が前四半期比+70%と急騰し、歴代最高の業績（売上+415%、営業利益28倍）を達成した。</p>
-      <div class="term-meta">初出: 2026-08-01　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-01 ／ 最終更新: 2026-08-06</div>
+    </div>
+    <div class="term-card" data-category="企業・市場" data-reading="ぱらんてぃあ">
+      <div class="term-header">
+        <span class="term-name">Palantir（パランティア）</span>
+        <span class="term-reading">ぱらんてぃあ</span>
+        <span class="term-english">Palantir Technologies</span>
+        <span class="term-category">企業・市場</span>
+      </div>
+      <p class="term-description">米国のAI・データ分析企業（NASDAQ: PLTR）。政府・軍事・民間向けにビッグデータ解析プラットフォームを提供。2026年8月4日発表のQ2決算でAIソフトウェア商業売上が前年比+71%と急拡大し株価が+29.5%急騰。「AIの収益化フェーズ」の象徴として世界の株式市場を牽引した。</p>
+      <div class="term-meta">初出: 2026-08-06 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="びっくす">
       <div class="term-header">
@@ -371,7 +366,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">シカゴ・オプション取引所（CBOE）が算出する米国株式市場の期待ボラティリティ（変動率）指数。S&P500のオプション価格から算出され、「恐怖指数」とも呼ばれる。20以下は安定、20-30は中程度の不安、30超は高不安を示す。2026年8月初旬は20前後で推移しており、7月中旬のボラティリティ拡大後に落ち着きを取り戻している状態。</p>
-      <div class="term-meta">初出: 2026-08-03　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-03 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="びーおーいー">
       <div class="term-header">
@@ -381,7 +376,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">イングランド銀行。英国の中央銀行。金融政策委員会（MPC）が政策金利を決定し、2026年7月現在3.75%。7月30日会合では6-3で据え置き（5回連続）。MPR（金融政策報告書）でインフレ再加速リスクを指摘。エネルギー高による後半インフレ再加速を警戒。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-04</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-04</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="びーおーじぇい">
       <div class="term-header">
@@ -391,7 +386,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">日本銀行（日銀）の英語略称。政策金利の決定や国債購入（量的緩和）などの金融政策を担う中央銀行。2026年6月に政策金利を1.00%に引き上げ。7月31日の会合では8-1で据え置きを決定（田中委員が利上げ主張）。コアインフレ予測2.5%、GDP成長予測を0.8%に上方修正。9月利上げをシグナル。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="経済政策" data-reading="ぴーしーいーでふれーたー">
       <div class="term-header">
@@ -401,7 +396,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">経済政策</span>
       </div>
       <p class="term-description">個人消費支出物価指数。米商務省が発表するインフレ指標で、Fedが金融政策の判断基準として最も重視する物価指標。コアPCE（食品・エネルギーを除く）が特に注目される。2026年6月分は前年比+3.3%（予想一致・前月+3.4%から低下）で、7/30に発表。4ヶ月連続で3.3%以上という状況が続く。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-05</div>
     </div>
     <div class="term-card" data-category="金融指標" data-reading="ぶれんとげんゆ">
       <div class="term-header">
@@ -411,7 +406,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">金融指標</span>
       </div>
       <p class="term-description">北海産原油を指標とした国際的な原油価格のベンチマーク。ロンドンのICE取引所で取引され、中東・アジア向け原油価格の決定にも用いられる。WTIよりも地理的に幅広い取引に使われる国際標準。2026年7月31日時点で1バレル$87.84（+1.11%）。7/23の$100.65（2022年以来最高値）から米・イラン停戦継続で急落後、$88台で安定。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="地政学" data-reading="ほるむずかいきょう">
       <div class="term-header">
@@ -421,7 +416,7 @@ a:hover { text-decoration: underline; }
         <span class="term-category">地政学</span>
       </div>
       <p class="term-description">ペルシャ湾とアラビア海を結ぶ幅約50kmの海峡。世界の原油輸送量の約20%（約1700万バレル/日）、LNG輸送量の約25%が通過する「原油の咽喉部」。2026年初頭から米・イランの軍事衝突で封鎖リスクが高まりBrent$100を超えたが、8/3にトランプ大統領がイランへの攻撃中止を発表し、全面開放を条件に停戦交渉継続中。</p>
-      <div class="term-meta">初出: 2026-08-04　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-08-04 ／ 最終更新: 2026-08-06</div>
     </div>
     <div class="term-card" data-category="企業・市場" data-reading="まぐせぶん">
       <div class="term-header">
@@ -431,41 +426,36 @@ a:hover { text-decoration: underline; }
         <span class="term-category">企業・市場</span>
       </div>
       <p class="term-description">米国株式市場を牽引するMicrosoft・Apple・Nvidia・Alphabet・Amazon・Meta・Teslaの7大テック企業の総称。S&P 500時価総額の3割超を占め、市場全体のパフォーマンスを左右する。2026年7月決算ではMSFT（Azure+43%）・AAPL（売上+16.6%）・AMZN（AWS+37%）が強く、META（CapEx$31B・EPS miss）・Teslaが失望という二極化が鮮明に。</p>
-      <div class="term-meta">初出: 2026-07-29　最終更新: 2026-08-05</div>
+      <div class="term-meta">初出: 2026-07-29 ／ 最終更新: 2026-08-06</div>
     </div>
-  <div class="no-results" id="no-results" style="display:none;">
-    <p>検索条件に一致する用語が見つかりませんでした。</p>
-  </div>
+  <div class="no-result" id="no-result" style="display:none">該当する用語が見つかりませんでした</div>
 </div>
 
-<div class="footer">
-  <p>本用語集はダイジェスト生成AIが自動作成したものです。正確性を保証するものではありません。</p>
-  <p>最終更新: 2026-08-05　｜　<a href="latest.html">← ダイジェストに戻る</a></p>
-</div>
+<footer>
+  ⚠️ 本用語集は情報提供のみを目的としており、投資助言ではありません。
+  ／ <a href="latest.html">← ダイジェストに戻る</a>
+</footer>
 
 <script>
-let currentCat = 'all';
-
-function setCategory(btn) {
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentCat = btn.dataset.cat;
-  filterTerms();
-}
-
+var activeCat = 'all';
 function filterTerms() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const cards = document.querySelectorAll('.term-card');
-  let visible = 0;
-  cards.forEach(card => {
-    const matchQ = !q || card.textContent.toLowerCase().includes(q);
-    const matchC = currentCat === 'all' || card.dataset.category === currentCat;
-    const show = matchQ && matchC;
+  var q = document.getElementById('search').value.toLowerCase();
+  var cards = document.querySelectorAll('.term-card');
+  var any = false;
+  cards.forEach(function(card) {
+    var matchQ = !q || card.textContent.toLowerCase().includes(q);
+    var matchC = activeCat === 'all' || card.dataset.category === activeCat;
+    var show = matchQ && matchC;
     card.style.display = show ? '' : 'none';
-    if (show) visible++;
+    if (show) any = true;
   });
-  document.getElementById('count-display').textContent = visible;
-  document.getElementById('no-results').style.display = visible === 0 ? '' : 'none';
+  document.getElementById('no-result').style.display = any ? 'none' : 'block';
+}
+function setCategory(btn) {
+  document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  activeCat = btn.dataset.cat;
+  filterTerms();
 }
 </script>
 </body>
