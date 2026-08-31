@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>情勢・市場デイリーダイジェスト 2026-08-29</title>
+<title>情勢・市場デイリーダイジェスト 2026-09-01</title>
 <style>
 :root {
   --bg: #0f1420;
@@ -18,523 +18,524 @@
   --important: #ff6b6b;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text-main); font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; }
+body { background: var(--bg); color: var(--text-main); font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Hiragino Sans', sans-serif; font-size: 14px; line-height: 1.6; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* Header */
-.header { background: #111827; border-bottom: 1px solid var(--card-border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.header { background: #111827; border-bottom: 2px solid var(--card-border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
 .header-title { font-size: 1.2em; font-weight: bold; color: var(--text-main); }
-.header-meta { font-size: 0.8em; color: var(--text-sub); }
-.header-links a { font-size: 0.85em; background: rgba(79,140,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: 4px; border: 1px solid rgba(79,140,255,0.3); }
+.header-meta { color: var(--text-sub); font-size: 0.85em; }
+.glossary-link { background: rgba(79,140,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: 4px; font-size: 0.82em; }
 
 /* Summary Banner */
-.summary-banner { background: #1e2840; border: 1px solid rgba(255,107,107,0.3); border-left: 4px solid var(--important); margin: 16px 20px; padding: 14px 16px; border-radius: 6px; }
-.summary-banner h3 { font-size: 0.85em; color: var(--important); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.summary-banner { background: linear-gradient(135deg, #1a2032 0%, #16203a 100%); border: 1px solid #3a4866; border-left: 4px solid var(--important); padding: 14px 20px; margin: 16px; border-radius: 6px; }
+.summary-banner h3 { color: var(--warn); font-size: 0.9em; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 .summary-banner ul { list-style: none; }
-.summary-banner li { padding: 3px 0; font-size: 0.95em; color: var(--text-main); }
-.summary-banner li::before { content: "🔴 "; }
+.summary-banner ul li { padding: 3px 0; color: var(--text-main); font-size: 0.92em; }
+.summary-banner ul li::before { content: "🔴 "; }
 
 /* Tab Navigation */
-.tab-nav { display: flex; overflow-x: auto; background: #111827; border-bottom: 1px solid var(--card-border); padding: 0 12px; scrollbar-width: none; }
-.tab-nav::-webkit-scrollbar { display: none; }
-.tab-btn { background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-sub); cursor: pointer; font-size: 0.85em; padding: 10px 14px; white-space: nowrap; transition: color .2s, border-color .2s; }
-.tab-btn:hover { color: var(--text-main); }
-.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab-nav { display: flex; overflow-x: auto; border-bottom: 1px solid var(--card-border); padding: 0 16px; background: #111827; gap: 2px; scrollbar-width: thin; }
+.tab-nav::-webkit-scrollbar { height: 3px; }
+.tab-nav::-webkit-scrollbar-thumb { background: var(--card-border); }
+.tab-btn { padding: 10px 14px; background: transparent; color: var(--text-sub); border: none; cursor: pointer; white-space: nowrap; font-size: 0.85em; border-bottom: 2px solid transparent; transition: all 0.2s; }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(79,140,255,0.08); }
+.tab-btn:hover:not(.active) { color: var(--text-main); background: rgba(255,255,255,0.04); }
 
 /* Tab Content */
-.tab-content { display: none; padding: 16px 20px; }
+.tab-content { display: none; padding: 20px; }
 .tab-content.active { display: block; }
 
-/* Cards */
-.card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
-.card h3 { font-size: 0.95em; color: var(--accent); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--card-border); }
+/* Important Badge */
+.badge-important { background: var(--important); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-right: 6px; }
 
-/* Numeric Tiles */
-.tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+/* News Items */
+.news-section { margin-bottom: 20px; }
+.news-section h3 { color: var(--accent); font-size: 0.9em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--card-border); }
+.news-item { padding: 8px 0; border-bottom: 1px solid rgba(42,51,72,0.5); font-size: 0.9em; }
+.news-item:last-child { border-bottom: none; }
+.news-meta { color: var(--text-sub); font-size: 0.78em; margin-top: 2px; }
+
+/* Weekly Trend */
+.weekly-trend { background: rgba(79,140,255,0.08); border-left: 3px solid var(--accent); padding: 10px 14px; margin-top: 16px; border-radius: 0 4px 4px 0; }
+.weekly-trend .trend-label { color: var(--accent); font-size: 0.8em; font-weight: bold; margin-bottom: 4px; }
+.weekly-trend p { color: var(--text-sub); font-size: 0.85em; }
+
+/* Market Tiles */
+.tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 20px; }
 .tile { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; }
-.tile-name { font-size: 0.78em; color: var(--text-sub); margin-bottom: 4px; }
-.tile-value { font-size: 1.25em; font-weight: bold; color: var(--text-main); }
-.tile-change { font-size: 0.82em; margin-top: 3px; }
-.tile-date { font-size: 0.72em; color: var(--text-sub); margin-top: 2px; }
+.tile-name { color: var(--text-sub); font-size: 0.78em; margin-bottom: 4px; }
+.tile-value { font-size: 1.15em; font-weight: bold; color: var(--text-main); }
+.tile-change { font-size: 0.8em; margin-top: 2px; }
+.tile-time { color: var(--text-sub); font-size: 0.72em; margin-top: 4px; }
 .up { color: var(--up); }
 .down { color: var(--down); }
-.neutral { color: var(--text-sub); }
-
-/* News list */
-.news-list { list-style: none; }
-.news-list li { padding: 5px 0; border-bottom: 1px solid rgba(42,51,72,0.6); font-size: 0.9em; }
-.news-list li:last-child { border-bottom: none; }
-.badge-important { background: var(--important); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 6px; vertical-align: middle; }
-
-/* Trend box */
-.trend-box { background: rgba(79,140,255,0.08); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 14px; font-size: 0.88em; color: var(--text-sub); }
-.trend-box strong { color: var(--text-main); }
+.flat { color: var(--text-sub); }
 
 /* Calendar */
-.calendar-section { background: var(--card-bg); border: 1px solid var(--card-border); border-top: 3px solid var(--warn); border-radius: 8px; margin: 16px 20px; padding: 14px 16px; }
-.calendar-section h3 { color: var(--warn); font-size: 1em; margin-bottom: 12px; }
-.cal-list { list-style: none; }
-.cal-list li { padding: 4px 0; border-bottom: 1px solid rgba(42,51,72,0.4); font-size: 0.88em; }
-.cal-list li:last-child { border-bottom: none; }
-.cal-tag { display: inline-block; background: rgba(244,185,66,0.15); color: var(--warn); font-size: 0.78em; padding: 1px 6px; border-radius: 3px; margin-right: 6px; font-weight: 600; }
-.cal-tag.tomorrow { background: rgba(79,140,255,0.15); color: var(--accent); }
-.cal-tag.thisweek { background: rgba(38,166,154,0.15); color: var(--down); }
+.calendar-section { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; margin: 0 16px 20px; padding: 16px; }
+.calendar-section h3 { color: var(--warn); font-size: 0.9em; margin-bottom: 12px; }
+.cal-item { display: flex; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(42,51,72,0.4); font-size: 0.86em; align-items: baseline; }
+.cal-item:last-child { border-bottom: none; }
+.cal-tag { background: rgba(244,185,66,0.15); color: var(--warn); padding: 1px 6px; border-radius: 3px; font-size: 0.75em; white-space: nowrap; }
+.cal-tag.tomorrow { background: rgba(79,140,255,0.12); color: var(--accent); }
+.cal-tag.thisweek { background: rgba(38,166,154,0.12); color: var(--down); }
+.cal-time { color: var(--text-sub); font-size: 0.82em; white-space: nowrap; min-width: 60px; }
+.cal-desc { color: var(--text-main); flex: 1; }
+.cal-est { color: var(--text-sub); font-size: 0.78em; white-space: nowrap; }
 
 /* Footer */
-.footer { text-align: center; padding: 16px 20px; font-size: 0.75em; color: var(--text-sub); border-top: 1px solid var(--card-border); margin-top: 8px; }
+.footer { background: #111827; border-top: 1px solid var(--card-border); padding: 12px 20px; color: var(--text-sub); font-size: 0.78em; text-align: center; }
 
 /* Watchlist empty */
-.watchlist-empty { text-align: center; padding: 40px 20px; color: var(--text-sub); }
-
-section.tab-section { max-width: 1100px; margin: 0 auto; }
+.watchlist-empty { text-align: center; color: var(--text-sub); padding: 40px 20px; }
 </style>
 </head>
 <body>
 
+<!-- Header -->
 <div class="header">
   <div>
     <div class="header-title">📊 情勢・市場デイリーダイジェスト</div>
-    <div class="header-meta">2026年8月29日（土曜日） 生成：06:30 JST ｜ 市場データ：8/28（金）終値基準</div>
+    <div class="header-meta">2026年09月01日（火） | 生成: 06:30 JST</div>
   </div>
-  <div class="header-links">
-    <a href="glossary.html">📖 用語集</a>
-  </div>
+  <a href="glossary.html" class="glossary-link">📖 用語集</a>
 </div>
 
 <!-- Summary Banner -->
 <div class="summary-banner">
-  <h3>🔴 本日の最重要ニュース</h3>
+  <h3>⚡ 本日の最重要ニュース</h3>
   <ul>
-    <li><strong>Warsh議長（Jackson Hole）:</strong> 「インフレは依然高すぎる」——追加利上げを示唆。米10年債4.73%（+6bp）、市場は10月〜12月利上げ織り込みへ</li>
-    <li><strong>TOPIX参照日は8/31（月）:</strong> 大規模インデックス改革の第1回参照日。600社超が除外候補。107兆円パッシブ資金に影響。来週月曜日が焦点</li>
-    <li><strong>BOJ9月利上げ確率90%へ上昇:</strong> Himino副総裁が門戸を開いたまま。JGB10年2.89%（30年ぶり高水準）継続</li>
+    <li>TOPIX参照日(8/31)確定：692社が段階除外候補、10月から2年間で実施。NT倍率の変動に注意</li>
+    <li>米10年国債利回り 4.75%突破（2025年1月以来最高）—— 原油高（Brent $90.69）とWarsh発言が押し上げ</li>
+    <li>BOJ9月利上げ確率85%：Himino副総裁タカ派継続。JGB10年 2.89%（30年ぶり高水準）</li>
+    <li>米国株8月は月間プラス締め（S&P +2.5%, NASDAQ +3.5%）、ただし月末に小幅反落</li>
+    <li>カナダ対抗関税（$27.6B相当）9月8日発効迫る</li>
   </ul>
 </div>
 
 <!-- Tab Navigation -->
 <div class="tab-nav">
-  <button class="tab-btn active" onclick="showTab('global')">🌍 世界情勢</button>
+  <button class="tab-btn active" onclick="showTab('world')">🌍 世界情勢</button>
   <button class="tab-btn" onclick="showTab('japan')">🇯🇵 日本情勢</button>
-  <button class="tab-btn" onclick="showTab('stocks-jp')">📈 株式（日本）</button>
-  <button class="tab-btn" onclick="showTab('stocks-us')">🇺🇸 株式（米国）</button>
-  <button class="tab-btn" onclick="showTab('forex')">💱 為替・金利</button>
-  <button class="tab-btn" onclick="showTab('commodity')">🛢️ 商品</button>
+  <button class="tab-btn" onclick="showTab('jp-stocks')">📈 株式（日本）</button>
+  <button class="tab-btn" onclick="showTab('us-stocks')">🗽 株式（米国）</button>
+  <button class="tab-btn" onclick="showTab('fx')">💱 為替・金利</button>
+  <button class="tab-btn" onclick="showTab('commodity')">🛢 商品・コモディティ</button>
   <button class="tab-btn" onclick="showTab('crypto')">₿ 仮想通貨</button>
   <button class="tab-btn" onclick="showTab('watchlist')">⭐ ウォッチリスト</button>
 </div>
 
-<!-- === TAB: 世界情勢 === -->
-<div id="tab-global" class="tab-content active">
-<section class="tab-section">
-
-<div class="card">
-  <h3>🇺🇸 米国・FRB</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>Warsh議長がJackson Hole初演説（8/28 10am ET）：「インフレは依然高すぎる。FRBはまだやるべき仕事がある」と発言。追加利上げを示唆し、2年債利回りが4.22%→4.30%に急上昇。9月FOMCハイクは見送りも10月・12月利上げ観測が台頭。</li>
-    <li><span class="badge-important">重要</span>Jackson Hole 2026シンポジウム（8/27〜29）テーマ「金融イノベーション：決済と政策への影響」——Warsh演説がハイライト。ECB・BOE・BOJ幹部も出席。</li>
-    <li>S&P500は週間では上昇も金曜日は▲0.25%で終了。Warsh演説を受けてグロース株が売られる。</li>
-    <li>Trump大統領はWarsh議長の発言に不満を示す可能性あり（従来から利下げ要求を継続）。</li>
-    <li>FF金利は現在3.50〜3.75%。Warsh発言後、利上げ織り込みが高まった。</li>
-  </ul>
+<!-- 世界情勢 -->
+<div id="tab-world" class="tab-content active">
+  <div class="news-section">
+    <h3>🔴 重要ニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>米カナダ貿易戦争：カナダが9月8日に対抗関税発動（$27.6B相当、15〜50%）。Section 338の50%関税（8/22発効）への報復。USMCA体制が根本から揺らいでいる。
+      <div class="news-meta">Canada Finance Dept · 2026-08-28</div>
+    </div>
+    <div class="news-item">
+      <span class="badge-important">重要</span>中東情勢：ホルムズ海峡通航リスク継続。9月1日に「ホルムズエネルギー危機の中国への影響」に関するウェビナーが開催されるなど、エネルギー安全保障が主要課題。イランとの恒久合意は未締結。
+      <div class="news-meta">CSIS · 2026-09-01</div>
+    </div>
+    <div class="news-item">
+      <span class="badge-important">重要</span>G20マイアミサミット（8/29〜31）が閉幕。貿易・気候・AI統治が主要テーマ。声明に米中対立が反映される見通し。
+    </div>
+    <div class="news-item">Warsh Fed議長のジャクソンホール演説（8/28）は「インフレ高すぎ、追加利上げを躊躇しない」とタカ派を鮮明。9月FOMCでの利上げ観測が一段と強まる。</div>
+    <div class="news-item">ロシア・ウクライナ：停戦交渉は膠着状態継続。欧州の防衛支出増加論議が続く。</div>
+    <div class="news-item">インド・東南アジア：対米貿易の代替サプライチェーンとして引き続き注目。インドネシア・ベトナムへの設備投資が加速。</div>
+    <div class="news-item">国連安保理：中東エネルギー危機を巡る緊急協議の開催を複数国が要請。</div>
+    <div class="news-item">欧州：ECBの次回利下げ判断は9月12日会合。域内インフレは緩和傾向も原油高が下支え。</div>
+  </div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>先週（8/25〜29）はWarsh JH演説・Nvidia Q2決算・TOPIX参照日という「超メガウィーク」を通過。Warsh演説タカ派確認で米10年債が4.73%→4.75%へ上昇。Section 338関税は発動後も交渉は行き詰まりのまま。今週は9/5（金）の米NFP雇用統計が最大のカタリスト。予想+130K（前回-23Kからの反動）が実現するか否かがFed利上げ確率を左右する。</p>
+  </div>
 </div>
 
-<div class="card">
-  <h3>🌐 地政学・貿易</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>米イラン交渉：ホルムズ海峡の通航量低水準が継続。60日間の平和交渉期間が終了し、明確な合意なし。米国は「史上最大の対イラン金融制裁」を発動準備中。イランは通航ルール違反船舶の拿捕を警告。</li>
-    <li>米カナダSection 338 50%関税：8/22発効後も継続。Carney政権は9/8から対抗関税を実施予定。交渉は決裂状態。</li>
-    <li>Brent原油$88.22（▲0.34%）——ホルムズ危機で高止まり。WTI$82.82（▲0.86%）。</li>
-    <li>ロシア・ウクライナ情勢：外交進展なし。欧州エネルギー問題は一服も警戒継続。</li>
-    <li>G7・G20：次回主要イベントは秋以降。Jackson Hole参加で中央銀行間の情報交換が活発化。</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h3>🇪🇺 欧州・その他</h3>
-  <ul class="news-list">
-    <li>ECB：インフレ鈍化を受け利下げサイクル継続中。ドイツ10年Bund利回りは低下傾向。Jackson Hole出席のLagarde総裁は緩和路線を維持。</li>
-    <li>ユーロ圏経済：ドイツは景気後退懸念継続。フランス・スペインは相対的堅調。</li>
-    <li>インド・東南アジア：AI関連投資でインドが恩恵を受ける見方が強い。米中対立を背景にサプライチェーン移転が継続。</li>
-    <li>BRICS：新興国経済は米ドル高と資本流出リスクを抱える。</li>
-  </ul>
-</div>
-
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>今週最大の焦点はWarsh議長のJackson Hole演説。インフレ警戒のタカ派姿勢が確認され、米金利の先高観が再燃した。同時にNvidiaの大幅beat（$96.22B）によるAI楽観論と金利上昇懸念が綱引きした週。地政学面ではホルムズ危機・米カナダ関税が継続し、不確実性は高い。来週はTOPIX参照日（8/31）と米雇用統計（9月初旬）が焦点。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: 日本情勢 === -->
+<!-- 日本情勢 -->
 <div id="tab-japan" class="tab-content">
-<section class="tab-section">
-
-<div class="card">
-  <h3>🏦 日銀・金融政策</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>BOJ副総裁Himino氏が8/27演説：「物価上振れリスクに従来以上に注意が必要」と発言。9月17〜18日会合での利上げの扉を開いたまま。市場の利上げ確率は85〜90%。</li>
-    <li><span class="badge-important">重要</span>JGB10年利回り：2.89%（前日比+1bp）——30年ぶり高水準圏で推移。BOJ利上げ観測と海外金利上昇が重なり上昇圧力継続。</li>
-    <li>現在の日銀政策金利：1.00%。次回利上げ（+25bp→1.25%）の確率約87%（OIS）。</li>
-    <li>コアCPI（7月）：前年比+3.1%（予想上回り）。エネルギー・食品価格が押し上げ。</li>
-    <li>BOJ複数筋：「9月より積極的なペースでの引き締めを検討中」との報道（Reuters）。</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h3>🏛️ 政治・経済政策</h3>
-  <ul class="news-list">
-    <li>高市首相政権：BOJの金融正常化路線を支持。財政面では大型補正予算を検討中。</li>
-    <li>経済安保：半導体・AI関連の国内投資推進継続。Rapidus（次世代半導体）向け支援も継続。</li>
-    <li>TOPIX大改革の政策的背景：東証がプライム市場の質向上を目標に流動性基準を強化。企業価値向上圧力が高まる。</li>
-    <li>円安対策：財務省は口頭介入を継続も、USD/JPY 159円台では実弾介入の兆候なし（7/30の¥8.45兆円介入後）。</li>
-  </ul>
-</div>
-
-<div class="card">
-  <h3>📊 主要経済指標</h3>
-  <ul class="news-list">
-    <li>CPI（7月）：コア+3.1%（予想上回り）。東京CPI+2.0%（8月速報）。</li>
-    <li>GDP（Q2）：年率+1.1%（予想+2.0%を下回る）。個人消費は8四半期ぶりマイナス。</li>
-    <li>貿易収支：ホルムズ危機によるエネルギー輸入増で赤字幅拡大傾向。</li>
-    <li>雇用：完全雇用状態を維持。失業率は低水準。</li>
-    <li>次週発表予定：8/31（月）雇用関連指標など。</li>
-  </ul>
-</div>
-
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>日本は「インフレ×利上げ」フェーズへの移行が本格化。コアCPI+3.1%とBOJ副総裁のタカ派シグナルで9月利上げはほぼ確定的。一方でGDP下振れ（個人消費マイナス）が示す通り、実体経済は利上げに耐えられるか微妙な局面。JGB10年2.89%は欧米金利との比較で急速に上昇。TOPIX参照日（8/31）という構造変化イベントも来週の注目点。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: 株式（日本） === -->
-<div id="tab-stocks-jp" class="tab-content">
-<section class="tab-section">
-
-<div class="tiles-grid">
-  <div class="tile">
-    <div class="tile-name">日経平均</div>
-    <div class="tile-value up">66,532</div>
-    <div class="tile-change up">▲+400.04 (+0.61%)</div>
-    <div class="tile-date">8/28終値</div>
+  <div class="news-section">
+    <h3>🔴 重要ニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>TOPIX参照日（8/31）確定：692社が段階除外候補。フリーフロート時価総額が下位3%に該当する銘柄が10月末から2年間・8段階で除外される。107兆円規模のパッシブ資金が影響を受ける過去最大の見直し。
+      <div class="news-meta">JPX / Bloomberg · 2026-08-31</div>
+    </div>
+    <div class="news-item">
+      <span class="badge-important">重要</span>BOJ9月利上げ確率85%：Himino副総裁が「物価上振れリスクに注意」とタカ派を維持。次回会合は9月18日。現行政策金利1.0%から1.25%への引き上げが織り込まれつつある。JGB10年利回りは2.89%（30年ぶり高水準）。
+      <div class="news-meta">Bloomberg / Japan Times · 2026-08-27</div>
+    </div>
+    <div class="news-item">日本Q2 GDP（年率+1.1%、予想+2.0%を下回る）発表後も、BOJは高市首相政権の支持もあり利上げ継続方針を維持。個人消費8四半期ぶりマイナスは内需の弱さを示す。</div>
+    <div class="news-item">日本7月CPI：前年比+3.1%（コア+3.1%）、予想上回り。BOJが警告した「2%を明確に超える」水準が続く。</div>
+    <div class="news-item">財務省の円買い介入（7/30：¥8.45兆円）の効果は徐々に薄れ、ドル円は159円台に戻っている。</div>
+    <div class="news-item">高市首相の消費税軽減策（食品を8%→1%に引き下げ、2027年4月〜2年間）を閣議決定。財源を巡りLDP内で亀裂。</div>
+    <div class="news-item">日本の産業政策：半導体・AI投資への支援が継続。Rapidus（北海道千歳の国産半導体）プロジェクトが進行中。</div>
+    <div class="news-item">東京CPI（8月）：+2.0%で加速。BOJ利上げの根拠を強める。</div>
   </div>
-  <div class="tile">
-    <div class="tile-name">TOPIX</div>
-    <div class="tile-value neutral">--</div>
-    <div class="tile-change neutral">速報値待ち</div>
-    <div class="tile-date">8/28終値</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">東証プライム 売買代金</div>
-    <div class="tile-value neutral">--</div>
-    <div class="tile-change neutral">データ未取得</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">NVDA（参考）</div>
-    <div class="tile-value up">$218〜230</div>
-    <div class="tile-change neutral">Jackson Hole後</div>
-    <div class="tile-date">8/28 NY終値圏</div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>今週の日本最大のイベントはTOPIX年次見直しの本格的な影響観測と9/18 BOJ会合の準備局面。除外候補692社の株価は需給悪化懸念から軟調が予想される一方、除外されない銘柄への資金シフトも起きる。円安（159円台）と物価高（+3.1%）が続く中でのBOJ利上げは「スタグフレーション」的リスクとして要注意。</p>
   </div>
 </div>
 
-<div class="card">
-  <h3>📰 日本株ニュース（8/28）</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>日経平均は+400.04円（+0.61%）で66,532円。Nvidia Q2大幅beat（$96.22B）を受けた半導体・AI関連株が買われ上昇。前日比では続伸。</li>
-    <li>半導体・AI関連：東京エレクトロン、アドバンテスト、信越化学などが上昇。Nvidia決算の恩恵が日本の半導体サプライチェーンに波及。</li>
-    <li>Warsh議長タカ派発言（10am NY = 23時JST）は時間外で反映。週明けの影響に注意。</li>
-    <li>TOPIX参照日（8/31・月曜）：今週最大のイベント。除外候補600社超の確定。流動性基準を満たす企業は新TOPIXに残留。107兆円パッシブ資金が10/30〜段階的にリバランス実施。</li>
-    <li>外国人投資家動向：Nvidia決算後のAI楽観論を背景に日本の半導体・AI関連への資金流入継続の見込み。</li>
-    <li>NT倍率（日経÷TOPIX）：TOPIXリバランス前後での変動に注目。</li>
-    <li>来週（9月第1週）：TOPIX参照日確定後の動向、BOJ利上げ観測のさらなる織り込み、米雇用統計（金曜）が焦点。</li>
-  </ul>
-</div>
+<!-- 株式（日本） -->
+<div id="tab-jp-stocks" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">日経平均</div>
+      <div class="tile-value">66,311</div>
+      <div class="tile-change down">▼ -0.14% (-93.63)</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">TOPIX</div>
+      <div class="tile-value">4,156.29</div>
+      <div class="tile-change up">▲ +0.23% (+9.58)</div>
+      <div class="tile-time">8/31 終値 ※参照日確定</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">NT倍率</div>
+      <div class="tile-value">~15.95</div>
+      <div class="tile-change flat">-- 参照日後変動注意</div>
+      <div class="tile-time">8/31 推計</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">8月月間 日経</div>
+      <div class="tile-value">--</div>
+      <div class="tile-change flat">月末データ参照</div>
+      <div class="tile-time">8/31 月末</div>
+    </div>
+  </div>
 
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>8月第4週の日経は66,000〜66,500圏でのもみ合い。Nvidia決算beat（+0.61%上昇）とWarsh演説タカ派（金利上昇→バリュエーション圧迫）のせめぎ合い。週間では堅調維持。最大の構造変化はTOPIX参照日（8/31）——来週月曜日に除外候補600社超が確定し、インデックス改革の第1章が始まる。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: 株式（米国） === -->
-<div id="tab-stocks-us" class="tab-content">
-<section class="tab-section">
-
-<div class="tiles-grid">
-  <div class="tile">
-    <div class="tile-name">S&P 500</div>
-    <div class="tile-value down">7,711.76</div>
-    <div class="tile-change down">▼▲ -0.25%</div>
-    <div class="tile-date">8/28終値</div>
+  <div class="news-section">
+    <h3>📰 株式（日本）ニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>日経平均は8/31早朝に▲1,500円超の急落（Brent $90突破・米金利4.75%による売り）後に急反発し、終値は▲0.14%と小幅安に。一方TOPIXは+0.23%とプラス——TOPIX参照日による需給イベントで明暗が分かれた。
+    </div>
+    <div class="news-item">TOPIX参照日（8/31）確定：692社（フリーフロート下位3%）が除外候補。10月30日から2年間・8段階で除外。除外銘柄はウェイト削減前に売り圧力が強まる見込み。</div>
+    <div class="news-item">東証プライムの売買代金は高水準。TOPIX除外候補（フリーフロート小型株）への先回り売りが目立つ展開。</div>
+    <div class="news-item">主要銘柄：トヨタは円安・原油高で方向感なし。ソニーはAI・エンタメ好調。Kioxia（NAND型フラッシュ）は最高決算後も在庫調整懸念で上値重い。</div>
+    <div class="news-item">外国人投資家の動向：TOPIX参照日前後の需給イベントを見極めながら、売り越し傾向が続いていたが8月後半は買い越しに転換した模様。</div>
+    <div class="news-item">半導体株（レーザーテック等）：Nvidia Q2大幅beatを受けてAI関連への期待は高いが、JGB利回り上昇によるバリュエーション圧迫が重し。</div>
+    <div class="news-item">8月月間パフォーマンス：日経はWarsh演説後に上昇。ただし月末に金利高・原油高で調整。</div>
   </div>
-  <div class="tile">
-    <div class="tile-name">NASDAQ</div>
-    <div class="tile-value down">26,402.42</div>
-    <div class="tile-change down">▼ -0.52%</div>
-    <div class="tile-date">8/28終値</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">Dow Jones</div>
-    <div class="tile-value neutral">53,560.0</div>
-    <div class="tile-change neutral">▼ -0.02%</div>
-    <div class="tile-date">8/28終値</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">VIX</div>
-    <div class="tile-value neutral">--</div>
-    <div class="tile-change neutral">データ未取得</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">Nvidia (NVDA)</div>
-    <div class="tile-value up">~$218〜230</div>
-    <div class="tile-change neutral">JH演説後変動</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">Russell 2000</div>
-    <div class="tile-value neutral">--</div>
-    <div class="tile-change neutral">データ未取得</div>
-    <div class="tile-date">8/28</div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>「超メガウィーク」（Nvidia決算・Warsh演説・TOPIX参照日）を通過し、今週は落ち着いた展開が予想される。ただし金利高（JGB 2.89%）・原油高（Brent $90）・BOJ利上げ観測という三重の逆風は続く。TOPIX年次見直みの除外候補692社の具体的な銘柄リスト公表（10月発表）まで需給不透明感が残る。</p>
   </div>
 </div>
 
-<div class="card">
-  <h3>📰 米国株ニュース（8/28）</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>S&P500▲0.25%・NASDAQ▲0.52%で終了。Warsh議長のタカ派Jackson Hole演説（「インフレ高すぎ・追加利上げあり得る」）を受けてグロース株・ハイテク株が売られた。週間ではS&P500は上昇で終了。</li>
-    <li><span class="badge-important">重要</span>Nvidia（NVDA）：Q2 FY27決算（8/26AH）で売上$96.22B（予想+$4B超）・Q3ガイダンス$108Bの大幅beat。これが今週の市場センチメントを牽引。株価は$218〜$230圏で推移（JH演説後に若干軟化）。</li>
-    <li>AI関連株：NVDA beat後、AI半導体・データセンター関連が週前半に急騰。ただしWarsh演説で金利上昇→バリュエーション圧力。</li>
-    <li>セクター別：テクノロジー▲0.5%（NVDA以外は圧力）、エネルギー微軟（原油下落）、金融は金利上昇で若干プラス。</li>
-    <li>決算シーズン：Mag7決算は概ね完了。次のカタリストは9月FOMC（9/16-17）と米8月雇用統計（9/4か）。</li>
-    <li>市場センチメント：週間ではAI楽観（Nvidia）と金利上昇（Warsh）の綱引き。来週はTOPIX・雇用統計待ちで方向感探り。</li>
-  </ul>
-</div>
+<!-- 株式（米国） -->
+<div id="tab-us-stocks" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">S&amp;P 500</div>
+      <div class="tile-value">7,686.14</div>
+      <div class="tile-change down">▼ -0.33%</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">NASDAQ</div>
+      <div class="tile-value">26,370.89</div>
+      <div class="tile-change down">▼ -0.12%</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Dow Jones</div>
+      <div class="tile-value">53,185.90</div>
+      <div class="tile-change down">▼ -0.70%</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">S&amp;P 月間（8月）</div>
+      <div class="tile-value">+2.5%</div>
+      <div class="tile-change up">▲ 月間プラス</div>
+      <div class="tile-time">8月月間</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">NASDAQ 月間（8月）</div>
+      <div class="tile-value">+3.5%</div>
+      <div class="tile-change up">▲ 月間プラス</div>
+      <div class="tile-time">8月月間</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">VIX</div>
+      <div class="tile-value">~14-15</div>
+      <div class="tile-change flat">-- やや上昇（金利高）</div>
+      <div class="tile-time">8/31 推計</div>
+    </div>
+  </div>
 
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>8月最終週（超メガウィーク）はNvida $96.22B beat（Day3が最大ハイライト）とWarsh JH演説（タカ派）が2大イベント。S&P500は週間プラスで着地も、Warsh演説後の金利上昇でグロース株は上値重い。FF金利3.50-3.75%からの追加利上げ観測が再燃し、市場は「AIブーム vs. 金利上昇」の板挟み局面に。9月FOMC（9/16-17）が次の主要分岐点。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: 為替・金利 === -->
-<div id="tab-forex" class="tab-content">
-<section class="tab-section">
-
-<div class="tiles-grid">
-  <div class="tile">
-    <div class="tile-name">USD/JPY</div>
-    <div class="tile-value up">159.55</div>
-    <div class="tile-change up">▲ +0.10%</div>
-    <div class="tile-date">8/28</div>
+  <div class="news-section">
+    <h3>📰 株式（米国）ニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>8月31日（月）の米国株は月末に小反落。Dow -0.70%が最大の下げ。ただし8月月間はS&P +2.5%、NASDAQ +3.5%とプラスで着地。Nvidia Q2大幅beat（$96.22B）とAI楽観が相場を下支え。
+    </div>
+    <div class="news-item">米10年債 4.75%突破（2025年1月以来最高）が株価の重し。特に高バリュエーションのNASDAQ・成長株が影響を受けやすい。</div>
+    <div class="news-item">Nvidia（NVDA）：Q2 FY27 売上$96.22B（予想+$4B超）・Q3ガイダンス$108B。次世代「Vera Rubin」出荷加速も発表。AI相場継続を確認する最重要決算。</div>
+    <div class="news-item">Palantir（PLTR）：政府・防衛AI契約の急拡大でQ2+40%超、株価+29〜30%の急騰。AIラリー相場の象徴として市場を牽引。</div>
+    <div class="news-item">Marvell Technology（MRVL）：AI/データセンター向けカスタムチップが好調。Q2決算（近日発表予定）への期待が高い。</div>
+    <div class="news-item">FedのFF金利は3.50〜3.75%。市場は9月FOMCでの利上げ確率を織り込み始めており、Warsh演説タカ派後にFedWatch確率が上昇。</div>
+    <div class="news-item">8月の消費者信頼感指数（コンファレンスボード）：89.4と7か月ぶり低水準。期待指数68.2は景気後退シグナル水準。</div>
+    <div class="news-item">9/5（金）の米NFP雇用統計（予想+130K）が次の最重要カタリスト。7月▲23Kの反動がどこまで出るかが焦点。</div>
   </div>
-  <div class="tile">
-    <div class="tile-name">EUR/USD</div>
-    <div class="tile-value neutral">1.1593</div>
-    <div class="tile-change neutral">概ね安定</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">GBP/USD</div>
-    <div class="tile-value neutral">1.3559</div>
-    <div class="tile-change neutral">概ね安定</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">米10年債</div>
-    <div class="tile-value up">4.73%</div>
-    <div class="tile-change up">▲ +6bp（Warsh後）</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">米2年債</div>
-    <div class="tile-value up">4.30%</div>
-    <div class="tile-change up">▲ 4.22%→4.30%</div>
-    <div class="tile-date">8/28（Warsh後）</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">JGB10年</div>
-    <div class="tile-value up">2.89%</div>
-    <div class="tile-change up">▲ +1bp</div>
-    <div class="tile-date">8/28（30年ぶり高水準）</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">FF金利（現在）</div>
-    <div class="tile-value neutral">3.50〜3.75%</div>
-    <div class="tile-change neutral">据え置き</div>
-    <div class="tile-date">FOMC 7/29決定</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">日銀政策金利</div>
-    <div class="tile-value neutral">1.00%</div>
-    <div class="tile-change neutral">→1.25%確率87%</div>
-    <div class="tile-date">9/17-18会合</div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>8月はNvidiaを筆頭としたAI相場の強さと、Warsh演説後の金利上昇が拮抗した1か月。9月に入り「9月効果」（S&P500は9月が最弱月）と金利高・原油高の逆風が重なる。9/5 NFPが強ければ利上げ懸念が一段と強まり株安リスク。弱ければ7月の二番煎じ反発を期待する買い。いずれにせよ9/5まで方向感が出にくい展開。</p>
   </div>
 </div>
 
-<div class="card">
-  <h3>📰 為替・金利ニュース（8/28）</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>米10年債利回り4.73%（+6bp）：Warsh議長のタカ派発言で急上昇。2年債も4.22%→4.30%に上昇。「ターム・プレミアム」の上昇が顕著。ピーク（4.74%）に迫る水準。</li>
-    <li><span class="badge-important">重要</span>JGB10年：2.89%と30年ぶり高水準圏を維持。BOJ9月利上げ（確率87%）観測と、Warsh演説後の米金利上昇が連動して上昇圧力。</li>
-    <li>USD/JPY：159.55（+0.10%）。Warsh演説（タカ派・ドル高圧力）とBOJ利上げ観測（円高圧力）が相殺。財務省の為替介入はなし。</li>
-    <li>EUR/USD 1.1593・GBP/USD 1.3559：概ね安定。Warsh演説でドルは若干強含み。</li>
-    <li>逆イールド：米2年債4.30% vs 10年4.73%——スプレッド+43bp（正常化方向に継続）。</li>
-    <li>ドイツBund10年：ECB利下げサイクル継続で低下傾向。米独スプレッドが開く構造。</li>
-  </ul>
+<!-- 為替・金利 -->
+<div id="tab-fx" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">USD/JPY</div>
+      <div class="tile-value">~159.9</div>
+      <div class="tile-change down">▼ 円安継続</div>
+      <div class="tile-time">9/1 推計</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">EUR/JPY</div>
+      <div class="tile-value">--</div>
+      <div class="tile-change flat">-- 参照中</div>
+      <div class="tile-time">9/1</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">EUR/USD</div>
+      <div class="tile-value">~1.085</div>
+      <div class="tile-change flat">-- 横ばい</div>
+      <div class="tile-time">8/31</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">米10年債利回り</div>
+      <div class="tile-value">4.75%</div>
+      <div class="tile-change up">▲ +0.02pt（2025/1以来最高）</div>
+      <div class="tile-time">8/31</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">米2年債利回り</div>
+      <div class="tile-value">4.30%</div>
+      <div class="tile-change up">▲ タカ派継続</div>
+      <div class="tile-time">8/31 推計</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">JGB 10年</div>
+      <div class="tile-value">2.89%</div>
+      <div class="tile-change up">▲ 30年ぶり高水準</div>
+      <div class="tile-time">8/31</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">FF金利</div>
+      <div class="tile-value">3.50-3.75%</div>
+      <div class="tile-change flat">据え置き（7/29 FOMC）</div>
+      <div class="tile-time">現行</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">BOJ政策金利</div>
+      <div class="tile-value">1.00%</div>
+      <div class="tile-change flat">→ 9/18で1.25%へ？</div>
+      <div class="tile-time">現行（利上げ確率85%）</div>
+    </div>
+  </div>
+
+  <div class="news-section">
+    <h3>📰 為替・金利ニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>米10年債利回りが4.75%を突破（Bloomberg確認）。Brent原油$90超えとWarsh Fed議長のタカ派演説が複合的に押し上げた。2025年1月以来の最高水準。
+    </div>
+    <div class="news-item">JGB10年利回り2.89%：BOJ9月利上げ確率85%を織り込み。高市首相の消費税減税による財政悪化懸念も加わり、30年ぶりの高水準を維持。</div>
+    <div class="news-item">ドル円：~159円台で推移。介入後（157円）から円安が再進行。BOJ利上げ観測がやや円高方向に働くも、米金利上昇で相殺されている。</div>
+    <div class="news-item">逆イールドの変化：米2年債4.30% vs 10年4.75%で逆イールドが縮小（スプレッド約-45bp）。NFP強ければ更に縮小の可能性。</div>
+    <div class="news-item">ドイツBund10年：原油高・ECBの利下げ慎重化を受けてやや上昇。</div>
+    <div class="news-item">BOJ Himino副総裁：ジャクソンホール参加後「物価上振れリスクに注意が必要」と発言。9月18日会合で1.25%への利上げを強く示唆。</div>
+    <div class="news-item">Treasury buybackプログラム：$4B規模の継続。市場の一時的なサポートはあるが4.75%超えを防ぎきれていない。</div>
+  </div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>Warsh演説でタカ派が確認された後、米金利は「Warsh's Wall」と呼ばれる4.75%に到達。今週はBOJの9月利上げ準備（ハト派コメントは出にくい）と米NFP（9/5）の二つが焦点。NFP強→利上げ前倒し懸念で米金利さらに上昇、ドル高円安。NFP弱→景気悪化懸念でドル売り・円高。いずれも大きな振れになり得る。</p>
+  </div>
 </div>
 
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>「債券ルート」が再燃。Warsh JH演説で米10年債が4.73%まで上昇し、ピーク（4.74%）に接近。BOJ利上げ観測でJGB10年も2.89%と30年ぶり高水準。円は「BOJ利上げ（円高要因）vs. 米金利上昇（円安要因）」の拮抗で159円台を維持。9月FOMC（9/16-17）と9月BOJ（9/17-18）が連続するため、為替・金利市場は9月が最大の変動ポイントになりそう。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: 商品 === -->
+<!-- 商品・コモディティ -->
 <div id="tab-commodity" class="tab-content">
-<section class="tab-section">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">WTI原油</div>
+      <div class="tile-value">$85.54</div>
+      <div class="tile-change up">▲ +2.57%</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Brent原油</div>
+      <div class="tile-value">$90.69</div>
+      <div class="tile-change up">▲ +2.93%（$90突破）</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">金（XAU/USD）</div>
+      <div class="tile-value">$4,452</div>
+      <div class="tile-change down">▼ 史上最高値圏から調整</div>
+      <div class="tile-time">8/31 終値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">銀（XAG/USD）</div>
+      <div class="tile-value">$67.10</div>
+      <div class="tile-change up">▲ +1.04%</div>
+      <div class="tile-time">8/31</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">LME銅</div>
+      <div class="tile-value">$14,420/t</div>
+      <div class="tile-change up">▲ 史上最高値圏</div>
+      <div class="tile-time">8/29 推計</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">天然ガス（HH）</div>
+      <div class="tile-value">--</div>
+      <div class="tile-change flat">-- 参照中</div>
+      <div class="tile-time">9/1</div>
+    </div>
+  </div>
 
-<div class="tiles-grid">
-  <div class="tile">
-    <div class="tile-name">WTI原油</div>
-    <div class="tile-value down">$82.82</div>
-    <div class="tile-change down">▼ -0.86%</div>
-    <div class="tile-date">8/28</div>
+  <div class="news-section">
+    <h3>📰 商品・コモディティニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>Brent原油が$90.69まで急騰（+2.93%）。ホルムズ海峡の恒久合意未締結継続とOPEC+の減産方針維持が複合的に供給不安を高めた。WTIも$85.54（+2.57%）。米金利高騰の中でも原油高が継続。
+    </div>
+    <div class="news-item">金（XAU）：$4,452と直近最高値圏（$4,629）から調整中。米金利4.75%突破でドル高→金売りの圧力。ただし地政学リスクと中央銀行需要が下支え。</div>
+    <div class="news-item">LME銅：$14,420/t（$6.54/lb）と記録的高値圏を維持。42日超連続在庫減少・バックワーデーション$434/t（5年ぶり高水準）で現物需給ひっ迫が続く。</div>
+    <div class="news-item">銀（XAG）：$67.10（+1.04%）。太陽光発電パネル需要増・工業用途拡大で強い。</div>
+    <div class="news-item">ホルムズ海峡：イランとの恒久的通航協定の交渉は継続中。合意成立なら原油$74以下への急落シナリオ。不成立なら$90超え継続。</div>
+    <div class="news-item">カナダ石油・天然ガス：Section338関税の影響でカナダからの原油輸入コスト上昇懸念。米中西部の石油精製業者に悪影響。</div>
   </div>
-  <div class="tile">
-    <div class="tile-name">Brent原油</div>
-    <div class="tile-value down">$88.22</div>
-    <div class="tile-change down">▼ -0.34%</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">金（XAU/USD）</div>
-    <div class="tile-value down">$4,629.06</div>
-    <div class="tile-change down">▼ -0.75%</div>
-    <div class="tile-date">8/28（史上最高値圏）</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">銀（XAG/USD）</div>
-    <div class="tile-value down">$68.69</div>
-    <div class="tile-change down">▼ -1.06%</div>
-    <div class="tile-date">8/28</div>
-  </div>
-  <div class="tile">
-    <div class="tile-name">LME銅</div>
-    <div class="tile-value neutral">$14,314</div>
-    <div class="tile-change neutral">▼ -0.82%</div>
-    <div class="tile-date">8/28（記録的高値圏）</div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>先週はBrent $88→$90への急騰が最大のサプライズ。ホルムズ恒久合意の失敗確認とOPEC+の協調減産継続が要因。今週はカナダ対抗関税（9/8）前にエネルギー市場が神経質になる可能性。金は米金利高で上値重いが$4,400台でサポート。LME銅の在庫減少トレンドは継続中で$14,500台への再上昇の可能性。</p>
   </div>
 </div>
 
-<div class="card">
-  <h3>📰 商品市況ニュース（8/28）</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>ホルムズ海峡危機継続：通航量は低水準維持（旧来の72隻/日対比、著しく減少）。Brent$88.22の高止まり要因。米イラン交渉は明確な進展なし。イランは拿捕警告を再発。</li>
-    <li>金（Gold）$4,629：史上最高値圏（直近ピーク$4,611比で若干高い）。Warsh演説（利上げ示唆）でドル高→金は若干軟化も、地政学リスクが下支え。前年比+60%超。</li>
-    <li>LME銅$14,314：記録的高水準圏。在庫は数週間連続で減少トレンド。バックワーデーション（現物プレミアム）が継続。AI・データセンター向け需要とグリーン転換需要が重なる。</li>
-    <li>WTI$82.82：ホルムズリスクとWarsh利上げ示唆（景気減速懸念）が拮抗。原油は若干軟化。米シェール生産は底堅い。</li>
-    <li>LNG・天然ガス：欧州の貯蔵量は良好な水準。ただしホルムズ経由のLNGタンカーは影響あり。</li>
-  </ul>
-</div>
-
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>商品市場は「ホルムズ危機（供給不安）」と「Warsh利上げ示唆（需要減退懸念）」の綱引き。金は史上最高値圏を維持し、中央銀行のインフレ・地政学ヘッジ需要が下支え。LME銅は記録的水準で高止まり——AI・グリーン需要の長期構造的な強さを示す。原油はホルムズで高止まりも、Brent$90の壁は依然重い。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: 仮想通貨 === -->
+<!-- 仮想通貨 -->
 <div id="tab-crypto" class="tab-content">
-<section class="tab-section">
-
-<div class="tiles-grid">
-  <div class="tile">
-    <div class="tile-name">BTC/USD</div>
-    <div class="tile-value down">~$79,560</div>
-    <div class="tile-change down">▼ 週高値$81K超から調整</div>
-    <div class="tile-date">8/28</div>
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">Bitcoin (BTC)</div>
+      <div class="tile-value">~$78,500</div>
+      <div class="tile-change down">▼ JH演説後調整</div>
+      <div class="tile-time">8/31 推計</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Ethereum (ETH)</div>
+      <div class="tile-value">~$1,900</div>
+      <div class="tile-change flat">-- 横ばい</div>
+      <div class="tile-time">8/31 推計</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">BTC 7日パフォーマンス</div>
+      <div class="tile-value">+22%</div>
+      <div class="tile-change up">▲ 3か月ぶり高値圏</div>
+      <div class="tile-time">8月第4週</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Spot BTC ETF流入</div>
+      <div class="tile-value">$517M/日</div>
+      <div class="tile-change up">▲ 数か月最大（8/19）</div>
+      <div class="tile-time">8/19 参考値</div>
+    </div>
   </div>
-  <div class="tile">
-    <div class="tile-name">ETH/USD</div>
-    <div class="tile-value down">~$2,506</div>
-    <div class="tile-change down">▼ 前日比微軟</div>
-    <div class="tile-date">8/28</div>
+
+  <div class="news-section">
+    <h3>📰 仮想通貨ニュース</h3>
+    <div class="news-item">
+      <span class="badge-important">重要</span>BTCは$81,023（8/26高値）を記録後、Warsh JH演説タカ派を受けて$79,560→$78,500水準に調整。7日間+22%の急騰（ショートスクイーズ）の後の小幅な落ち着き。$75,000〜80,000のレンジが新しい支持帯となるか。
+    </div>
+    <div class="news-item">Clarity Act（仮想通貨規制法案）：上院で夏季休会中（9/14再開）。Polymarketの可決確率は13%と低い。法案通過なら機関投資家の本格参入で強気、否決継続なら不透明感残存。</div>
+    <div class="news-item">スポットBTC ETF：Fidelity、BlackRockなどへの資金流入が8/19に$517M（数か月最大）を記録。機関投資家の参入継続。</div>
+    <div class="news-item">ETH：$1,900前後で横ばい。BTCとの相対パフォーマンス（ETH/BTC比率）は低迷しており、規制明確化待ちの状態。ステーキング収益率は年利4〜5%で安定。</div>
+    <div class="news-item">仮想通貨市場全体：時価総額$2.7T前後。BTCドミナンス58%前後。アルトコインの動きはBTC追随型が続く。</div>
+    <div class="news-item">規制動向：Trump政権は「デジタル資産推進」を維持するも、Clarity Act審議は遅延。SEC対Coinbaseの訴訟は継続中。</div>
   </div>
-  <div class="tile">
-    <div class="tile-name">BTC 週次</div>
-    <div class="tile-value up">+22%（7日）</div>
-    <div class="tile-change neutral">3ヶ月ぶり高値圏</div>
-    <div class="tile-date">8/21→28</div>
+  <div class="weekly-trend">
+    <div class="trend-label">📅 週次トレンドコメント</div>
+    <p>先週の+22%急騰（$65,000→$81,000）はTreasury buyback倍増発表・Nvidia beat・BTC支持発言の三重の材料によるショートスクイーズ。今週はWarsh演説タカ派確認後の「材料出尽くし」調整局面。$75,000サポートを維持できるかが重要。9/5 NFPが弱ければリスクオフでBTC売り、強ければドル高でBTC売りと、短期的には上値が重い展開。Clarity Act再開（9/14〜）が次の材料。</p>
   </div>
 </div>
 
-<div class="card">
-  <h3>📰 仮想通貨ニュース（8/28〜29）</h3>
-  <ul class="news-list">
-    <li><span class="badge-important">重要</span>BTC：$81,000超えを試みるも、Warsh議長タカ派発言（金利上昇）で$79,560前後まで調整。週間では+22%（$65K台→$80K台）の大幅上昇。ショートスクイーズ・AI楽観・Treasury buyback効果が複合的に作用。</li>
-    <li>ETH：$2,511前後で推移。BTC比では出遅れ感あり。</li>
-    <li>Trump政権：仮想通貨規制法案（Clarity Act）の早期成立を要請。上院は9/14再開後に再審議予定（Polymarket採択確率13%前後）。</li>
-    <li>機関投資家動向：AI楽観論とBTC ETFへの継続的な流入が観測される。</li>
-    <li>規制面：SEC・COFCの仮想通貨規制の方向性は相対的に緩和方向。Clarity Act可決なら市場は大幅上昇の見込み。</li>
-  </ul>
-</div>
-
-<div class="trend-box">
-  <strong>週次トレンドコメント：</strong>BTC週間+22%は8月の最大の驚き。要因はショートスクイーズ（過去最大級）・AI楽観論（Nvidia beat）・Treasury buybackによる流動性供給。ただしWarsh演説（利上げ示唆）で上値は抑制。$80K前後が当面のレンジ上限の目安。$81K超定着できれば$90K台試験も視野。Clarity Act採決（9月以降）が次の大きな規制カタリスト。
-</div>
-
-</section>
-</div>
-
-<!-- === TAB: ウォッチリスト === -->
+<!-- ウォッチリスト -->
 <div id="tab-watchlist" class="tab-content">
-<section class="tab-section">
   <div class="watchlist-empty">
-    <p style="font-size:2em;margin-bottom:12px">⭐</p>
-    <p style="font-size:1.1em;font-weight:bold;margin-bottom:8px">ウォッチリストは空です</p>
-    <p style="color:var(--text-sub)">チャットで「◯◯をウォッチリストに追加して」とお伝えいただくと、<br>翌日から個別にモニタリングします。</p>
-    <p style="margin-top:12px;color:var(--text-sub);font-size:0.85em">例：「トヨタ・ソニーをウォッチリストに追加して」<br>「USD/JPY・BTC/USDをウォッチリストに追加して」</p>
+    <div style="font-size:2em; margin-bottom:12px;">⭐</div>
+    <div style="font-size:1em; color:var(--text-main); margin-bottom:8px;">ウォッチリストは空です</div>
+    <div style="color:var(--text-sub); font-size:0.85em;">チャットで「◯◯をウォッチリストに追加して」と伝えると<br>個別の銘柄・通貨ペアのモニタリングができます。<br>（株式コード: 7203（トヨタ）、AAPL など）</div>
   </div>
-</section>
 </div>
 
-<!-- === 経済指標カレンダー === -->
+<!-- Economic Calendar -->
 <div class="calendar-section">
-  <h3>📅 経済指標カレンダー（来週〜今後の重要イベント）</h3>
-  <ul class="cal-list">
-    <li><span class="cal-tag">8/31月</span>TOPIX第1回参照日（月末最終営業日）——除外候補600社超確定。107兆円パッシブファンド影響</li>
-    <li><span class="cal-tag">8/31月</span>UK Nationwide住宅価格（8月）</li>
-    <li><span class="cal-tag tomorrow">9/1火</span>日本・製造業PMI（8月確報）</li>
-    <li><span class="cal-tag tomorrow">9/1火</span>米・ISM製造業景況指数（8月）</li>
-    <li><span class="cal-tag thisweek">9/3水</span>米・ADP雇用者数（8月）</li>
-    <li><span class="cal-tag thisweek">9/3水</span>米・ISM非製造業景況指数（8月）</li>
-    <li><span class="cal-tag thisweek">9/4木</span>カナダ中銀（BOC）政策決定会合</li>
-    <li><span class="cal-tag thisweek">9/5金</span>米・NFP（8月雇用統計）——7月▲23K（初の純減）の反動と9月FOMC判断に重大影響</li>
-    <li><span class="cal-tag thisweek">9/16-17</span>米・FOMC政策決定会合（利上げ是非）</li>
-    <li><span class="cal-tag thisweek">9/17-18</span>日銀・金融政策決定会合（25bp利上げ確率87%）</li>
-  </ul>
+  <h3>📅 経済指標カレンダー</h3>
+  <div class="cal-item">
+    <span class="cal-tag">本日 9/1</span>
+    <span class="cal-time">23:00 ET</span>
+    <span class="cal-desc">米 JOLTS 求人件数（7月）— 労働需給の先行指標</span>
+    <span class="cal-est">前回: 7.9M</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag">本日 9/1</span>
+    <span class="cal-time">23:00 ET</span>
+    <span class="cal-desc">米 ISM製造業景況指数（8月）— 50超で景気拡大</span>
+    <span class="cal-est">前回: 55.6</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag">本日 9/1</span>
+    <span class="cal-time">23:00 ET</span>
+    <span class="cal-desc">米 建設支出（7月）</span>
+    <span class="cal-est">予想: +0.2%</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag tomorrow">明日 9/2</span>
+    <span class="cal-time">21:15 ET</span>
+    <span class="cal-desc">米 ADP雇用統計（8月）— NFPの先行指標</span>
+    <span class="cal-est">前回: --</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag tomorrow">明日 9/2</span>
+    <span class="cal-time">10:00 ET</span>
+    <span class="cal-desc">米 製造業受注（7月）</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag thisweek">9/5（金）</span>
+    <span class="cal-time">21:30 ET</span>
+    <span class="cal-desc">🔴 米 NFP 雇用統計（8月）— 最重要指標。予想: +130K、前回: -23K</span>
+    <span class="cal-est">予想+130K</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag thisweek">9/12（金）</span>
+    <span class="cal-time">21:15 ET</span>
+    <span class="cal-desc">ECB 金融政策会合（利下げ判断）</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag thisweek">9/18</span>
+    <span class="cal-time">終日</span>
+    <span class="cal-desc">🔴 BOJ 金融政策会合（9月利上げ確率85%、1.00%→1.25%?）</span>
+  </div>
+  <div class="cal-item">
+    <span class="cal-tag thisweek">9/16-17</span>
+    <span class="cal-time">終日</span>
+    <span class="cal-desc">🔴 FOMC 会合（利上げ確率が上昇中）</span>
+  </div>
 </div>
 
 <!-- Footer -->
 <div class="footer">
-  <p>本資料は情報提供目的のみです。投資勧誘・助言を目的としたものではありません。記載数値は速報値または概算値を含みます。</p>
-  <p style="margin-top:4px">生成：AIエージェント自動生成 ｜ 2026-08-29 06:30 JST</p>
+  ⚠️ 本レポートは自動収集情報に基づく参考情報です。投資判断の根拠とせず、必ず公式情報・一次ソースを確認してください。<br>
+  生成: 2026-09-01 06:30 JST | <a href="https://osa-01.github.io/financial-services-pub/latest.html">ダッシュボードURL</a> | <a href="glossary.html">📖 用語集</a>
 </div>
 
 <script>
-function showTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
   event.target.classList.add('active');
 }
 </script>
