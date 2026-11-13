@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情勢・市場デイリーダイジェスト 2026-11-14</title>
+<style>
+:root {
+  --bg: #0f1420;
+  --card-bg: #1a2032;
+  --card-border: #2a3348;
+  --text-main: #e8ecf4;
+  --text-sub: #9aa5b8;
+  --accent: #4f8cff;
+  --up: #ef5350;
+  --down: #26a69a;
+  --warn: #f4b942;
+  --important: #ff6b6b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text-main); font-family: 'Hiragino Sans', 'Meiryo', sans-serif; font-size: 14px; line-height: 1.6; min-height: 100vh; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Header */
+.header { background: #111827; border-bottom: 1px solid var(--card-border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.header-title { font-size: 1.1em; font-weight: bold; color: var(--text-main); }
+.header-meta { font-size: 0.8em; color: var(--text-sub); }
+.header-glossary { font-size: 0.85em; background: rgba(79,140,255,0.15); color: var(--accent); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(79,140,255,0.3); }
+
+/* Summary banner */
+.summary-banner { background: #131b2e; border-left: 4px solid var(--important); padding: 12px 16px; margin: 12px 16px; border-radius: 0 8px 8px 0; }
+.summary-banner h3 { color: var(--important); font-size: 0.85em; margin-bottom: 8px; letter-spacing: 0.5px; }
+.summary-banner ul { list-style: none; padding: 0; }
+.summary-banner li { padding: 3px 0; font-size: 0.9em; color: var(--text-main); }
+.summary-banner li::before { content: "▶ "; color: var(--important); font-size: 0.8em; }
+
+/* Tabs */
+.tabs-wrapper { overflow-x: auto; border-bottom: 1px solid var(--card-border); background: #111827; padding: 0 16px; }
+.tabs { display: flex; gap: 2px; white-space: nowrap; }
+.tab-btn { background: none; border: none; color: var(--text-sub); padding: 10px 14px; cursor: pointer; font-size: 0.85em; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.tab-btn:hover { color: var(--text-main); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: bold; }
+
+/* Tab content */
+.tab-content { display: none; padding: 16px; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+.card h3 { font-size: 0.9em; color: var(--text-sub); margin-bottom: 10px; letter-spacing: 0.3px; text-transform: uppercase; font-size: 0.8em; }
+
+/* Tiles grid */
+.tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-bottom: 14px; }
+.tile { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px 12px; }
+.tile-name { font-size: 0.75em; color: var(--text-sub); margin-bottom: 4px; }
+.tile-value { font-size: 1.15em; font-weight: bold; color: var(--text-main); }
+.tile-change { font-size: 0.8em; margin-top: 2px; }
+.tile-date { font-size: 0.7em; color: var(--text-sub); margin-top: 3px; }
+.up { color: var(--up); }
+.down { color: var(--down); }
+.na { color: var(--text-sub); }
+
+/* Important badge */
+.badge-important { background: var(--important); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 6px; vertical-align: middle; }
+
+/* News list */
+.news-list { list-style: none; padding: 0; }
+.news-list li { padding: 6px 0; border-bottom: 1px solid rgba(42,51,72,0.5); font-size: 0.88em; color: var(--text-main); }
+.news-list li:last-child { border-bottom: none; }
+.news-source { font-size: 0.78em; color: var(--text-sub); margin-left: 8px; }
+
+/* Weekly trend */
+.weekly-trend { background: rgba(79,140,255,0.08); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 6px 6px 0; margin-top: 12px; }
+.weekly-trend h4 { font-size: 0.78em; color: var(--accent); margin-bottom: 6px; letter-spacing: 0.5px; }
+.weekly-trend p { font-size: 0.85em; color: var(--text-main); }
+
+/* Calendar */
+.calendar-section { margin: 16px; padding: 14px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; }
+.calendar-section h3 { font-size: 0.9em; color: var(--accent); margin-bottom: 10px; }
+.cal-item { padding: 5px 0; border-bottom: 1px solid rgba(42,51,72,0.4); font-size: 0.85em; }
+.cal-item:last-child { border-bottom: none; }
+.cal-day { display: inline-block; background: rgba(79,140,255,0.15); color: var(--accent); padding: 1px 7px; border-radius: 3px; font-size: 0.8em; margin-right: 8px; min-width: 50px; text-align: center; }
+.cal-day.today { background: rgba(255,107,107,0.2); color: var(--important); }
+
+/* Footer */
+footer { background: #111827; border-top: 1px solid var(--card-border); padding: 12px 16px; font-size: 0.75em; color: var(--text-sub); text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">📊 情勢・市場デイリーダイジェスト</div>
+    <div class="header-meta">2026年11月14日（土）｜生成: JST 06:40頃</div>
+  </div>
+  <a href="glossary.html" class="header-glossary">📖 用語集</a>
+</div>
+
+<div class="summary-banner">
+  <h3>🔴 本日の最重要ニュース</h3>
+  <ul>
+    <li><strong>Nvidia CEO Jensen Huang氏が11/12に即時辞任</strong>（スパイ疑惑・不倫報道）、暫定CEO Colette Kress。株価は2日間で約6%下落・10日間累計-22%。Q3決算は11/17に予定。</li>
+    <li><strong>Anthropic ANT IPO: 6倍超申込</strong>、$70-78/株の価格レンジ超の設定を検討中（11/18価格決定、11/19 NASDAQ上場）。GoogleほかAMD・TSMC等が$260億コーナーストーン。</li>
+    <li><strong>APEC深圳サミット5日前（11/18-19）</strong>: トランプ=習近平会談（今年3度目）が確定的。プーチン参加報道も。米中貿易休戦延長・AI協力が主な議題。</li>
+  </ul>
+</div>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('world')">🌍 世界情勢</button>
+    <button class="tab-btn" onclick="showTab('japan')">🗾 日本情勢</button>
+    <button class="tab-btn" onclick="showTab('jp-stocks')">📈 株式（日本）</button>
+    <button class="tab-btn" onclick="showTab('us-stocks')">🇺🇸 株式（米国）</button>
+    <button class="tab-btn" onclick="showTab('fx')">💱 為替・金利</button>
+    <button class="tab-btn" onclick="showTab('commodity')">🛢️ 商品</button>
+    <button class="tab-btn" onclick="showTab('crypto')">₿ 仮想通貨</button>
+    <button class="tab-btn" onclick="showTab('watchlist')">⭐ ウォッチリスト</button>
+  </div>
+</div>
+
+<!-- Tab: World Affairs -->
+<div id="world" class="tab-content active">
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>Nvidia CEO辞任続報</strong>: Jensen Huang氏が11/12に即時辞任（スパイ疑惑+不倫）。第3の不倫疑惑も新たに報道（Yahoo Finance）。暫定CEO CFO Colette Kress。SEC 8-K提出済み。 <span class="news-source">CNBC / Yahoo Finance / SEC</span></li>
+      <li><span class="badge-important">重要</span> <strong>APEC深圳(11/18-19): 5日前</strong>。トランプ・習近平・プーチンの3首脳会談が浮上。米中交渉チームが最後の詰めを加速。財務長官ベッセント氏はAPEC香港を欠席しトランプの深圳訪問に注力か。 <span class="news-source">SCMP / Korea Times</span></li>
+      <li><strong>米中貿易休戦</strong>: 1/10までの延長合意済み。Bessent「レアアース合意を感謝祭(11/26)までに」。AIガバナンス・相互核査察が追加議題として浮上。 <span class="news-source">SCMP</span></li>
+      <li><strong>ホルムズ危機Day255</strong>: カタールがイランの停戦提案（$80億）をトランプ政権に中継中。Vance外交路線 vs トランプ強硬派で内部分裂継続。ホルムズ危機はIEA「史上最大の石油供給障害」と認定。 <span class="news-source">InvestingLive / WorldOil</span></li>
+      <li><strong>欧州</strong>: ドイツ・フランスを中心に景気減速懸念継続。ロシア・ウクライナ情勢は膠着状態。 <span class="news-source">各メディア</span></li>
+      <li><strong>中東</strong>: オマーンがイランとホルムズ管理の暫定協定を模索。鉱雷除去・暫定航路の設定が交渉焦点。 <span class="news-source">1news.co.nz</span></li>
+      <li><strong>AI覇権</strong>: Anthropic ANT IPO成功時、AIインフラ投資競争が一段と加速する見通し。AMD・TSMC等$260億コーナーストーン投資家として名を連ねる。 <span class="news-source">RTTNews / Digg</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>Nvidia CEO辞任がAI株全般に動揺をもたらした1週間。米中間選挙(民主党制覇)→CPI上振れ→CoreWeave決算ビート→Huang辞任と材料が目まぐるしく交錯。S&P500は週間+2.51%と回復したが、ハイテクは選別色が強い。APEC直前週でリスク・オン方向への期待もある。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Japan -->
+<div id="japan" class="tab-content">
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>BOJ: 12月18日利上げ確率83%</strong>。現行政策金利1.25%。浅田委員が11/12に慎重姿勢を示したが、市場の利上げ観測は大きく変わらず。名目賃金+2.6%・基調インフレ2%到達が利上げ根拠。 <span class="news-source">各金融メディア</span></li>
+      <li><span class="badge-important">重要</span> <strong>高市内閣・財政政策</strong>: 21.3兆円経済対策を閣議決定済み（補正予算案は年内成立目指す）。財政均衡目標を撤廃し積極財政路線へ。円安・金利上昇との整合性に市場は懐疑的。 <span class="news-source">TheStandard / KoreaJoongAng</span></li>
+      <li><strong>USD/JPY ~160円</strong>: 11/13終値~159.9円。BOJ12月利上げ観測 vs 米金利高止まりで160円攻防。財務省・日銀の介入警戒ラインとして注目。 <span class="news-source">各FX情報</span></li>
+      <li><strong>日本PPI(10月)発表済み</strong>: YoY+7.1%（前月比+0.4%、エネルギー高）。基調インフレ圧力継続を示す。 <span class="news-source">日銀・統計局</span></li>
+      <li><strong>日本経済安保・半導体</strong>: Kioxia(東証上場)・Rapidus等への政府支援が継続。AI向けHBM需要拡大でSK Hynix・マイクロン等との連携が加速。 <span class="news-source">各メディア</span></li>
+      <li><strong>APEC前の外交調整</strong>: 日本は米中間のバランサー役を担うか注目。高市首相と習・トランプ両首脳との個別会談が検討中。 <span class="news-source">各外交メディア</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>日経225は先週-9.25%の急落から61,249まで回復（+6.6%）。BOJの12月利上げ確率が80%超に上昇するなか、円安阻止・物価安定・成長促進という三重命題が高市内閣の最大の課題。来週はAPEC深圳を控え、日米中関係の行方が最大の焦点。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Japan Stocks -->
+<div id="jp-stocks" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">日経平均</div>
+      <div class="tile-value na">--,---</div>
+      <div class="tile-change na">11/13終値確認中</div>
+      <div class="tile-date">参考: 11/12終値 61,249</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">TOPIX</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">SoftBank (9984)</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change up">先週大幅高</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Kioxia (285A)</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change up">+5%超 (11/12)</div>
+      <div class="tile-date">AI・HBM需要で急騰</div>
+    </div>
+  </div>
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>Nvidia CEO辞任で日本半導体株に下押し圧力</strong>: 11/13は米国でNVDA -2%。Kioxiaやルネサスなどへの連動安に注意。 <span class="news-source">CNBC</span></li>
+      <li><strong>先週の日経回復</strong>: 11/9週-9.25%からの急回復。57,434→61,249（+6.6%）。CoreWeave決算超過・ホルムズ外交進展が買い材料。 <span class="news-source">TradingEconomics</span></li>
+      <li><strong>半導体: AI・HBM</strong>: SK Hynix+5%超（11/12）。Kioxia同日高騰。AI向けHBM需要は2027年まで増加持続との見方。 <span class="news-source">各メディア</span></li>
+      <li><strong>外国人投資家</strong>: 11月に入り日本株への買い越しが続く（先週ベア市場脱出で評価見直し）。円安も輸出株への追い風。 <span class="news-source">各メディア</span></li>
+      <li><strong>自動車</strong>: トヨタ・ホンダは円安メリットを享受しつつ、米中貿易交渉の行方を注視。EV競争激化は続く。 <span class="news-source">各メディア</span></li>
+      <li><strong>来週の注目</strong>: 11/17 NVDA Q3決算（新体制初のガイダンスに注目）→日本半導体・AI関連株に直撃。APEC深圳（11/18-19）の米中合意内容次第で輸出株が動く。 <span class="news-source">各メディア</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>先週の急落（-9.25%）から一転、CoreWeave決算・ホルムズ外交・Anthropic IPO申込好調を材料に61,249まで回復。ただしNvidia CEO辞任で上値は重く、ベア市場圏（ピーク比-21%）からの完全脱出はまだ。来週11/17 NVDA決算とAPECが分岐点。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: US Stocks -->
+<div id="us-stocks" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">S&P 500</div>
+      <div class="tile-value">7,561.67</div>
+      <div class="tile-change down">▼ -0.40%</div>
+      <div class="tile-date">11/13終値 (週間+2.51%)</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Nasdaq 総合</div>
+      <div class="tile-value">25,136.27</div>
+      <div class="tile-change down">▼ -0.90%</div>
+      <div class="tile-date">11/13終値 (週間+2.27%)</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Dow Jones</div>
+      <div class="tile-value">52,347.55</div>
+      <div class="tile-change up">▲ +0.10%</div>
+      <div class="tile-date">11/13終値 (週間+2.07%)</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">NVIDIA (NVDA)</div>
+      <div class="tile-value">~$163</div>
+      <div class="tile-change down">▼ -2% (11/13)</div>
+      <div class="tile-date">CEO辞任から累計-22%</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">Russell 2000</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">VIX</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+  </div>
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>Nvidia CEO Jensen Huang即時辞任（11/12）</strong>: スパイ疑惑・不倫（第3の不倫も浮上）。暫定CEO Colette Kress CFO。株価は2日間で約6%下落。Bernstein TP $400→$200。10日間累計-22%。11/17 Q3決算（新体制初のガイダンス）が次の関門。 <span class="news-source">Yahoo Finance / CNBC / SEC</span></li>
+      <li><span class="badge-important">重要</span> <strong>米国株週間成績</strong>: S&P500 +2.51%, Nasdaq +2.27%, Dow +2.07%。民主党制覇ショックから回復基調だが、AI株はNvidia CEO辞任で再び圧迫。テックより旧来型(Dow)が相対的に強い。 <span class="news-source">Investrade</span></li>
+      <li><strong>米PPI(10月) 11/13発表</strong>: 予想MoM+0.4%。前月Sep PPI YoY+6.3%（予想+5.3%上振れ）。エネルギー高が主因。12月FOMC利上げ（+25bp→4.00-4.25%）はほぼ確定的。 <span class="news-source">BLS / Benzinga</span></li>
+      <li><strong>Anthropic ANT IPO</strong>: 6倍超申込。$70-78/株の想定レンジ超の価格を検討中。11/18価格決定、11/19 NASDAQ上場。AMD・Broadcom・Google・Micron・Microsoft・Nvidia・TSMCが$260億コーナーストーン投資家。 <span class="news-source">RTTNews / Digg</span></li>
+      <li><strong>CoreWeave (CRWV) 好決算</strong>: Q3決算が市場予想超過。AI コンピューティング需要の力強さを再確認。11/12のNASDAQ +1.6%の主な材料。 <span class="news-source">各メディア</span></li>
+      <li><strong>FOMC: 現行3.75-4.00%</strong>。12月会合（12/8-9）で+25bp→4.00-4.25%がほぼ確定。10月CPI YoY +4.0%の上振れが決定打。 <span class="news-source">FXStreet / PIMCO</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>民主党両院制覇ショックとNFP上振れ(+165K)による利上げ再加速懸念から始まった週が、CoreWeave好決算で持ち直した形。ただしNvidia CEO辞任がAIセクターに長期的な不確実性をもたらし、Nasdaq は週後半に失速。今後はAPEC結果とNVDA Q3決算（11/17）が最大の注目点。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: FX & Rates -->
+<div id="fx" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">USD/JPY</div>
+      <div class="tile-value">159.90</div>
+      <div class="tile-change up">▲ 円安方向</div>
+      <div class="tile-date">11/13参考値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">EUR/JPY</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">EUR/USD</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">米10年債利回り</div>
+      <div class="tile-value">5.00%</div>
+      <div class="tile-change up">▲ 高止まり</div>
+      <div class="tile-date">11/13参考値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">FF金利</div>
+      <div class="tile-value">3.75-4.00%</div>
+      <div class="tile-change na">据え置き中</div>
+      <div class="tile-date">12月+25bp見込み</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">日銀政策金利</div>
+      <div class="tile-value">1.25%</div>
+      <div class="tile-change up">12月18日利上げ83%</div>
+      <div class="tile-date">次回会合 12/18</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">日本10年国債</div>
+      <div class="tile-value na">~1.1%</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13参考値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">米2年債利回り</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+  </div>
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>USD/JPY ~160円攻防</strong>: 11/13終値~159.9円。BOJ12月利上げ観測（83%）があるものの、米PPI上振れ・FF金利高止まりが円安圧力を維持。財務省・日銀の介入警戒ライン（155→160円へ引き上げ）が焦点。 <span class="news-source">各FX情報</span></li>
+      <li><span class="badge-important">重要</span> <strong>米10年債5%再突破</strong>: 10月CPI YoY+4.0%上振れ後、5%台を維持。12月FOMC利上げ（+25bp）を完全に織り込んだ水準。逆イールド（2年-10年）の縮小に注意。 <span class="news-source">TradingEconomics</span></li>
+      <li><strong>FOMC 12月会合(12/8-9)</strong>: +25bp→4.00-4.25%がほぼ確定。10月CPI+0.4%、PPI上振れで「データ次第」の余地なし。その後は2027年まで据え置きとの見方も（Rabobank）。 <span class="news-source">FXStreet / Cryptobriefing</span></li>
+      <li><strong>BOJ 12月18日会合</strong>: 利上げ確率83%。名目賃金+2.6%・基調インフレ2%到達が根拠。浅田委員の慎重発言で若干低下。円安継続なら前倒し利上げ圧力も。 <span class="news-source">各メディア</span></li>
+      <li><strong>欧州金利</strong>: ECBは景気減速を背景に慎重姿勢継続。ドイツBund利回りはやや低下方向。 <span class="news-source">各メディア</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>NFP上振れ(+165K)とCPI上振れ(+0.4%)で米金利の高止まりが確認された1週間。USD/JPYは157→160円へ円安が進行。BOJの12月利上げ確率が80%超となり、160円超えは「介入水域」として市場が緊張感を持って注視。来週APECでの米中合意次第では一時的なドル安も。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Commodities -->
+<div id="commodity" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">Brent原油</div>
+      <div class="tile-value">$91.6</div>
+      <div class="tile-change down">▼ -1.2% (11/13)</div>
+      <div class="tile-date">ホルムズ外交進展</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">WTI原油</div>
+      <div class="tile-value na">~$87-89</div>
+      <div class="tile-change down">▼ Brent連動安</div>
+      <div class="tile-date">11/13参考値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">金 (XAU/USD)</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">銀 (XAG/USD)</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">銅 (LME)</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">天然ガス</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+  </div>
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>Brent原油 $91.6 (-1.2%)</strong>: カタール媒介によるホルムズ危機の外交進展期待で下落。11/8週以来の下落継続。ピーク時$115前後から大幅安だが、危機未解決で$90-100レンジを維持。 <span class="news-source">InvestingLive / 各メディア</span></li>
+      <li><strong>ホルムズ危機Day255</strong>: イランが$80億の条件提示→カタール経由でトランプ政権に伝達。Vance外交路線 vs トランプ強硬派の内部分裂が停滞要因。短期的な暫定合意（航路確保）の可能性が浮上。 <span class="news-source">WorldOil / InvestingLive</span></li>
+      <li><strong>OPEC+供給</strong>: ホルムズ閉鎖による供給障害をOPEC+が一部カバー。サウジ・UAEの増産余力は依然あり。 <span class="news-source">IEA</span></li>
+      <li><strong>IEA</strong>: ホルムズ危機を「史上最大の石油供給障害」と認定。危機解決後は大幅な原油安となる可能性が高く、OPEC+の生産調整が焦点に。 <span class="news-source">IEA</span></li>
+      <li><strong>APECの影響</strong>: 11/18-19のAPEC深圳でトランプ-習会談が実現すれば、エネルギー安保を巡る米中間の協調の可能性も。 <span class="news-source">SCMP</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>Brentは$97（11/9週）から$91台へ大幅下落。ホルムズ外交進展期待が主な材料。ただし危機未解決のため再上昇リスクは常に存在。金は米金利高止まりを受けてやや弱含み。APECでの地政学的緊張緩和があればさらなる下落も。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Crypto -->
+<div id="crypto" class="tab-content">
+  <div class="tiles-grid">
+    <div class="tile">
+      <div class="tile-name">BTC/USD</div>
+      <div class="tile-value">$73,208</div>
+      <div class="tile-change down">▼ 5週続落</div>
+      <div class="tile-date">11/12-13参考値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">ETH/USD</div>
+      <div class="tile-value">$2,037</div>
+      <div class="tile-change down">▼ 200日線割れ</div>
+      <div class="tile-date">11/12-13参考値</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">恐怖・強欲指数</div>
+      <div class="tile-value">28</div>
+      <div class="tile-change down">Fear（恐怖）</div>
+      <div class="tile-date">11/12基準</div>
+    </div>
+    <div class="tile">
+      <div class="tile-name">総時価総額</div>
+      <div class="tile-value na">--</div>
+      <div class="tile-change na">確認中</div>
+      <div class="tile-date">11/13基準</div>
+    </div>
+  </div>
+  <div class="card">
+    <ul class="news-list">
+      <li><span class="badge-important">重要</span> <strong>BTC $73,208: 5週続落</strong>。民主党両院制覇による規制強化懸念・リスクオフで下落継続。恐怖・強欲指数28（Fear）。$70,000台のサポートラインが重要。 <span class="news-source">各Crypto情報</span></li>
+      <li><strong>ETH $2,037: 200日移動平均線割れ</strong>。ビットコイン相対比でアンダーパフォーム。ETFへの資金流入が低迷。 <span class="news-source">各Crypto情報</span></li>
+      <li><strong>AI × Crypto関連</strong>: Anthropic ANT IPOを控え、AIトークン・インフラ関連には一定の関心。ただし全体のリスクオフが優先。 <span class="news-source">各メディア</span></li>
+      <li><strong>規制動向</strong>: 米民主党の両院制覇により、仮想通貨規制強化立法の審議が加速する可能性。SEC・CFTC の権限強化が焦点。 <span class="news-source">各メディア</span></li>
+      <li><strong>APECとクリプト</strong>: 米中AI・デジタル通貨協議がAPEC深圳のサイドアジェンダとして浮上。デジタル人民元（DCEP）の国際展開も注目点。 <span class="news-source">各メディア</span></li>
+    </ul>
+    <div class="weekly-trend">
+      <h4>📅 週次トレンド（11/8-14）</h4>
+      <p>BTC は$75,774（11/9）→$73,208（11/13）とさらに下落。民主党制覇、CPI上振れ、Nvidia CEO辞任と負の材料が重なり、リスク資産全般が逃避モード。ETHの200日線割れも弱気シグナル。次の注目はAPEC後の地政学リスク後退と、Anthropic IPO成功がAI×ブロックチェーンへの関心を呼び戻すか。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Tab: Watchlist -->
+<div id="watchlist" class="tab-content">
+  <div class="card">
+    <p style="color: var(--text-sub); font-size: 0.9em; padding: 20px; text-align: center;">
+      📋 ウォッチリストに登録された銘柄はありません。<br><br>
+      チャットで「◯◯をウォッチリストに追加して」とお伝えください。<br>
+      （例：「Nvidiaをウォッチリストに追加して」「USD/JPYをウォッチリストに追加して」）
+    </p>
+  </div>
+</div>
+
+<!-- Economic Calendar -->
+<div class="calendar-section">
+  <h3>📅 経済指標カレンダー（来週の主な予定）</h3>
+  <div class="cal-item">
+    <span class="cal-day today">本日</span>
+    <strong>土曜日（11/14）</strong>: 市場休場（ニュース・SNS動向に注目）
+  </div>
+  <div class="cal-item">
+    <span class="cal-day">月 11/16</span>
+    <strong>日本</strong>: GDP速報値（Q3 2026）予想 前期比+0.2% ｜ <strong>米国</strong>: NY連銀製造業景況指数
+  </div>
+  <div class="cal-item">
+    <span class="cal-day">火 11/17</span>
+    <strong>Nvidia (NVDA) Q3決算</strong>（新体制=暫定CEO Colette Kress初のガイダンスに市場注目）｜ 米国 小売売上高(10月)
+  </div>
+  <div class="cal-item">
+    <span class="cal-day">水 11/18</span>
+    <strong>APEC深圳サミット開幕</strong>（〜19日）: トランプ-習近平首脳会談 ｜ <strong>Anthropic ANT IPO価格決定</strong>（$70-78/株レンジ）
+  </div>
+  <div class="cal-item">
+    <span class="cal-day">木 11/19</span>
+    <strong>Anthropic (ANT) NASDAQ上場初日</strong> ｜ APEC深圳（2日目）: 米中首脳・貿易休戦延長合意の有無 ｜ 米国 新規失業保険申請
+  </div>
+  <div class="cal-item">
+    <span class="cal-day">金 11/20</span>
+    日本 消費者物価指数(10月・全国) ｜ 米国 ミシガン大消費者信頼感（速報）
+  </div>
+</div>
+
+<footer>
+  <p>⚠️ 本ダイジェストは情報提供を目的とした自動生成レポートです。投資判断の根拠として使用しないでください。数値は取得時点のものであり、最新の情報は各公式ソースをご確認ください。</p>
+  <p style="margin-top: 6px;">生成: 2026-11-14 JST | <a href="https://osa-01.github.io/financial-services-pub/latest.html">ダッシュボードURL</a> | <a href="glossary.html">用語集</a></p>
+</footer>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
