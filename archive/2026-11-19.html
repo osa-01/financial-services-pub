@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情勢・市場デイリーダイジェスト — 2026-11-19</title>
+<style>
+:root {
+  --bg: #0f1420;
+  --card-bg: #1a2032;
+  --card-border: #2a3348;
+  --text-main: #e8ecf4;
+  --text-sub: #9aa5b8;
+  --accent: #4f8cff;
+  --up: #ef5350;
+  --down: #26a69a;
+  --warn: #f4b942;
+  --important: #ff6b6b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 1.6; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Header */
+.header { background: #111827; border-bottom: 1px solid var(--card-border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.header-title { font-size: 1.1em; font-weight: bold; color: var(--text-main); }
+.header-meta { font-size: 0.8em; color: var(--text-sub); }
+.header-glossary { font-size: 0.85em; }
+
+/* Summary Banner */
+.summary-banner { background: rgba(79,140,255,0.1); border: 1px solid rgba(79,140,255,0.3); border-radius: 8px; margin: 12px 16px; padding: 12px 16px; }
+.summary-banner h3 { color: var(--accent); font-size: 0.85em; margin-bottom: 8px; letter-spacing: 0.05em; }
+.summary-banner ul { list-style: none; padding: 0; }
+.summary-banner li { padding: 3px 0; font-size: 0.9em; border-bottom: 1px solid rgba(79,140,255,0.1); }
+.summary-banner li:last-child { border-bottom: none; }
+.summary-banner li::before { content: "▶ "; color: var(--accent); }
+
+/* Tabs */
+.tabs-nav { display: flex; overflow-x: auto; gap: 4px; padding: 8px 16px; border-bottom: 1px solid var(--card-border); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.tabs-nav::-webkit-scrollbar { display: none; }
+.tab-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-sub); cursor: pointer; padding: 6px 14px; white-space: nowrap; font-size: 0.85em; transition: all 0.2s; }
+.tab-btn:hover { border-color: var(--accent); color: var(--text-main); }
+.tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; font-weight: bold; }
+
+/* Tab Content */
+.tab-content { display: none; padding: 16px; }
+.tab-content.active { display: block; }
+
+/* Important badge */
+.badge-important { background: var(--important); color: white; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-right: 6px; }
+.news-important { font-weight: bold; margin-bottom: 10px; }
+
+/* News list */
+.news-list { list-style: none; padding: 0; margin: 10px 0; }
+.news-list li { padding: 5px 0; border-bottom: 1px solid rgba(42,51,72,0.6); font-size: 0.88em; color: var(--text-main); }
+.news-list li:last-child { border-bottom: none; }
+.news-list li .src { color: var(--text-sub); font-size: 0.8em; margin-left: 6px; }
+
+/* Trend comment */
+.trend-box { background: rgba(79,140,255,0.08); border-left: 3px solid var(--accent); border-radius: 4px; padding: 10px 14px; margin-top: 14px; font-size: 0.85em; color: var(--text-sub); }
+.trend-box strong { color: var(--accent); }
+
+/* Number tiles */
+.tiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin: 12px 0; }
+.tile { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; }
+.tile-name { font-size: 0.75em; color: var(--text-sub); }
+.tile-value { font-size: 1.3em; font-weight: bold; margin: 4px 0; color: var(--text-main); }
+.tile-change { font-size: 0.8em; }
+.tile-change.up { color: var(--up); }
+.tile-change.down { color: var(--down); }
+.tile-change.na { color: var(--text-sub); }
+.tile-date { font-size: 0.7em; color: var(--text-sub); margin-top: 4px; }
+
+/* Section divider */
+.section-h { font-size: 0.8em; font-weight: bold; color: var(--text-sub); letter-spacing: 0.08em; text-transform: uppercase; margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--card-border); }
+
+/* Economic Calendar */
+.econ-cal { margin: 0 16px 16px; }
+.econ-cal h3 { font-size: 0.95em; color: var(--accent); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--card-border); }
+.cal-table { width: 100%; border-collapse: collapse; font-size: 0.82em; }
+.cal-table th { background: rgba(79,140,255,0.1); color: var(--text-sub); padding: 5px 8px; text-align: left; }
+.cal-table td { padding: 5px 8px; border-bottom: 1px solid rgba(42,51,72,0.5); color: var(--text-main); }
+.cal-table tr:last-child td { border-bottom: none; }
+.cal-day { color: var(--accent); font-weight: bold; white-space: nowrap; }
+.cal-impact-high { color: var(--important); font-weight: bold; }
+.cal-impact-med { color: var(--warn); }
+.cal-impact-low { color: var(--text-sub); }
+
+/* Disclaimer */
+.disclaimer { text-align: center; font-size: 0.72em; color: var(--text-sub); padding: 12px 16px 20px; border-top: 1px solid var(--card-border); margin-top: 16px; }
+
+@media (max-width: 600px) {
+  .tiles-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  .header-title { font-size: 0.95em; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div>
+    <div class="header-title">情勢・市場デイリーダイジェスト</div>
+    <div class="header-meta">2026年11月19日（木） JST 06:30 生成</div>
+  </div>
+  <a href="../glossary.html" class="header-glossary">📖 用語集</a>
+</div>
+
+<!-- Summary Banner -->
+<div class="summary-banner">
+  <h3>🔔 本日の重要ニュース</h3>
+  <ul>
+    <li><strong>APEC深圳Day2 — 史上初のトランプ・習近平・プーチン3者会談が本日2:30 PM（現地）開催予定。</strong>米中AIチップ規制・ホルムズ・ウクライナが議題</li>
+    <li><strong>Anthropic ANT、本日Nasdaq初日上場。</strong>IPO価格$83（予定レンジ$70-78超）・6-7倍超申し込み。初値$100超観測</li>
+    <li><strong>FOMC議事録（11/18公開）：「ほぼ全員が追加利上げ適切」。</strong>12月+25bp確率95.7%へ上昇。金は-2.3%反落</li>
+    <li>Nvidia Q3超ビート（$115.8B、+103%）：半導体牽引でNASDAQ反発、ただしDow -1.1%と二極分化</li>
+    <li>USD/JPY 159円台で160円突破なら介入警戒。植田BOJ総裁「利上げ継続が重要」と再表明</li>
+  </ul>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('world')">🌐 世界情勢</button>
+  <button class="tab-btn" onclick="showTab('japan')">🇯🇵 日本情勢</button>
+  <button class="tab-btn" onclick="showTab('stocks-jp')">📈 株式（日本）</button>
+  <button class="tab-btn" onclick="showTab('stocks-us')">🇺🇸 株式（米国）</button>
+  <button class="tab-btn" onclick="showTab('fx')">💱 為替・金利</button>
+  <button class="tab-btn" onclick="showTab('commodity')">🛢️ 商品</button>
+  <button class="tab-btn" onclick="showTab('crypto')">₿ 仮想通貨</button>
+  <button class="tab-btn" onclick="showTab('watchlist')">👁️ ウォッチリスト</button>
+</div>
+
+<!-- Tab: World Affairs -->
+<div id="tab-world" class="tab-content active">
+  <div class="news-important"><span class="badge-important">重要</span>APEC深圳Day2 — 史上初のトランプ・習近平・プーチン3者会談（2:30 PM現地時間）。議題はAIガバナンス、米中貿易、ホルムズ危機、ウクライナ和平。ホワイトハウスは突破口への期待を低く設定</div>
+  <div class="news-important"><span class="badge-important">重要</span>プーチンとの別途米ロ2者会談も予定。アラスカ会談失敗後、初の直接会談。ロシアは「欧州は屈辱的な衰退」と発言</div>
+  <ul class="news-list">
+    <li>習近平はトランプ到着時に自ら空港で出迎え（異例プロトコル）。歓迎晩餐会で「貿易制限の削減」を強調 <span class="src">CNN/CNBC</span></li>
+    <li>高市首相もAPECサイドラインでプーチンと約30分会談 <span class="src">Nikkei Asia</span></li>
+    <li>米中AIチップ対中規制：APEC直前に米がさらなる輸出規制を発動。議題の一つとして協議予定 <span class="src">CNBC</span></li>
+    <li>米中貿易：2025年釜山停戦（1年間関税削減）の期限が年末に接近。$30B相互削減の延長協議 <span class="src">FreightWaves/Deccan Chronicle</span></li>
+    <li>ホルムズ危機Day260継続：カタール・パキスタンが仲介する停戦交渉。イランはホルムズ通行料徴収を停止中 <span class="src">Maritime Executive</span></li>
+    <li>ウクライナ情勢：停戦交渉の見通しなし。トランプ-プーチン会談での進展期待も低調 <span class="src">NBCNews</span></li>
+    <li>欧州：APECで存在感低下。ユーロ圏経済の低迷継続 <span class="src">Time Magazine</span></li>
+    <li>中国：「深圳コンセンサス」採択に向けた文書調整中。AIガバナンスの国際枠組みが焦点 <span class="src">NBC News</span></li>
+  </ul>
+  <div class="trend-box"><strong>📊 週次トレンド（11/13-19）：</strong> APEC深圳が今週の最大イベント。Nvidia Q3ビート・ANT IPO・FOMC議事録と重なり「イベント週」。トランプ・習近平の3度目の直接会談。米中は2025年釜山停戦の延長が焦点で、追加AIチップ規制の応酬が続く。ホルムズ危機はDay260に突入し外交交渉は膠着状態。</div>
+</div>
+
+<!-- Tab: Japan -->
+<div id="tab-japan" class="tab-content">
+  <div class="news-important"><span class="badge-important">重要</span>植田BOJ総裁「金融緩和環境は継続しており、利上げ継続が重要」と再表明（11/18）。12月18日利上げ確率80%超維持</div>
+  <ul class="news-list">
+    <li>USD/JPY 159円台：160円突破時の実弾介入リスク。今年累計介入額27.1兆円。高市財務当局は過度の変動を牽制 <span class="src">FXStreet</span></li>
+    <li>Q3 GDP速報（11/16発表）: -0.1%（4四半期ぶりマイナス）。設備投資落ち込みが主因。BOJ12月判断に不確実性 <span class="src">Bloomberg</span></li>
+    <li>高市内閣：21.3兆円経済対策は閣議決定済み。食料品消費税減税・防衛増額・370兆円産業投資が柱 <span class="src">FXStreet</span></li>
+    <li>高市首相の「積極財政」とBOJ利上げの整合性に市場が引き続き懐疑的 <span class="src">The Print</span></li>
+    <li>APECサイドライン：高市首相がプーチンと会談（約30分）。日ロ関係改善の糸口探る <span class="src">Nikkei Asia</span></li>
+    <li>翌日（11/20）: 日本CPI（10月）発表。コアCPI前月比予想+0.2%。BOJ12月判断の重要指標 <span class="src">Finance Calendar</span></li>
+    <li>コアコアCPI（生鮮食品・エネルギー除く）：9月+2.1%。2%台維持でBOJ利上げ根拠 <span class="src">Bot/統計局</span></li>
+    <li>臨時国会：経済対策の予算審議継続中 <span class="src">各社</span></li>
+  </ul>
+  <div class="trend-box"><strong>📊 週次トレンド（11/13-19）：</strong> Q3 GDP -0.1%でBOJ12月利上げへの確信がやや揺らいだが、植田総裁のコメントで12月ハイク観測は80%超を維持。高市財政とBOJ利上げの二重奏は市場の最大リスク要因。USD/JPYが159-160で膠着状態。160突破時の介入警戒が円相場の上値を抑制。</div>
+</div>
+
+<!-- Tab: Stocks Japan -->
+<div id="tab-stocks-jp" class="tab-content">
+  <div class="section-h">主要指数（11/18終値）</div>
+  <div class="tiles-grid">
+    <div class="tile"><div class="tile-name">日経平均</div><div class="tile-value">59,089</div><div class="tile-change up">▲ +0.40%</div><div class="tile-date">11/18終値</div></div>
+    <div class="tile"><div class="tile-name">TOPIX</div><div class="tile-value">3,824</div><div class="tile-change down">▼ -0.42%</div><div class="tile-date">11/18終値</div></div>
+    <div class="tile"><div class="tile-name">JPXプライム150</div><div class="tile-value">--</div><div class="tile-change na">--</div><div class="tile-date">データ取得中</div></div>
+    <div class="tile"><div class="tile-name">東証売買代金</div><div class="tile-value">--</div><div class="tile-change na">--</div><div class="tile-date">データ取得中</div></div>
+  </div>
+  <ul class="news-list">
+    <li>Nvidia Q3ビート（$115.8B, +103%）受けて半導体・AI関連株が反発 <span class="src">Investing.com</span></li>
+    <li>TOPIX下落：東証プライム市場の上昇銘柄わずか25%、下落71% <span class="src">Finimize</span></li>
+    <li>Kioxia（6971）など半導体株が業種別で上昇。AIサーバー需要による恩恵期待 <span class="src">各社</span></li>
+    <li>先週比（11/13→18）: 日経は約-200円（59,662→59,089）。AIイベント週での買い戻しは限定的 <span class="src">Nikkei</span></li>
+  </ul>
+  <div class="trend-box"><strong>📊 週次トレンド（11/13-19）：</strong> 11月6日の57,434（中間選挙ショック）から乱高下。AIビッグイベント週でも指数レベルの回復力は弱い。</div>
+</div>
+
+<!-- Tab: Stocks US -->
+<div id="tab-stocks-us" class="tab-content">
+  <div class="section-h">主要指数（11/18終値）</div>
+  <div class="tiles-grid">
+    <div class="tile"><div class="tile-name">S&amp;P 500</div><div class="tile-value">7,324</div><div class="tile-change down">▼ -0.23%</div><div class="tile-date">11/18終値</div></div>
+    <div class="tile"><div class="tile-name">NASDAQ</div><div class="tile-value">24,430</div><div class="tile-change up">▲ +0.42%</div><div class="tile-date">11/18終値</div></div>
+    <div class="tile"><div class="tile-name">Dow Jones</div><div class="tile-value">50,198</div><div class="tile-change down">▼ -1.11%</div><div class="tile-date">11/18終値</div></div>
+    <div class="tile"><div class="tile-name">NVDA</div><div class="tile-value">~225</div><div class="tile-change up">▲ Q3ビート後</div><div class="tile-date">11/18概算値</div></div>
+  </div>
+  <div class="news-important"><span class="badge-important">重要</span>Anthropic ANT、本日Nasdaq初日（11/19）。IPO価格$83、初値$100超観測。</div>
+  <ul class="news-list">
+    <li>Nvidia Q3超ビート：売上$115.8B（+103% YoY）、EPS $2.68 vs予想$2.47 <span class="src">CNBC</span></li>
+    <li>FOMC議事録（11/18公開）：「ほぼ全員が追加利上げ適切」。12月+25bp確率95.7% <span class="src">Benzinga</span></li>
+    <li>S&P 500 は11/18で5連続下落。7月以来の安値圏 <span class="src">CNBC</span></li>
+  </ul>
+  <div class="trend-box"><strong>📊 週次トレンド（11/13-19）：</strong> S&P 500は11/13の7,562から7,324まで-3.2%。ANT IPO初日がリスクオンのカタリストになれるか市場の注目。</div>
+</div>
+
+<!-- Tab: FX & Rates -->
+<div id="tab-fx" class="tab-content">
+  <div class="section-h">為替レート（11/18時点）</div>
+  <div class="tiles-grid">
+    <div class="tile"><div class="tile-name">USD/JPY</div><div class="tile-value">159.26</div><div class="tile-change down">▼ -0.08%</div><div class="tile-date">11/18（介入警戒）</div></div>
+    <div class="tile"><div class="tile-name">FF金利（現在）</div><div class="tile-value">3.75-4.00%</div><div class="tile-change na">12月+25bp織り込み</div><div class="tile-date">現行</div></div>
+    <div class="tile"><div class="tile-name">米10年債利回り</div><div class="tile-value">5.06%</div><div class="tile-change down">▼ -4bp</div><div class="tile-date">11/18終値</div></div>
+    <div class="tile"><div class="tile-name">BOJ政策金利</div><div class="tile-value">1.25%</div><div class="tile-change na">12月+25bp確率80%</div><div class="tile-date">現行（9/15利上げ）</div></div>
+  </div>
+  <ul class="news-list">
+    <li>USD/JPY：160円が「介入レッドライン」。今年累計介入額27.1兆円 <span class="src">FXStreet</span></li>
+    <li>FOMC議事録：「ほぼ全員が追加利上げ適切」。12月8-9日+25bpの確率95.7% <span class="src">Benzinga</span></li>
+    <li>植田BOJ総裁（11/18）：「利上げ継続が重要、金融緩和的な環境は続く」 <span class="src">FXStreet</span></li>
+  </ul>
+  <div class="trend-box"><strong>📊 週次トレンド（11/13-19）：</strong> USD/JPYは159-160で膠着。米金利は5%超の高止まり確認。</div>
+</div>
+
+<!-- Tab: Commodities -->
+<div id="tab-commodity" class="tab-content">
+  <div class="section-h">商品市況（11/18時点）</div>
+  <div class="tiles-grid">
+    <div class="tile"><div class="tile-name">WTI原油</div><div class="tile-value">$85.07</div><div class="tile-change down">▼ -1.10%</div><div class="tile-date">11/18</div></div>
+    <div class="tile"><div class="tile-name">Brent原油</div><div class="tile-value">$92.63</div><div class="tile-change down">▼ -0.57%</div><div class="tile-date">11/18</div></div>
+    <div class="tile"><div class="tile-name">金（XAU/USD）</div><div class="tile-value">$3,758</div><div class="tile-change down">▼ -2.30%</div><div class="tile-date">11/18</div></div>
+  </div>
+  <ul class="news-list">
+    <li>FOMC議事録「全員利上げ支持」で実質金利上昇→金の弱材料 <span class="src">Investing Live</span></li>
+    <li>Brentは$92-93で高地政学プレミアを維持：ホルムズ危機Day260 <span class="src">FX Empire</span></li>
+  </ul>
+</div>
+
+<!-- Tab: Crypto -->
+<div id="tab-crypto" class="tab-content">
+  <div class="section-h">仮想通貨（11/18時点）</div>
+  <div class="tiles-grid">
+    <div class="tile"><div class="tile-name">BTC/USD</div><div class="tile-value">$64,146</div><div class="tile-change down">▼ -0.40%</div><div class="tile-date">11/18 ET朝</div></div>
+    <div class="tile"><div class="tile-name">ETH/USD</div><div class="tile-value">$1,807</div><div class="tile-change down">▼ -0.60%</div><div class="tile-date">11/18 ET夜</div></div>
+    <div class="tile"><div class="tile-name">恐怖・強欲指数</div><div class="tile-value">28</div><div class="tile-change down">Fear（恐怖）</div><div class="tile-date">11/18</div></div>
+    <div class="tile"><div class="tile-name">BTC 4週比</div><div class="tile-value">-20%</div><div class="tile-change down">▼ 急落後</div><div class="tile-date">10月末比</div></div>
+  </div>
+  <ul class="news-list">
+    <li>BTC $64,000前後：10月末の$80,000台から約-20%。民主党規制強化懸念 <span class="src">Benzinga</span></li>
+    <li>Hyperliquid（分散型デリバティブ取引所）でANT IPO事前取引：初値+20〜25%予想 <span class="src">Yahoo Finance</span></li>
+  </ul>
+  <div class="trend-box"><strong>📊 週次トレンド（11/13-19）：</strong> BTCは$73,208（11/13）→$64,146（11/18）と-12%の急落。ANT IPOのリスクオン効果がクリプトに波及するかが注目点。</div>
+</div>
+
+<!-- Tab: Watchlist -->
+<div id="tab-watchlist" class="tab-content">
+  <div style="text-align:center; padding: 40px 20px; color: var(--text-sub);">
+    <div style="font-size: 2em; margin-bottom: 12px;">📋</div>
+    <div style="font-size: 1em; margin-bottom: 8px; color: var(--text-main);">ウォッチリストは空です</div>
+    <div style="font-size: 0.85em;">チャットで「○○をウォッチリストに追加して」とメッセージを送ると<br>次回から個別分析が表示されます。</div>
+  </div>
+</div>
+
+<!-- Economic Calendar -->
+<div class="econ-cal">
+  <h3>📅 経済指標カレンダー</h3>
+  <table class="cal-table">
+    <thead><tr><th>日時（JST）</th><th>国</th><th>指標・イベント</th><th>重要度</th><th>予想</th></tr></thead>
+    <tbody>
+      <tr><td><span class="cal-day">本日</span> 終日</td><td>🌐 国際</td><td>APEC深圳Day2 トリラテラル会談（トランプ・習近平・プーチン）</td><td class="cal-impact-high">★最高</td><td>14:30現地時間（JST 15:30）</td></tr>
+      <tr><td><span class="cal-day">本日</span> 終日</td><td>🇺🇸 米国</td><td>Anthropic ANT Nasdaq初日上場</td><td class="cal-impact-high">高</td><td>IPO価格$83・初値$100超観測</td></tr>
+      <tr><td><span class="cal-day">本日</span> 22:30</td><td>🇺🇸 米国</td><td>初回失業保険申請件数</td><td class="cal-impact-med">中</td><td>--</td></tr>
+      <tr><td><span class="cal-day">本日</span> 22:55</td><td>🇺🇸 米国</td><td>Fed副議長ジェファーソン講演</td><td class="cal-impact-high">高</td><td>利上げ継続発言に注目</td></tr>
+      <tr><td><span class="cal-day">明日</span> 08:30</td><td>🇯🇵 日本</td><td>消費者物価指数（10月）</td><td class="cal-impact-high">高</td><td>コアCPI前月比 +0.2%予想</td></tr>
+      <tr><td><span class="cal-day">明日</span> 09:00</td><td>🇨🇳 中国</td><td>PBoC ローンプライムレート（LPR）</td><td class="cal-impact-med">中</td><td>据え置き予想</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  本ダイジェストは自動生成された情報提供目的のコンテンツです。投資判断の根拠として使用しないでください。<br>
+  数値は取得時点の概算値であり、実際の市場価格と異なる場合があります。<br>
+  Generated: 2026-11-19 06:30 JST
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+</script>
+
+</body>
+</html>
