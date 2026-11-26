@@ -3,227 +3,284 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>情勢・市場ダイジェスト 2026-11-26</title>
+<title>情勢・市場デイリーダイジェスト 2026-11-27</title>
 <style>
 :root {
-  --bg: #0d0f14;
-  --bg2: #161922;
-  --bg3: #1e2330;
-  --accent: #4f9cf9;
-  --accent2: #7c3aed;
-  --up: #22c55e;
-  --dn: #ef4444;
-  --warn: #f59e0b;
-  --text: #e2e8f0;
-  --muted: #64748b;
-  --border: #2d3748;
-  font-size: 14px;
+  --bg: #0f1420;
+  --card-bg: #1a2032;
+  --card-border: #2a3348;
+  --text-main: #e8ecf4;
+  --text-sub: #9aa5b8;
+  --accent: #4f8cff;
+  --up: #ef5350;
+  --down: #26a69a;
+  --warn: #f4b942;
+  --important: #ff6b6b;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', 'Segoe UI', sans-serif; }
-header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
-header h1 { font-size: 1.1rem; font-weight: 700; color: var(--accent); }
-header .meta { font-size: 0.75rem; color: var(--muted); }
-.tabs { display: flex; overflow-x: auto; background: var(--bg2); border-bottom: 1px solid var(--border); gap: 0; }
-.tab { padding: 10px 16px; cursor: pointer; white-space: nowrap; font-size: 0.8rem; color: var(--muted); border-bottom: 2px solid transparent; transition: all 0.2s; }
-.tab:hover { color: var(--text); }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.panel { display: none; padding: 16px 20px; }
-.panel.active { display: block; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.tile { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
-.tile .label { font-size: 0.7rem; color: var(--muted); margin-bottom: 4px; }
-.tile .val { font-size: 1.2rem; font-weight: 700; }
-.tile .chg { font-size: 0.75rem; margin-top: 2px; }
+body { background: var(--bg); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; line-height: 1.6; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.header { background: #111827; border-bottom: 1px solid var(--card-border); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.header-title { font-size: 1.1em; font-weight: 700; color: var(--text-main); }
+.header-meta { font-size: 0.8em; color: var(--text-sub); }
+.header-glossary { font-size: 0.85em; }
+
+.summary-banner { background: #1a1f2e; border-left: 4px solid var(--warn); padding: 12px 16px; margin: 12px 16px; border-radius: 4px; }
+.summary-banner h3 { font-size: 0.85em; color: var(--warn); margin-bottom: 6px; }
+.summary-banner ul { list-style: none; }
+.summary-banner li { font-size: 0.9em; color: var(--text-main); padding: 2px 0; }
+.summary-banner li::before { content: "▶ "; color: var(--warn); }
+
+.tab-nav-wrap { overflow-x: auto; border-bottom: 1px solid var(--card-border); background: #111827; }
+.tab-nav { display: flex; min-width: max-content; padding: 0 8px; }
+.tab-btn { background: none; border: none; color: var(--text-sub); padding: 10px 14px; cursor: pointer; font-size: 0.85em; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
+.tab-btn:hover { color: var(--text-main); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.tab-content { display: none; padding: 16px; max-width: 1200px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+.tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.tile { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; }
+.tile-name { font-size: 0.75em; color: var(--text-sub); }
+.tile-val { font-size: 1.3em; font-weight: 700; color: var(--text-main); margin: 4px 0; }
+.tile-chg { font-size: 0.8em; }
+.tile-time { font-size: 0.7em; color: var(--text-sub); margin-top: 4px; }
 .up { color: var(--up); }
-.dn { color: var(--dn); }
-.neu { color: var(--muted); }
-.warn { color: var(--warn); }
-.card { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
-.card h3 { font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; }
-.card p { font-size: 0.82rem; line-height: 1.6; color: #cbd5e1; }
-.news-item { border-left: 3px solid var(--accent2); padding: 8px 12px; margin-bottom: 8px; background: var(--bg3); border-radius: 0 6px 6px 0; }
-.news-item .cat { font-size: 0.65rem; color: var(--warn); text-transform: uppercase; margin-bottom: 2px; }
-.news-item .title { font-size: 0.82rem; color: var(--text); line-height: 1.5; }
-.news-item .body { font-size: 0.77rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
-.alert { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; font-size: 0.82rem; }
-.alert strong { color: var(--dn); }
-.calendar-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
-.cal-date { width: 80px; color: var(--warn); font-weight: 600; flex-shrink: 0; }
-.cal-event { color: var(--text); }
-.trend { font-size: 0.75rem; color: var(--muted); background: var(--bg2); border-radius: 4px; padding: 6px 10px; margin-top: 6px; border-left: 2px solid var(--muted); }
-.holiday-banner { background: rgba(79,156,249,0.1); border: 1px solid rgba(79,156,249,0.3); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.82rem; color: var(--accent); }
+.down { color: var(--down); }
+.na { color: var(--text-sub); }
+
+.news-list { list-style: none; }
+.news-list li { padding: 6px 0; border-bottom: 1px solid rgba(42,51,72,0.5); font-size: 0.88em; }
+.news-list li:last-child { border-bottom: none; }
+.badge-important { background: var(--important); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 6px; }
+.news-src { font-size: 0.75em; color: var(--text-sub); margin-left: 6px; }
+
+.weekly-trend { background: rgba(79,140,255,0.08); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 4px 4px 0; margin-top: 16px; font-size: 0.85em; color: var(--text-sub); }
+.weekly-trend strong { color: var(--text-main); }
+
+.section-title { font-size: 0.95em; font-weight: 600; color: var(--accent); margin: 16px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--card-border); }
+
+.econ-cal { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; margin: 16px; }
+.econ-cal h3 { font-size: 0.95em; font-weight: 600; color: var(--warn); margin-bottom: 10px; }
+.econ-table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+.econ-table td { padding: 5px 8px; border-bottom: 1px solid rgba(42,51,72,0.4); }
+.econ-table td:first-child { color: var(--text-sub); white-space: nowrap; }
+.econ-table td:nth-child(2) { color: var(--accent); font-weight: 600; white-space: nowrap; }
+.econ-table td:nth-child(3) { color: var(--text-main); }
+.econ-table td:nth-child(4) { color: var(--warn); text-align: right; white-space: nowrap; }
+.econ-today { background: rgba(244,185,66,0.08); }
+
+footer { background: #111827; border-top: 1px solid var(--card-border); padding: 12px 16px; text-align: center; font-size: 0.75em; color: var(--text-sub); margin-top: 20px; }
 </style>
 </head>
 <body>
-<header>
-  <h1>🌐 情勢・市場ダイジェスト</h1>
-  <div class="meta">2026-11-26（木）感謝祭 | 生成: 06:50 JST</div>
-</header>
-<div class="tabs">
-  <div class="tab active" onclick="show('world')">🌍 世界情勢</div>
-  <div class="tab" onclick="show('japan')">🗾 日本</div>
-  <div class="tab" onclick="show('us-eq')">🇺🇸 米国株</div>
-  <div class="tab" onclick="show('jp-eq')">📈 日本株</div>
-  <div class="tab" onclick="show('fx')">💱 FX・金利</div>
-  <div class="tab" onclick="show('commod')">🛢️ 商品</div>
-  <div class="tab" onclick="show('crypto')">₿ 暗号資産</div>
-  <div class="tab" onclick="show('cal')">📅 カレンダー</div>
+
+<div class="header">
+  <div>
+    <div class="header-title">📊 情勢・市場デイリーダイジェスト</div>
+    <div class="header-meta">2026年11月27日（金）｜生成: JST 06:30頃｜感謝祭翌日・米市場早終い（13:00 ET）</div>
+  </div>
+  <div class="header-glossary"><a href="glossary.html">📖 用語集</a></div>
 </div>
 
-<!-- 世界情勢 -->
-<div id="world" class="panel active">
-  <div class="alert"><strong>🚨 ホルムズ危機 Day270</strong>：11/25にも新たに2隻のタンカーが機雷炎上。イラン海軍「要求達成まで海峡は再開しない」と声明。石油流量-40%継続。</div>
-  <div class="news-item">
-    <div class="cat">中東・エネルギー</div>
-    <div class="title">ホルムズ海峡 — 機雷攻撃が止まらない</div>
-    <div class="body">11/25、IRGCは2隻の外国タンカーが許可されていないルートで海峡を通過しようとして機雷に触れ炎上と発表。イラン海軍は「要求が達成されるまで、海峡は決して再開しない」と改めて宣言。米財務省は前日に追加制裁を発動。Brent原油は$89台に下落——対話期待の重しか、一方で地政学プレミアムは維持。</div>
-  </div>
-  <div class="news-item">
-    <div class="cat">米国経済</div>
-    <div class="title">PCEインフレ&GDP — FRB12月利上げ事実上確定</div>
-    <div class="body">11/25発表。ヘッドラインPCE +3.8%YoY、コアPCE +3.3%YoY（予想3.2%超え）。Q3 GDP改定+4.3%（速報3.4%から大幅上方修正）。CMEフェドウォッチ: 12月25bp利上げ確率97%。ナスダックは発表後一時-4.5%急落も引けにかけ大半を回復。</div>
-  </div>
-  <div class="news-item">
-    <div class="cat">外交・貿易</div>
-    <div class="title">APEC深圳合意 — 追加関税停止を2027/1/10まで延長中</div>
-    <div class="body">先週閉幕したAPEC深圳サミットでのトランプ-習-プーチン3者会談の結果、米中24%追加関税停止が2027年1月10日まで延長されていることを確認。技術規制・台湾問題は未解決のまま。</div>
-  </div>
-  <div class="trend">📊 週次トレンド: ホルムズ危機はDay270に突入。石油流量-40%が続くが、Brentは$89-$90台で安定化。対話による解決の見通しは立っておらず、地政学リスクプレミアムは継続見通し。</div>
+<div class="summary-banner">
+  <h3>🔔 本日の最重要ポイント</h3>
+  <ul>
+    <li><strong>東京CPI 07:30発表</strong>: コアCPI予想3.0%（前月2.6%から急上昇）→日銀12月利上げ確実視の決め手に</li>
+    <li><strong>ホルムズ危機Day271</strong>: LNGタンカー含む複数隻が機雷炎上継続。イラン「要求達成まで再開せず」Brent≈$89-90</li>
+    <li><strong>米中新関税提案</strong>: トランプ政権が中国に最大20%（停戦失効後は40%）の追加関税を提案。1月25日公聴会後に発効見込み</li>
+  </ul>
 </div>
 
-<!-- 日本 -->
-<div id="japan" class="panel">
-  <div class="news-item">
-    <div class="cat">日本経済・財政</div>
-    <div class="title">高市内閣：21.3兆円経済対策が執行中</div>
-    <div class="body">食品消費税1%引下げ法案が2027年4月施行予定。財政出動に伴う国債増発懸念はあるものの、当面はBOJの利上げと財政刺激の「二重奏」が続く見通し。FXstreet（11/26 06:55 UTC）：「Takaichi stimulus package isn't reckless spending」と市場への説明強化。</div>
+<div class="tab-nav-wrap">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('world',this)">🌍 世界情勢</button>
+    <button class="tab-btn" onclick="switchTab('japan',this)">🗾 日本情勢</button>
+    <button class="tab-btn" onclick="switchTab('stocks-jp',this)">📈 株式（日本）</button>
+    <button class="tab-btn" onclick="switchTab('stocks-us',this)">🗽 株式（米国）</button>
+    <button class="tab-btn" onclick="switchTab('fx-rates',this)">💱 為替・金利</button>
+    <button class="tab-btn" onclick="switchTab('commodities',this)">🛢️ 商品</button>
+    <button class="tab-btn" onclick="switchTab('crypto',this)">₿ 仮想通貨</button>
+    <button class="tab-btn" onclick="switchTab('watchlist',this)">⭐ ウォッチリスト</button>
   </div>
-  <div class="news-item">
-    <div class="cat">BOJ・金融政策</div>
-    <div class="title">BOJ12月利上げ確率86-87%維持 — 1.25%→1.50%予想</div>
-    <div class="body">12/17-18のBOJ会合に向け利上げ確率86-87%。USD/JPY159円台後半。熱いPCEデータでFRBが12月に利上げすれば、米日の政策金利差263bpはほぼ変わらず、円安圧力持続。160円突破で財務省介入リスク高。</div>
-  </div>
-  <div class="news-item">
-    <div class="cat">日本株</div>
-    <div class="title">日経平均 11/25大幅反落 -1,633円(-2.78%)</div>
-    <div class="body">57,011.62円で引け。米AI株急落の波及でキオクシアHD・フジクラなど半導体・AI関連が売り。TOPIX-18.68(-0.50%)で相対的には堅調。本日（11/26）は米感謝祭休場のため薄商い予想。</div>
-  </div>
-  <div class="trend">📊 週次トレンド: 日本株は米AI株に連動しやすい構図が続く。高市財政+BOJ利上げのポリシーミックスに対する市場の反応は引き続き注目。</div>
 </div>
 
-<!-- 米国株 -->
-<div id="us-eq" class="panel">
-  <div class="holiday-banner">⚠️ 本日（11/26 木）: 感謝祭で米市場休場。11/27（金）は短縮取引。</div>
-  <div class="grid">
-    <div class="tile"><div class="label">S&P 500</div><div class="val">7,182.78</div><div class="chg dn">▼ 0.25%</div></div>
-    <div class="tile"><div class="label">Nasdaq</div><div class="val">23,585.80</div><div class="chg dn">▼ 0.62%</div></div>
-    <div class="tile"><div class="label">Dow Jones</div><div class="val">50,182.95</div><div class="chg up">▲ 0.33%</div></div>
-    <div class="tile"><div class="label">VIX (概算)</div><div class="val">~22</div><div class="chg warn">⚡ 高め</div></div>
+<div id="tab-world" class="tab-content active">
+  <div class="section-title">🌍 世界情勢</div>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>ホルムズ危機Day271: LNGタンカー含む複数隻が機雷炎上。イラン革命防衛隊、2隻が「無許可ルート」で通過し炎上と発表。石油流量-40%継続。<span class="news-src">OilPrice / FreePressJournal 11/26</span></li>
+    <li><span class="badge-important">重要</span>米中関税: トランプ政権が中国・EU・12カ国に対し最大20%の追加関税提案（中国は最大20%、停戦失効後は40%へ）。APEC停戦（2027/1/10期限）との整合性が焦点。<span class="news-src">Yahoo Finance / Business Standard 11/26</span></li>
+    <li>ロシア・ウクライナ: ロシアが弾道ミサイル+シャヘドドローン113機をウクライナへ発射。欧州ではロシア関連サボタージュ（爆発・放火）が前年比倍増とIISSが警告。<span class="news-src">Geopolitics Daily / CNN 11/26</span></li>
+    <li>米中首脳: トランプ大統領がXiに40%関税チラつかせながら交渉継続。ストックホルム・ジュネーブ次回協議設定中。<span class="news-src">Tribune India</span></li>
+    <li>ドイツ: 親イラン組織のシナゴーグ攻撃計画に関与の疑いで2名逮捕。ロシアのスパイとして独ウクライナ系女性実業家の裁判も開始。<span class="news-src">Reuters 11/26</span></li>
+    <li>中東: クウェートでイランのドローン攻撃疑い事案、欧州がイランへの圧力強化を要求。<span class="news-src">CBS News</span></li>
+    <li>OPEC+: 11/29会合を앞に、供給過剰懸念とホルムズリスクのバランスで産量方針に注目。<span class="news-src">MarketScreener</span></li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> ホルムズ危機はDay271まで長期化し、石油供給リスクが構造化。一方、米中は関税停戦を維持しながらも次の「圧力カード」として新関税提案が浮上。欧州ではロシアのハイブリッド戦が激化し、サボタージュリスクが高まっている。
   </div>
-  <div class="card">
-    <h3>📉 PCE発表後の乱高下 → 引けにかけ回復</h3>
-    <p>11/25 22:30 JST発表のPCEインフレ（コア+3.3%、予想超え）・GDP改定値（+4.3%）を受け、ナスダックが発表直後に-4.5%まで急落。しかし引け前に買い戻しが入り、S&P500 -0.25%・Nasdaq -0.62%と損失を大幅縮小。Dowはバリュー株主導で+0.33%を維持。12月FRB利上げ97%確定でテック株重し継続。</p>
-  </div>
-  <div class="card">
-    <h3>🎯 Nvidia / AI株の動向</h3>
-    <p>NVDA: 11/23の+31.5%反発後、11/24に-7.6%反落。11/25はPCEショックで再び売り圧力。AIセルオフの基調は変わらず。ANTアンソロピックIPO価格割れも継続。マグニフィセント7全体に利益確定売り圧力。</p>
-  </div>
-  <div class="trend">📊 週次トレンド: 米株はAIセルオフ(テック↓) vs DOW堅調(バリュー↑)の二極化。12月FRB利上げ織り込みが進み、成長株の割引率上昇懸念が継続。感謝祭ウィークは薄商いでボラ増幅リスク。</div>
 </div>
 
-<!-- 日本株 -->
-<div id="jp-eq" class="panel">
-  <div class="grid">
-    <div class="tile"><div class="label">日経平均</div><div class="val">57,011</div><div class="chg dn">▼ 2.78% (-1,633)</div></div>
-    <div class="tile"><div class="label">TOPIX</div><div class="val">3,746.20</div><div class="chg dn">▼ 0.50% (-18.68)</div></div>
-    <div class="tile"><div class="label">ドル円影響</div><div class="val">159.3円</div><div class="chg warn">介入警戒</div></div>
-    <div class="tile"><div class="label">東証プライム売買</div><div class="val">薄商い</div><div class="chg neu">感謝祭休場</div></div>
+<div id="tab-japan" class="tab-content">
+  <div class="section-title">🗾 日本情勢</div>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>東京CPI 11月（07:30 JST発表）: コアCPI予想3.0%（前月2.6%から急上昇）。達成なら日銀12月利上げ（1.25%→1.50%）をほぼ確実にする重要指標。<span class="news-src">InvestingLive / FXStreet 11/26</span></li>
+    <li><span class="badge-important">重要</span>日銀田村委員（11/26）: 「追加利上げの是非を12月またはそれ以降の会合で考えたい」と慎重姿勢を維持しつつ、基調物価上昇なら早期利上げ必要と強調。<span class="news-src">時事通信 11/26</span></li>
+    <li>BOJ12月利上げ確率: 市場織り込み75〜80%（Reuters調査では経済学者の86%が12月利上げ予想）。12/17-18会合焦点。<span class="news-src">Reuters / FinScans 11/26</span></li>
+    <li>ドル円160円攻防: USD/JPY 159円台で推移。12月に米FRBと日銀が「同時利上げ」となった場合、円安の行方に注目。介入警戒ラインは160円。<span class="news-src">MyNavi 11/26</span></li>
+    <li>高市内閣・経済対策: 21.3兆円経済対策執行中。食品消費税1%引下げ法案（2027/4施行予定）の国会審議継続。<span class="news-src">FXStreet 11/26</span></li>
+    <li>日本経済安保・産業政策: 半導体補助金第2弾の審査が進行中。米中関税上昇によるサプライチェーン再編が日本企業に影響。<span class="news-src">関連報道</span></li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> 東京CPIが先行指標として注目される。コアCPI3.0%到達なら、日銀は12月の「データ次第」という留保を外すとみられる。ドル円は159〜160円の重要局面で、当局発言・CPI結果が重要。
   </div>
-  <div class="card">
-    <h3>📉 11/25 大引け概況</h3>
-    <p>日経平均は前日比1,633円01銭安(-2.78%)の57,011.62円で大引け。米AI関連株急落の波及で半導体・電子部品が売られた。キオクシアHD、フジクラなどが下落。TOPIXは-0.50%と相対的に軽微。本日(11/26)は米市場休場のため手がかり難、小幅な値動きが見込まれる。</p>
-  </div>
-  <div class="card">
-    <h3>🏦 ウォッチリスト</h3>
-    <p>現在ウォッチリストは空です。「◯◯をウォッチリストに追加して」とチャットで伝えると反映されます。</p>
-  </div>
-  <div class="trend">📊 週次トレンド: 日経は58,000-57,000のレンジで推移。米AI株動向とドル円(160円ライン)が引き続き鍵。感謝祭ウィーク明けの来週月曜(11/30)に米市場の方向感が出る見込み。</div>
 </div>
 
-<!-- FX・金利 -->
-<div id="fx" class="panel">
-  <div class="grid">
-    <div class="tile"><div class="label">USD/JPY</div><div class="val">159.3</div><div class="chg warn">介入警戒160円</div></div>
-    <div class="tile"><div class="label">EUR/USD</div><div class="val">~1.052</div><div class="chg neu">概算</div></div>
-    <div class="tile"><div class="label">米10年債利回り</div><div class="val">4.82%</div><div class="chg dn">▼ PCE後軟化</div></div>
-    <div class="tile"><div class="label">日本10年</div><div class="val">~1.05%</div><div class="chg neu">概算</div></div>
-    <div class="tile"><div class="label">FF金利</div><div class="val">3.75-4.00%</div><div class="chg warn">12月利上げ97%</div></div>
-    <div class="tile"><div class="label">BOJ政策金利</div><div class="val">1.25%</div><div class="chg warn">12月→1.50%86%</div></div>
+<div id="tab-stocks-jp" class="tab-content">
+  <div class="section-title">📈 株式（日本）</div>
+  <div class="tile-grid">
+    <div class="tile"><div class="tile-name">日経平均</div><div class="tile-val">57,499</div><div class="tile-chg up">+487 (+0.86%)</div><div class="tile-time">11/26終値</div></div>
+    <div class="tile"><div class="tile-name">TOPIX</div><div class="tile-val">3,750</div><div class="tile-chg up">+4 (+0.11%)</div><div class="tile-time">11/26終値</div></div>
+    <div class="tile"><div class="tile-name">JPXプライム150</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
   </div>
-  <div class="card">
-    <h3>💱 ドル円・BOJ動向</h3>
-    <p>PCE発表前は159.22円。コアPCE3.3%（予想超）でFRBの12月+25bp（4.00-4.25%）がほぼ確定。一方BOJも12月17-18日会合で1.50%への引き上げを86-87%の確率で予想。米日ともに利上げでも「金利差263bp」がほぼ変わらず、円高への転換は限定的。160円突破で財務省が$27兆円規模の介入を発動するリスクあり。</p>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>11/26（木）日経+487（+0.86%）=57,499: 前日11/25の-1,633急落から反発。米感謝祭休場で薄商いの中、AI関連の買い戻し主導。<span class="news-src">日本経済新聞 11/26</span></li>
+    <li>業種別: AI・半導体関連に買い戻し。前日の米株急落波及が一服し、ハイテク株中心に回復。<span class="news-src">Monex 11/26</span></li>
+    <li>TOPIX +0.11%と日経比低め: 大型グロース株のリバウンドが主導し、バリュー・内需株への波及は限定的。<span class="news-src">Yahoo Finance JP</span></li>
+    <li>本日11/27（金）: 東京CPI発表（07:30）→結果次第で日銀利上げ観測が強まり、高PER株に調整圧力か。薄商い継続見込み。</li>
+    <li>外国人投資家: 感謝祭ウィークで機関投資家の動きは限定的。週明け11/30から本格的な値動きへ。</li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> 日経平均は米AIバブル調整・PCE結果を受け11/25に急落、翌11/26に反発。57,000-58,000のレンジで東京CPIと日銀政策への反応が焦点。感謝祭ウィーク明けの11/30が実質的な方向感の確認日。
   </div>
-  <div class="trend">📊 週次トレンド: USD/JPYは158-160のレンジで膠着。BOJ12月利上げがより確実視されれば円高シフトの可能性もあるが、FRBも同時期に引き上げるため金利差縮小は限定的。感謝祭休場で流動性が薄く、大きな動きに注意。</div>
 </div>
 
-<!-- 商品 -->
-<div id="commod" class="panel">
-  <div class="grid">
-    <div class="tile"><div class="label">Brent原油</div><div class="val">$89.93</div><div class="chg dn">▼ 1.6%</div></div>
-    <div class="tile"><div class="label">WTI原油</div><div class="val">$80.53</div><div class="chg dn">▼ 1.9%</div></div>
-    <div class="tile"><div class="label">金(スポット)</div><div class="val">$3,482</div><div class="chg dn">▼ 2.05%</div></div>
-    <div class="tile"><div class="label">銀(スポット)</div><div class="val">$39.29</div><div class="chg dn">▼ 3.71%</div></div>
+<div id="tab-stocks-us" class="tab-content">
+  <div class="section-title">🗽 株式（米国）</div>
+  <div class="tile-grid">
+    <div class="tile"><div class="tile-name">S&amp;P 500</div><div class="tile-val">7,182</div><div class="tile-chg down">-18 (-0.25%)</div><div class="tile-time">11/25終値※感謝祭休場</div></div>
+    <div class="tile"><div class="tile-name">NASDAQ</div><div class="tile-val">23,585</div><div class="tile-chg down">-148 (-0.62%)</div><div class="tile-time">11/25終値※感謝祭休場</div></div>
+    <div class="tile"><div class="tile-name">Dow Jones</div><div class="tile-val">50,182</div><div class="tile-chg up">+166 (+0.33%)</div><div class="tile-time">11/25終値※感謝祭休場</div></div>
+    <div class="tile"><div class="tile-name">Russell 2000</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
+    <div class="tile"><div class="tile-name">VIX</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
   </div>
-  <div class="card">
-    <h3>🛢️ 原油：ホルムズプレミアム vs サプライ余剰</h3>
-    <p>Brent $89.93（-1.6%）、WTI $80.53（-1.9%）。ホルムズ危機Day270で地政学リスクが続くが、OilPrice分析によると「戦争プレミアムは日量380万バレルの供給余剰を隠している」と指摘。石油流量-40%の地政学プレミアムと需給緩和見通しが綱引き。</p>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>11/25（水）: コアPCE3.3%（予想3.2%超え）＋GDP改定+4.3%がFRB12月利上げ（97%確率）を確定。Nasdaq一時-4.5%急落後、引けにかけ回復。<span class="news-src">TradingKey / Yahoo Finance 11/25</span></li>
+    <li>Dow Jones 50,000台を維持: バリュー株・ディフェンシブが支え。AI・グロースと二極化継続。Berkshire Hathaway 2026年+15%でS&amp;P500を大幅アウトパフォーム。<span class="news-src">24/7 Wall St. 11/25</span></li>
+    <li>11/26（木）: 感謝祭で市場休場。<span class="news-src">NYSE/Nasdaq公式</span></li>
+    <li>本日11/27（金）: Black Friday早終い（東部時間13:00終了）。薄商いでボラティリティ増幅リスク。<span class="news-src">Page Twenty One / Qz.com</span></li>
+    <li>FRB12月会合: 25bp利上げ確率97%。金利4.00-4.25%へ引上げ見通し。2027年初の追加利上げも視野。<span class="news-src">Investing.com / BigGo Finance</span></li>
+    <li>米中関税懸念: 新提案（中国20%、停戦失効後40%）が週明けの株価に影響か。<span class="news-src">Yahoo Finance 11/26</span></li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> PCE確認でFRB12月利上げが織り込まれ、高PERテック株への調整圧力が継続。一方Dowは50,000台をキープしバリュー株の底堅さを示す。感謝祭ウィークの薄商いを経て、週明け11/30から本格的な方向感の確認へ。
   </div>
-  <div class="card">
-    <h3>🥇 金・銀：PCE後に急落</h3>
-    <p>金$3,482（-2.05%）、銀$39.29（-3.71%）。PCE＋GDP強いデータでFRBの追加引き締め観測が強まり、金利上昇＝金の機会コスト上昇で売り。金は「1年以上で最低水準付近」との報道あり。</p>
-  </div>
-  <div class="trend">📊 週次トレンド: 原油はホルムズリスクで$85-$95のレンジ。金はFRB利上げ継続観測で上値重い。感謝祭ウィークは流動性低下による急変動リスク。</div>
 </div>
 
-<!-- 暗号資産 -->
-<div id="crypto" class="panel">
-  <div class="grid">
-    <div class="tile"><div class="label">Bitcoin (BTC)</div><div class="val">$58,564</div><div class="chg dn">▼ 2.8%</div></div>
-    <div class="tile"><div class="label">Ethereum (ETH)</div><div class="val">$1,650</div><div class="chg dn">▼ ~2%</div></div>
-    <div class="tile"><div class="label">恐怖・強欲指数</div><div class="val">Fear</div><div class="chg dn">リスクオフ</div></div>
-    <div class="tile"><div class="label">BTC ETFフロー</div><div class="val">-$239M</div><div class="chg dn">BlackRock流出</div></div>
+<div id="tab-fx-rates" class="tab-content">
+  <div class="section-title">💱 為替・金利</div>
+  <div class="tile-grid">
+    <div class="tile"><div class="tile-name">USD/JPY</div><div class="tile-val">159.2</div><div class="tile-chg na">薄商い</div><div class="tile-time">11/26 感謝祭</div></div>
+    <div class="tile"><div class="tile-name">EUR/JPY</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
+    <div class="tile"><div class="tile-name">GBP/JPY</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
+    <div class="tile"><div class="tile-name">EUR/USD</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
+    <div class="tile"><div class="tile-name">米10年債利回り</div><div class="tile-val">4.86%</div><div class="tile-chg down">-7bp</div><div class="tile-time">11/25終値</div></div>
+    <div class="tile"><div class="tile-name">日本10年国債</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
+    <div class="tile"><div class="tile-name">FF金利</div><div class="tile-val">3.75-4.00%</div><div class="tile-chg na">12月+25bp見込</div><div class="tile-time">現行</div></div>
+    <div class="tile"><div class="tile-name">日銀政策金利</div><div class="tile-val">1.25%</div><div class="tile-chg na">12月+25bp見込</div><div class="tile-time">現行</div></div>
   </div>
-  <div class="card">
-    <h3>₿ BTC $58,564 — AIセルオフ波及でFear継続</h3>
-    <p>BTC約$58,564（-2.8%）、ETH約$1,650。BlackRockがBTC・ETH ETFから合計約$239Mを引き上げ。50日・100日・200日移動平均線すべてを下回る水準。PCE後のリスクオフ継続で$60,000回復は近期難しい見通し。恐怖・強欲指数は「Fear」ゾーンを継続。</p>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>USD/JPY 159円台: 感謝祭で薄商い。東京CPI（07:30発表）がコア3.0%到達なら円買い加速→159円割れの可能性。160円突破なら介入警戒。<span class="news-src">FXStreet 11/26</span></li>
+    <li>米10年債 4.86%（11/25）: 月中高値5.17%から低下傾向。PCE後は「成長懸念」でさらに低下。ただし12月利上げ確実視で下げ余地は限定的。<span class="news-src">Pomegra.io / Investing.com</span></li>
+    <li>米日「同時利上げ」シナリオ: FRB（12/8-9会合）と日銀（12/17-18）が揃って+25bpの場合、金利差縮小→円高要因だが、最終的な方向性は不透明。<span class="news-src">MyNavi 11/26</span></li>
+    <li>BOJ田村委員（11/26）: 「インフレ目標達成なら早期利上げが必要」と発言。東京CPIを受けて市場の日銀織り込みが80%超に上昇する可能性。<span class="news-src">FXStreet / FinScans 11/26</span></li>
+    <li>欧州: ユーロ圏消費者信頼感（確定値）本日19:00 JST発表予定。ドイツ失業者数（17:55 JST）も注目。<span class="news-src">Finanzen.net</span></li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> 米10年債は5.17%ピーク後に4.86%まで低下。米日双方の利上げ確実視で金利差は実質変化なく、ドル円は159円を中心に膠着。東京CPIが今週最大のカタリスト。
   </div>
-  <div class="trend">📊 週次トレンド: 暗号資産はAIセルオフ→リスクオフの流れに連動。機関投資家のETF資金流出が続く間は$55,000-$62,000のレンジ継続か。感謝祭後の週明けに市場全体のセンチメント回復があれば反発の可能性。</div>
 </div>
 
-<!-- カレンダー -->
-<div id="cal" class="panel">
-  <div class="holiday-banner">⚠️ 本日 11/26（木）: 米感謝祭 — 米国株式・債券市場 完全休場</div>
-  <div class="calendar-item"><div class="cal-date">11/26（木）</div><div class="cal-event">🇺🇸 感謝祭 — 米市場休場 ／ 🇯🇵 東京市場通常取引（手がかり難）</div></div>
-  <div class="calendar-item"><div class="cal-date">11/27（金）</div><div class="cal-event">🇺🇸 米市場短縮取引（早終い13:00 ET） ／ 薄商い・ボラ増幅注意</div></div>
-  <div class="calendar-item"><div class="cal-date">11/28（土）</div><div class="cal-event">週末休場</div></div>
-  <div class="calendar-item"><div class="cal-date">12/09（水）</div><div class="cal-event">🇺🇸 FRB FOMC会合（予想 +25bp → 4.00-4.25%、97%確率）</div></div>
-  <div class="calendar-item"><div class="cal-date">12/17-18（水木）</div><div class="cal-event">🇯🇵 BOJ政策決定会合（予想 +25bp → 1.50%、86%確率）</div></div>
-  <div class="calendar-item"><div class="cal-date">2027/01/10</div><div class="cal-event">🇨🇳🇺🇸 米中追加関税停止期限（APEC深圳合意）</div></div>
-  <div class="calendar-item"><div class="cal-date">2027/04（予定）</div><div class="cal-event">🇯🇵 食品消費税1%引下げ施行（高市内閣）</div></div>
-  <div class="card" style="margin-top:14px">
-    <h3>📌 今週の焦点</h3>
-    <p>PCE（コア3.3%）・GDP（+4.3%）が予想超えで12月FRB利上げがほぼ確定。今後は1月・3月以降の追加利上げ可能性が焦点に。ホルムズ危機Day270は依然解決の見通しなし。BOJ12月利上げに向け国内経済指標（賃金・物価）が注目される。感謝祭ウィーク明け11/30以降、本格的な値動きに注目。</p>
+<div id="tab-commodities" class="tab-content">
+  <div class="section-title">🛢️ 商品・コモディティ</div>
+  <div class="tile-grid">
+    <div class="tile"><div class="tile-name">WTI原油</div><div class="tile-val">$83.68</div><div class="tile-chg na">11/25終値</div><div class="tile-time">速報値</div></div>
+    <div class="tile"><div class="tile-name">Brent原油</div><div class="tile-val">$89.62</div><div class="tile-chg na">11/25終値</div><div class="tile-time">速報値</div></div>
+    <div class="tile"><div class="tile-name">金（XAU/USD）</div><div class="tile-val">$3,576</div><div class="tile-chg up">+$21 (+0.60%)</div><div class="tile-time">11/25終値</div></div>
+    <div class="tile"><div class="tile-name">銀（XAG/USD）</div><div class="tile-val">$41.12</div><div class="tile-chg up">+$0.32 (+0.78%)</div><div class="tile-time">11/25終値</div></div>
+    <div class="tile"><div class="tile-name">銅（LME）</div><div class="tile-val">--</div><div class="tile-chg na">--</div><div class="tile-time">未確認</div></div>
+  </div>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>ホルムズ危機継続: 複数隻の機雷炎上でペルシャ湾の石油流量-40%継続。Brent≈$89-90で推移。OPEC+が11/29会合で産量方針を決定予定。<span class="news-src">OilPrice / MarketScreener 11/25-26</span></li>
+    <li>WTI $83.68 vs Brent $89.62: スプレッド≈$5.94。ホルムズリスクプレミアムがBrent側に乗っている状態。<span class="news-src">WorldOilMonitor 11/25</span></li>
+    <li>金$3,576: PCE後のリスクオフ・ドル安でサポート。$3,500を上回り、安全資産需要が継続。<span class="news-src">Kitco 11/25</span></li>
+    <li>銀$41.12: 金の上昇に連動。産業需要（半導体・太陽光）面でのサポートも継続。<span class="news-src">Kitco 11/25</span></li>
+    <li>OPEC+会合（11/29・日曜）: 供給過剰懸念 vs ホルムズリスクのバランスで減産幅の維持/縮小を議論。来週の原油価格の重要イベント。<span class="news-src">MarketScreener</span></li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> ホルムズ危機によるBrentプレミアムが継続。金は$3,500台を維持し地政学リスクと利上げ確定の中で安定推移。OPEC+会合（11/29）が来週の原油相場の方向性を決定する。
   </div>
 </div>
+
+<div id="tab-crypto" class="tab-content">
+  <div class="section-title">₿ 仮想通貨</div>
+  <div class="tile-grid">
+    <div class="tile"><div class="tile-name">BTC/USD</div><div class="tile-val">$60,677</div><div class="tile-chg up">+3.5%</div><div class="tile-time">最新(OKX)</div></div>
+    <div class="tile"><div class="tile-name">ETH/USD</div><div class="tile-val">$1,690</div><div class="tile-chg up">+3.0%</div><div class="tile-time">最新(OKX)</div></div>
+    <div class="tile"><div class="tile-name">恐怖・強欲指数</div><div class="tile-val">Fear</div><div class="tile-chg na">継続</div><div class="tile-time">11/25基準</div></div>
+  </div>
+  <ul class="news-list">
+    <li><span class="badge-important">重要</span>BTC $60,677（最新）: 11/25の$58,564から反発。7日間では依然-8%水準。PCEショック一服とBlack Friday薄商いでリスクオンが戻りつつある。<span class="news-src">OKX / Fortune 11/25-26</span></li>
+    <li>ETH $1,690: 同様に$1,641から反発。<span class="news-src">OKX 11/26</span></li>
+    <li>BlackRock ETF流出: 11/25にBlackRock Bitcoin ETFから$239M流出。機関投資家のリスクオフ継続を示唆。<span class="news-src">エージェントメモリ参照</span></li>
+    <li>規制動向: トランプ政権下での暗号資産規制緩和期待が長期的なサポート要因として継続。<span class="news-src">関連報道</span></li>
+    <li>アルトコイン: XRP・Solanaも11/25は軟調。感謝祭連休明けに方向感確認へ。<span class="news-src">Eurasia Business News 11/25</span></li>
+  </ul>
+  <div class="weekly-trend">
+    <strong>週次トレンド:</strong> PCEショックで$58,500まで下落後、$60,000台に回復。恐怖指数「Fear」継続中で慎重姿勢が優勢。BlackRock ETFからの資金流出が機関投資家の態度を映す。12月FOMC後の方向感が重要。
+  </div>
+</div>
+
+<div id="tab-watchlist" class="tab-content">
+  <div class="section-title">⭐ ウォッチリスト</div>
+  <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 20px; text-align: center; color: var(--text-sub);">
+    <div style="font-size: 2em; margin-bottom: 12px;">📋</div>
+    <p>現在ウォッチリストに登録されている銘柄はありません。</p>
+    <p style="margin-top: 8px; font-size: 0.85em;">チャットで「◯◯をウォッチリストに追加して」とお伝えいただくと、次回から個別に追跡します。</p>
+  </div>
+</div>
+
+<div class="econ-cal">
+  <h3>📅 経済指標カレンダー</h3>
+  <table class="econ-table">
+    <tr class="econ-today"><td>[本日 07:30 JST]</td><td>🇯🇵 日本</td><td>東京CPI 11月（コアCPI前年比）</td><td>予想: +3.0%（前月+2.6%）</td></tr>
+    <tr class="econ-today"><td>[本日 16:45 JST]</td><td>🇫🇷 フランス</td><td>CPI 11月速報（前年比）</td><td>予想: --</td></tr>
+    <tr class="econ-today"><td>[本日 17:00 JST]</td><td>🇪🇸 スペイン</td><td>CPI 11月速報（前年比）</td><td>予想: --</td></tr>
+    <tr class="econ-today"><td>[本日 17:55 JST]</td><td>🇩🇪 ドイツ</td><td>失業者数（11月）</td><td>予想: --</td></tr>
+    <tr class="econ-today"><td>[本日 19:00 JST]</td><td>🇪🇺 ユーロ圏</td><td>消費者信頼感（11月・確定値）</td><td>予想: --</td></tr>
+    <tr class="econ-today"><td>[本日 米国早終い]</td><td>🇺🇸 米国</td><td>Black Friday 13:00 ET早終い</td><td>薄商い注意</td></tr>
+    <tr><td>[11/28 土]</td><td>--</td><td>主要指標なし（週末）</td><td>--</td></tr>
+    <tr><td>[11/29 日]</td><td>🛢️ OPEC+</td><td>OPEC+閣僚級会合（産量方針決定）</td><td>要注目</td></tr>
+    <tr><td>[11/30 月]</td><td>🇯🇵 日本</td><td>鉱工業生産（10月速報）</td><td>--</td></tr>
+    <tr><td>[12/08-09]</td><td>🇺🇸 FRB</td><td>FOMC（12月会合・25bp利上げ97%確率）</td><td>4.00-4.25%へ</td></tr>
+    <tr><td>[12/17-18]</td><td>🇯🇵 日銀</td><td>日銀金融政策決定会合（12月）</td><td>+25bp想定（1.50%へ）</td></tr>
+    <tr><td>[12/17]</td><td>🇯🇵 日本</td><td>全国CPI 11月（22:30 GMT）</td><td>12月日銀会合の前日</td></tr>
+  </table>
+</div>
+
+<footer>
+  免責事項: 本ダイジェストは情報提供のみを目的とし、投資助言ではありません。数値はリアルタイムではなく、実際の取引には必ず最新の公式情報をご確認ください。生成: Claude Code (Scheduled Task) | 2026-11-27
+</footer>
 
 <script>
-function show(id) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
 }
 </script>
 </body>
