@@ -3,29 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>金融・経済用語集</title>
+<title>📖 金融・経済 用語集</title>
 <style>
-body { background: #0d0f14; color: #e2e8f0; font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif; padding: 20px; }
-h1 { color: #4f9cf9; margin-bottom: 16px; font-size: 1.1rem; }
-.entry { background: #161922; border: 1px solid #2d3748; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
-.term { font-size: 1.0rem; font-weight: 700; color: #fff; }
-.reading { font-size: 0.75rem; color: #64748b; margin: 2px 0 6px; }
-.desc { font-size: 0.82rem; color: #cbd5e1; line-height: 1.6; }
-.updated { font-size: 0.72rem; color: #64748b; margin-bottom: 16px; }
+:root {
+  --bg: #0f1420; --card-bg: #1a2032; --card-border: #2a3348;
+  --text-main: #e8ecf4; --text-sub: #9aa5b8; --accent: #4f8cff;
+  --warn: #f4b942;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text-main); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; line-height: 1.6; padding: 0 0 40px; }
+a { color: var(--accent); text-decoration: none; }
+.header { background: #111827; border-bottom: 1px solid var(--card-border); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.header-title { font-size: 1.1em; font-weight: 700; }
+.header-meta { font-size: 0.8em; color: var(--text-sub); }
+.search-area { padding: 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+#search { flex: 1; min-width: 200px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 12px; color: var(--text-main); font-size: 0.9em; }
+#search:focus { outline: 2px solid var(--accent); }
+.cat-filters { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 16px 12px; }
+.cat-btn { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 4px 12px; font-size: 0.8em; color: var(--text-sub); cursor: pointer; transition: all 0.2s; }
+.cat-btn.active, .cat-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.terms-list { padding: 0 16px; max-width: 900px; margin: 0 auto; }
+.term-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+.term-header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.term-name { font-size: 1.2em; font-weight: bold; color: var(--text-main); }
+.term-reading { font-size: 0.8em; color: var(--text-sub); }
+.term-english { font-size: 0.85em; color: var(--accent); }
+.term-category { margin-left: auto; font-size: 0.75em; background: rgba(79,140,255,0.15); color: var(--accent); padding: 2px 8px; border-radius: 4px; }
+.term-description { color: var(--text-main); margin-top: 8px; line-height: 1.6; }
+.term-meta { font-size: 0.75em; color: var(--text-sub); margin-top: 8px; }
+footer { background: #111827; border-top: 1px solid var(--card-border); padding: 12px 16px; text-align: center; font-size: 0.75em; color: var(--text-sub); margin-top: 20px; }
 </style>
 </head>
 <body>
-<h1>📚 金融・経済用語集</h1>
-<div class="updated">最終更新: 2026-11-26 | エントリー数: 10</div>
-<div class="entry"><div class="term">PCE</div><div class="reading">ぴーしーいー</div><div class="desc">個人消費支出（Personal Consumption Expenditures）。FRBが最も重視するインフレ指標。ヘッドライン（全項目）とコア（食料・エネルギー除く）がある。2026年10月: ヘッドライン3.8%、コア3.3%（予想超え）。</div></div>
-<div class="entry"><div class="term">FOMC</div><div class="reading">えふおーえむしー</div><div class="desc">連邦公開市場委員会（Federal Open Market Committee）。FRBの金融政策を決定する委員会。2026年12月9日の会合で+25bp（3.75-4.00%→4.00-4.25%）の利上げ確率97%。</div></div>
-<div class="entry"><div class="term">BOJ</div><div class="reading">びーおーじぇい</div><div class="desc">日本銀行（Bank of Japan）。2026年現在の政策金利は1.25%。12月17-18日の会合で1.50%への引き上げ確率86-87%。</div></div>
-<div class="entry"><div class="term">ホルムズ海峡</div><div class="reading">ほるむずかいきょう</div><div class="desc">中東の要衝。イランとオマーン・UAEの間にある海峡で世界の原油輸送の約20%が通過。2026年2月28日に始まった危機でイランが封鎖中。石油流量-40%。Day270（2026/11/26現在）。</div></div>
-<div class="entry"><div class="term">フェドウォッチ</div><div class="reading">ふぇどうぉっち</div><div class="desc">CMEグループが提供するFRBの政策金利変更確率ツール。FF金利先物に基づいて算出。2026/11/25時点: 12月25bp利上げ97%。</div></div>
-<div class="entry"><div class="term">AIセルオフ</div><div class="reading">えーあいせるおふ</div><div class="desc">AI関連株への過度な投資に対する見直し売りのこと。Nvidia（NVDA）など半導体・AI銘柄が中心。2026/11/23のHuang CEO復帰→翌日から再び売りが優勢。NASDAQが主な影響を受ける。</div></div>
-<div class="entry"><div class="term">感謝祭</div><div class="reading">かんしゃさい</div><div class="desc">Thanksgiving Day。米国の祝日（11月第4木曜日）。2026年は11月26日。米株式・債券市場は完全休場。翌27日（金）は短縮取引（早終い13:00 ET）。</div></div>
-<div class="entry"><div class="term">介入</div><div class="reading">かいにゅう</div><div class="desc">為替介入。日本財務省・日銀が円安を是正するためにドルを売り・円を買う市場操作。過去の介入では8円超の円高効果。2026年は160円が介入ラインとして意識され、約27兆円規模の介入が行われていると見られる。</div></div>
-<div class="entry"><div class="term">マグニフィセント7</div><div class="reading">まぐにふぃせんとせぶん</div><div class="desc">米国株式市場を牽引する7大テック企業の通称（Apple・Microsoft・Nvidia・Alphabet・Amazon・Meta・Tesla）。AIセルオフの影響を直接受けやすい。</div></div>
-<div class="entry"><div class="term">恐怖・強欲指数</div><div class="reading">きょうふきょうよくしすう</div><div class="desc">Fear & Greed Index。CNNが算出する市場センチメント指標。0（Extreme Fear）〜100（Extreme Greed）。2026/11/26現在「Fear（恐怖）」ゾーン。AIセルオフ・PCE高止まりを受けリスクオフムード。</div></div>
+<div class="header">
+  <div>
+    <div class="header-title">📖 金融・経済 用語集</div>
+    <div class="header-meta">最終更新: 2026-11-27 ｜ 登録用語数: 8</div>
+  </div>
+  <div><a href="latest.html">← ダイジェストに戻る</a></div>
+</div>
+<div class="search-area">
+  <input type="text" id="search" placeholder="用語を検索..." oninput="filterTerms()">
+</div>
+<div class="cat-filters">
+  <button class="cat-btn active" data-cat="all" onclick="setCat(this)">すべて</button>
+  <button class="cat-btn" data-cat="金融指標" onclick="setCat(this)">金融指標</button>
+  <button class="cat-btn" data-cat="経済政策" onclick="setCat(this)">経済政策</button>
+  <button class="cat-btn" data-cat="地政学" onclick="setCat(this)">地政学</button>
+  <button class="cat-btn" data-cat="企業・市場" onclick="setCat(this)">企業・市場</button>
+  <button class="cat-btn" data-cat="仮想通貨" onclick="setCat(this)">仮想通貨</button>
+</div>
+<div class="terms-list" id="termsList">
+<div class="term-card" data-category="経済政策" data-reading="ぼーじぇいせいさくきんり">
+  <div class="term-header"><span class="term-name">BOJ（日銀）政策金利</span><span class="term-reading">ぼーじぇいせいさくきんり</span><span class="term-english">Bank of Japan Policy Rate</span><span class="term-category">経済政策</span></div>
+  <p class="term-description">日本銀行が誤導する短期金利（無担保コール翔日物）。長年のマイナス金利・ゼロ金利政策から2024年以降に段階的に引き上げられ、現在1.25%、2026年12月17〜18日の会合で謝1.50%への追加利上げが75〜80%の確率で市場に織り込まれている。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="地政学" data-reading="おーぺっくぷらす">
+  <div class="term-header"><span class="term-name">OPEC+</span><span class="term-reading">おーぺっくぷらす</span><span class="term-english">OPEC Plus</span><span class="term-category">地政学</span></div>
+  <p class="term-description">石油輸出国機構（OPEC）加盟国にロシアなど非加盟産油国を加えた産油国連合。協調減産を通じて原油価格の安定を図る　2026年11月29日に閣僚級会合を開催し、供給過剰懸念とホルムズ危機によるリスクのバランスをとりながら産量方針を決定予定。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="金融指標" data-reading="こあぴーしーいー">
+  <div class="term-header"><span class="term-name">コアPCE</span><span class="term-reading">こあぴーしーいー</span><span class="term-english">Core Personal Consumption Expenditures</span><span class="term-category">金融指標</span></div>
+  <p class="term-description">米国の物価指標のひとつ。個人消費支出から食品とエネルギーを除いた指数で、FRB（米連邦準備制度）が金融政策判断で最重視する　2026年11月発表の10月分は前年比+3.3%と予想を上回り、12月のFRB利上げをほぼ確定させた。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="金融指標" data-reading="とうきょうしーぴーあい">
+  <div class="term-header"><span class="term-name">東京CPI</span><span class="term-reading">とうきょうしーぴーあい</span><span class="term-english">Tokyo Consumer Price Index</span><span class="term-category">金融指標</span></div>
+  <p class="term-description">総務省が毎月下旬に発表する東京都区部の消費者物価指数。全国CPIより約3〜4週間早く発表されるため、全国データの先行指標として注目される。日銀の金融政策決定会合の前に発表されることが多く、利上げ判断に直接影響する、2026年11月分（コア予想3.0%）は日銀12月利上げの決め手となりうる。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="経済政策" data-reading="ふぇでらるふぁんずきんり">
+  <div class="term-header"><span class="term-name">フェデラル・ファンド金利</span><span class="term-reading">ふぇでらるふぁんずきんり</span><span class="term-english">Federal Funds Rate</span><span class="term-category">経済政策</span></div>
+  <p class="term-description">米国の銀行間で短期資金を融通し合う際の金利。FRBが誤導目標を設定し、金融政策の基準となる。現在の誤導目標は3.75〜4.00%で、2026年12月のFOMCで謝4.00〜4.25%への引上げがほぼ確実視されている。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="経済政策" data-reading="えふおーえむしー">
+  <div class="term-header"><span class="term-name">FOMC</span><span class="term-reading">えふおーえむしー</span><span class="term-english">Federal Open Market Committee</span><span class="term-category">経済政策</span></div>
+  <p class="term-description">FRB（米連邦準備制度）の政策決定機関。年8回開催され、政策金利（FF金利）の変更を決定する　2026年12月8〜9日の会合では25bp（0.25%）の利上げが97%の確率で織り込まれており、金利は3.75〜4.00%から謝4.00〜4.25%へ引き上げられる見通し。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="地政学" data-reading="ほるむずかいきょう">
+  <div class="term-header"><span class="term-name">ホルムズ海峻</span><span class="term-reading">ほるむずかいきょう</span><span class="term-english">Strait of Hormuz</span><span class="term-category">地政学</span></div>
+  <p class="term-description">ペルシャ湾とオマーン湾をつなぐ戦略的海峻。世界の原油輸送量の約2割が通過する。イランが機雷敷設や船舶拿捕により封鎖を続けており、2026年11月時点で270日を超えて危機が継続。石油流量が40%減少し、Brent原油価格を押し上げている。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+<div class="term-card" data-category="地政学" data-reading="あいあいえすえす">
+  <div class="term-header"><span class="term-name">IISS</span><span class="term-reading">あいあいえすえす</span><span class="term-english">International Institute for Strategic Studies</span><span class="term-category">地政学</span></div>
+  <p class="term-description">英国に本拠を置く独立系安全保障シンクタンク。各国の軍事力・安全保障情勢を分析する「ミリタリーバランス」等で知られる　2026年11月、欧州におけるロシア関連サボタージュ（爆発・放火）が前年比倍増し、大規模被害事案のリスクが高まっているとの報告書を発表した。</p>
+  <div class="term-meta">初出: 2026-11-27</div>
+</div>
+</div>
+<footer>
+  免責事項: 本用語集は教育・情報提供を目的とし、投資助言ではありません。 | 最終更新: 2026-11-27 | <a href="latest.html">← ダイジェストに戻る</a>
+</footer>
+<script>
+function filterTerms() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const cat = document.querySelector('.cat-btn.active').dataset.cat;
+  document.querySelectorAll('.term-card').forEach(card => {
+    const matchQ = !q || card.textContent.toLowerCase().includes(q);
+    const matchC = cat === 'all' || card.dataset.category === cat;
+    card.style.display = (matchQ && matchC) ? '' : 'none';
+  });
+}
+function setCat(btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterTerms();
+}
+</script>
 </body>
 </html>
